@@ -6,6 +6,7 @@ use App\Common\Helper;
 use App\Models\BaseModel;
 use Illuminate\Http\Request;
 use Illuminate\Http\Response;
+use Illuminate\Support\Facades\DB;
 use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Support\Facades\Validator;
 use Illuminate\Foundation\Bus\DispatchesJobs;

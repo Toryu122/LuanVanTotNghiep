@@ -3,6 +3,7 @@
 namespace App\Providers;
 
 use App\Common\GlobalVariable;
+use Illuminate\Pagination\Paginator;
 use Illuminate\Support\Facades\Schema;
 use Illuminate\Support\ServiceProvider;
 use Illuminate\Database\Eloquent\Builder;
@@ -16,7 +17,7 @@ class AppServiceProvider extends ServiceProvider
      */
     public function register()
     {
-        $this->app->singleton(GlobalVariable::class, function (){
+        $this->app->singleton(GlobalVariable::class, function () {
             return new GlobalVariable();
         });
     }
@@ -36,6 +37,7 @@ class AppServiceProvider extends ServiceProvider
                     ->with($relation, $constraint);
             }
         );
+        Paginator::useBootstrap();
         Schema::defaultStringLength(191);
     }
 }

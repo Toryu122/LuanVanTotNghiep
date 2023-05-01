@@ -1,0 +1,116 @@
+:root {
+    --size: 24px;
+    --myBlue: #358de6;
+}
+
+.dropdown:hover > .dropdown-menu {
+    display: block;
+}
+
+.dropdown > .dropdown-toggle:active {
+    pointer-events: none;
+}
+
+input.form-control {
+    width: 400px !important;
+}
+
+.card-img,
+.card-img-bottom,
+.card-img-top {
+    border-radius: 5px;
+    /* box-shadow: 0px 6px 6px rgba(0, 0, 0, 0.25); */
+}
+
+.game {
+    transition: box-shadow 0.3s;
+    border-radius: 5px;
+}
+
+.game:hover {
+    box-shadow: 3px 3px 3px 3px rgba(0, 0, 0, 0.2);
+}
+
+.game-img {
+    width: 243px;
+    height: 116px;
+    object-fit: cover; 
+}
+
+.center-img {
+    display: block;
+    margin-left: auto;
+    margin-right: auto;
+}
+
+.center-page {
+    width: 100%;
+    display: flex;
+    justify-content: center;
+}
+
+.price-tag {
+    color: #2f70af;
+}
+
+swiper-container {
+    width: 100%;
+    height: 100%;
+}
+
+swiper-slide {
+    text-align: center;
+    font-size: 18px;
+    background: #fff;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+swiper-container swiper-slide {
+    height: 300px;
+    line-height: 300px;
+}
+
+swiper-container swiper-slide {
+    height: 500px;
+    line-height: 500px;
+}
+
+swiper-slide img {
+    display: block;
+    width: 100%;
+    height: 100%;
+}
+
+.icon-shape {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    text-align: center;
+    vertical-align: middle;
+}
+
+.icon-sm {
+    width: 2rem;
+    height: 2rem;
+}
+
+.detail-img {
+    box-sizing: border-box;
+    width: 291px;
+    height: 403px;
+    left: 141px;
+    top: 135px;
+    border: 1px solid #000000;
+}
+
+.btn-quantity {
+    background-color: var(--myBlue);
+    color: white;
+}
+
+.btn-default:hover {
+    border-color: var(--myBlue);
+    color: var(--myBlue);
+}
