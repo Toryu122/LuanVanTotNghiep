@@ -2,6 +2,7 @@
 
 use App\Models\Game;
 use App\Models\Genre;
+use App\Models\Order;
 use App\Models\Publisher;
 use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
@@ -56,8 +57,29 @@ class CreateBase extends Migration
             $table->id();
             $table->unsignedInteger('game_id')->nullable(false);
             $table->unsignedInteger('genre_id')->nullable(false);
-            $table->foreign('game_id')->references('id')->on('game');
-            $table->foreign('genre_id')->references('id')->on('genre');
+            $table->foreign('game_id')->references('id')->on(Game::retrieveTableName());
+            $table->foreign('genre_id')->references('id')->on(Genre::retrieveTableName());
+        });
+
+        Schema::create(Order::retrieveTableName(), function (Blueprint $table) {
+            $table->id();
+            $table->unsignedInteger('user_id')->nullable(false);
+            $table->foreign('user_id')->references('id')->on('users');
+            $table->string('email');
+            $table->double('total')->nullable(false);
+            $table->timestamp('created_at')->useCurrent();
+            $table->timestamp('updated_at')->useCurrent();
+        });
+
+        Schema::create('order_details', function (Blueprint $table) {
+            $table->id();
+            $table->unsignedInteger('order_id')->nullable(false);
+            $table->unsignedInteger('game_id')->nullable(false);
+            $table->foreign('order_id')->references('id')->on(Order::retrieveTableName());
+            $table->foreign('game_id')->references('id')->on(Game::retrieveTableName());
+            $table->double('price')->nullable(false);
+            $table->timestamp('created_at')->useCurrent();
+            $table->timestamp('updated_at')->useCurrent();
         });
     }
 
@@ -73,5 +95,7 @@ class CreateBase extends Migration
         Schema::dropIfExists(Genre::retrieveTableName());
         Schema::dropIfExists(Publisher::retrieveTableName());
         Schema::dropIfExists(Genre::INTERMEDIATE_TABLE[0]);
+        Schema::dropIfExists(Order::retrieveTableName());
+        Schema::dropIfExists('order_details');
     }
 }

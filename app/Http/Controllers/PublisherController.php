@@ -11,11 +11,4 @@ class PublisherController extends Controller
 {
     // public $model = Publisher::class;
 
-    /**
-     * @return HasMany
-     */
-    public function games() : HasMany
-    {
-        return $this->hasMany(Game::class);
-    }
 }

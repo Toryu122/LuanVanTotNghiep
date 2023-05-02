@@ -9,12 +9,5 @@ use Illuminate\Http\Request;
 class GenreController extends Controller
 {
     // public $model = Genre::class;
-
-    /**
-     * @return BelongsToMany
-     */
-    public function games() : BelongsToMany
-    {
-        return $this->belongsToMany(Game::class);
-    }
+    
 }
