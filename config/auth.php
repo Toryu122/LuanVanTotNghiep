@@ -14,7 +14,7 @@ return [
     */
 
     'defaults' => [
-        'guard' => 'auth0',
+        'guard' => 'web',
         'passwords' => 'users',
     ],
 
@@ -39,11 +39,7 @@ return [
         'web' => [
             'driver' => 'session',
             'provider' => 'users',
-        ],
-        'auth0' => [
-            'driver' => 'auth0',
-            'provider' => 'auth0',
-        ],
+        ]
     ],
 
     /*
@@ -73,11 +69,6 @@ return [
         //     'driver' => 'database',
         //     'table' => 'users',
         // ],
-
-        'auth0' => [
-            'driver' => 'auth0',
-            'repository' => \Auth0\Laravel\Auth\User\Repository::class
-        ],
     ],
 
     /*

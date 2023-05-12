@@ -11,6 +11,9 @@ class Order extends BaseModel
 {
     use HasFactory;
 
+    /**
+     * @return BelongsTo
+     */
     public function user() : BelongsTo
     {
         return $this->belongsTo(User::class);
