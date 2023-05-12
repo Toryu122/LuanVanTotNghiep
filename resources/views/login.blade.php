@@ -25,6 +25,13 @@
                             tin!</i>
                     </small>
                 </div>
+                <div class="text-center">
+                    @if (Session::has('user_not_found'))
+                        <div class="invalid-feedback d-block" role="alert">
+                            <strong>{{ Session::get('user_not_found')}}</strong>
+                        </div>
+                    @endif
+                </div>
                 <form action="{{ route('loginUser') }}" method="POST">
                     @csrf
                     <div class="form-group pt-3">

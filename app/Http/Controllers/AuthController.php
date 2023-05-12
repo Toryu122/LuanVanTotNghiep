@@ -87,9 +87,7 @@ class AuthController extends Controller
             return redirect(route('index'));
         }
 
-        return back()->withErrors([
-            'email' => 'The provided credentials do not match our records.',
-        ])->onlyInput('email');
+        return redirect(route('login'))->with('user_not_found', 'Tài khoản không tồn tại, vui lòng đăng ký!');
     }
 
     public function logoutUser(Request $request)
