@@ -64,7 +64,7 @@ class AuthController extends Controller
 
         auth()->login($user);
 
-        return redirect(route('signup'))->with('success', 'Đăng ký thành công');
+        return redirect(route('index'));
     }
 
     public function loginUser(Request $request)
