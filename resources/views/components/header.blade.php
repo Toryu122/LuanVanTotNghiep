@@ -18,7 +18,7 @@
             <!-- Left links -->
             <ul class="navbar-nav me-auto d-flex flex-row">
                 <li class="nav-item text-center mx-2 mx-lg-1">
-                    <a class="nav-link" aria-current="page" href="#!">
+                    <a href="{{ route('index') }}" class="nav-link" aria-current="page" href="#!">
                         <div>
                             <i class="fas fa-home fa-lg mb-1"></i>
                         </div>
@@ -29,7 +29,7 @@
 
             <!-- Search form -->
             <form class="d-flex input-group w-auto ms-lg-3 my-3 my-lg-0">
-                <input type="search" class="form-control" placeholder="Tìm kiếm sản phẩm" aria-label="Search" />
+                <input type="search" class="form-control search" placeholder="Tìm kiếm sản phẩm" aria-label="Search" />
                 <button class="btn btn-primary" type="button" data-mdb-ripple-color="dark">
                     <i class="fa-solid fa-magnifying-glass"></i>
                 </button>
@@ -38,21 +38,53 @@
             <!-- Right links -->
             <ul class="navbar-nav ms-auto d-flex flex-row mt-3 mt-lg-0">
                 <li class="nav-item dropdown text-center mx-2 mx-lg-1">
-                    <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button"
-                        data-mdb-toggle="dropdown" aria-expanded="false">
-                        <div>
-                            <i class="fa-solid fa-user"></i>
-                        </div>
-                        Tài Khoản
-                    </a>
+                    @if (Auth::user())
+                        <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button"
+                            data-mdb-toggle="dropdown" aria-expanded="false">
+                            <div>
+                                <i class="fa-solid fa-user"></i>
+                            </div>
+                            {{ auth()->user()->name }}
+                        </a>
+                    @else
+                        <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button"
+                            data-mdb-toggle="dropdown" aria-expanded="false">
+                            <div>
+                                <i class="fa-solid fa-user"></i>
+                            </div>
+                            Tài Khoản
+                        </a>
+                    @endif
                     <!-- Dropdown menu -->
+
                     <ul class="dropdown-menu dropdown-menu-dark" aria-labelledby="navbarDropdown">
-                        <li><a class="dropdown-item" href="#">Đăng nhập</a></li>
-                        <li><a class="dropdown-item" href="#">Đăng ký</a></li>
+                        @if (Auth::user())
+                            <li>
+                                <a class="dropdown-item" href="{{ route('logoutUser') }}">
+                                    Thông tin tài khoản
+                                </a>
+                            </li>
+                            <li>
+                                <a class="dropdown-item" href="{{ route('logoutUser') }}">
+                                    Đăng xuất
+                                </a>
+                            </li>
+                        @else
+                            <li>
+                                <a class="dropdown-item" href="{{ route('login') }}">
+                                    Đăng nhập
+                                </a>
+                            </li>
+                            <li>
+                                <a class="dropdown-item" href="{{ route('signup') }}">
+                                    Đăng ký
+                                </a>
+                            </li>
+                        @endif
                     </ul>
                 </li>
                 <li class="nav-item text-center mx-2 mx-lg-1">
-                    <a class="nav-link" aria-current="page" href="#!">
+                    <a class="nav-link" aria-current="page" href="#">
                         <div>
                             <i class="fa-solid fa-cart-shopping"></i>
                             <span class="badge rounded-pill badge-notification bg-info">0</span>

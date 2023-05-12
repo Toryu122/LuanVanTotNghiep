@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Controllers\AuthController;
 use App\Http\Controllers\GameController;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Route;
@@ -15,29 +16,10 @@ use Illuminate\Support\Facades\Route;
 |
 */
 
+Route::get('/dang-nhap', [AuthController::class, 'login'])->name('login');
+Route::get('/dang-ky', [AuthController::class, 'signup'])->name('signup');
+Route::post('/login', [AuthController::class, 'loginUser'])->name('loginUser');
+Route::post('/createUser', [AuthController::class, 'createUser'])->name('createUser');
+Route::get('/dang-xuat', [AuthController::class, 'logoutUser'])->name('logoutUser');
+
 Route::get('/', [GameController::class, 'index'])->name('index');
-
-// 📂 routes/web.php
-// 👆 Keep anything already present in the file, just add the following ...
-
-// Route::get('/login', \Auth0\Laravel\Http\Controller\Stateful\Login::class)->name('login');
-// Route::get('/logout', \Auth0\Laravel\Http\Controller\Stateful\Logout::class)->name('logout');
-// Route::get('/auth0/callback', \Auth0\Laravel\Http\Controller\Stateful\Callback::class)->name('auth0.callback');
-
-// // 📂 routes/web.php
-// // 👆 Keep anything already present in the file, just add the following ...
-
-// Route::get('/', function () {
-//     if (Auth::check()) {
-//         return view('auth0.user');
-//     }
-
-//     return view('auth0/guest');
-// })->middleware(['auth0.authenticate.optional']);
-
-// // 👆 Continued from above, in routes/web.php
-
-// // Require an authenticated session to access this route.
-// Route::get('/required', function () {
-//     return view('auth0.user');
-// })->middleware(['auth0.authenticate']);

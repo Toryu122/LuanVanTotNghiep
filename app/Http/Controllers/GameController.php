@@ -14,7 +14,7 @@ use Illuminate\Database\Eloquent\Relations\BelongsToMany;
 class GameController extends Controller
 {
     // public $model = Game::class;
-    public $perPage = 8;
+    public $perPage = 12;
 
     public function index()
     {
