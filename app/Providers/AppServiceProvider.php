@@ -7,7 +7,7 @@ use Illuminate\Pagination\Paginator;
 use Illuminate\Support\Facades\Schema;
 use Illuminate\Support\ServiceProvider;
 use Illuminate\Database\Eloquent\Builder;
-
+use Illuminate\Support\Facades\URL;
 class AppServiceProvider extends ServiceProvider
 {
     /**
@@ -29,6 +29,9 @@ class AppServiceProvider extends ServiceProvider
      */
     public function boot()
     {
+        if (app()->environment('remote')) {
+            URL::forceScheme('https');
+        }
         Builder::macro(
             'withWhereHas',
             function ($relation, $constraint) {
@@ -39,5 +42,6 @@ class AppServiceProvider extends ServiceProvider
         );
         Paginator::useBootstrap();
         Schema::defaultStringLength(191);
+        
     }
 }
