@@ -1,9 +1,10 @@
 <?php
 
-use App\Http\Controllers\AuthController;
-use App\Http\Controllers\GameController;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Route;
+use App\Http\Controllers\AuthController;
+use App\Http\Controllers\GameController;
+use Laravel\Socialite\Facades\Socialite;
 
 /*
 |--------------------------------------------------------------------------
@@ -23,3 +24,9 @@ Route::post('/createUser', [AuthController::class, 'createUser'])->name('createU
 Route::get('/dang-xuat', [AuthController::class, 'logoutUser'])->name('logoutUser');
 
 Route::get('/', [GameController::class, 'index'])->name('index');
+Route::get('/policy', function () {
+    return view('policy');
+});
+Route::get('/tos', function () {
+    return view('tos');
+});
