@@ -11,6 +11,14 @@ class Order extends BaseModel
 {
     use HasFactory;
 
+    protected $fillable = [
+
+    ];
+
+    protected $updatable = [
+
+    ];
+
     /**
      * @return BelongsTo
      */
