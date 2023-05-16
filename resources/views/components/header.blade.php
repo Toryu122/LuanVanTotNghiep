@@ -5,7 +5,7 @@
     <!-- Container wrapper -->
     <div class="container-fluid">
         <!-- Navbar brand -->
-        {{-- <a class="navbar-brand" href="#">Navbar</a> --}}
+        <a class="navbar-brand" href="#">Navbar</a>
 
         <!-- Toggle button -->
         <button class="navbar-toggler" type="button" data-mdb-toggle="collapse" data-mdb-target="#navbarSupportedContent"

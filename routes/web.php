@@ -17,39 +17,39 @@ use Laravel\Socialite\Facades\Socialite;
 |
 */
 
-Route::get('/dang-nhap', [AuthController::class, 'login'])->name('login');
-Route::get('/dang-ky', [AuthController::class, 'signup'])->name('signup');
-Route::post('/login', [AuthController::class, 'loginUser'])->name('loginUser');
-Route::post('/createUser', [AuthController::class, 'createUser'])->name('createUser');
-Route::get('/infor', [AuthController::class, 'inforUser'])->name('inforUser');
-Route::get('/dang-xuat', [AuthController::class, 'logoutUser'])->name('logoutUser');
+// Route::get('/dang-nhap', [AuthController::class, 'login'])->name('login');
+// Route::get('/dang-ky', [AuthController::class, 'signup'])->name('signup');
+// Route::post('/login', [AuthController::class, 'loginUser'])->name('loginUser');
+// Route::post('/createUser', [AuthController::class, 'createUser'])->name('createUser');
+// Route::get('/infor', [AuthController::class, 'inforUser'])->name('inforUser');
+// Route::get('/dang-xuat', [AuthController::class, 'logoutUser'])->name('logoutUser');
 
-Route::get('/', [GameController::class, 'index'])->name('index');
-Route::get('/policy', function () {
-    return view('policy');
-});
-Route::get('/tos', function () {
-    return view('tos');
-});
+// Route::get('/', [GameController::class, 'index'])->name('index');
+// Route::get('/policy', function () {
+//     return view('policy');
+// });
+// Route::get('/tos', function () {
+//     return view('tos');
+// });
 
-Route::get('/fb/chinhsachriengtu', function () {
-    return '<h1>Chính sách riêng tư</h1>';
-});
+// Route::get('/fb/chinhsachriengtu', function () {
+//     return '<h1>Chính sách riêng tư</h1>';
+// });
  
-Route::get('/auth/fb', function () {
-    return Socialite::driver('facebook')->redirect();
-});
+// Route::get('/auth/fb', function () {
+//     return Socialite::driver('facebook')->redirect();
+// });
 
-Route::get('/auth/fb/callback', function () {
-    $user = Socialite::driver('facebook')->user();
-    dd($user);
-});
+// Route::get('/auth/fb/callback', function () {
+//     $user = Socialite::driver('facebook')->user();
+//     dd($user);
+// });
 
-Route::get('/auth/gg', function () {
-    return Socialite::driver('google')->redirect();
-});
+// Route::get('/auth/gg', function () {
+//     return Socialite::driver('google')->redirect();
+// });
 
-Route::get('/auth/gg/callback', function () {
-    $user = Socialite::driver('google')->user();
-    dd($user);
-});
+// Route::get('/auth/gg/callback', function () {
+//     $user = Socialite::driver('google')->user();
+//     dd($user);
+// });
