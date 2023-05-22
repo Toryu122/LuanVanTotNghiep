@@ -3,10 +3,13 @@
 namespace App\Http\Controllers;
 
 use App\Models\User;
-use Illuminate\Contracts\Session\Session;
+use Illuminate\Support\Str;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Hash;
+use Laravel\Socialite\Facades\Socialite;
+use Illuminate\Contracts\Session\Session;
 use Illuminate\Support\Facades\Validator;
 use Illuminate\Validation\Rules\Password;
 
@@ -99,5 +102,39 @@ class AuthController extends Controller
         $request->session()->regenerateToken();
 
         return redirect('/');
+    }
+
+    public function loginGoogle()
+    {
+        return Socialite::driver('google')->redirect();
+    }
+
+    public function loginGoogleUser()
+    {
+        $userGoogle = Socialite::driver('google')->user();
+
+        $userExist = DB::table('users')
+            ->where('social_id', '=', $userGoogle->getId())
+            ->first();
+
+        if (!$userExist) {
+            $user = DB::table('users')
+                ->insertGetId(
+                    [
+                        'name' => $userGoogle->getName(),
+                        'email' => $userGoogle->getEmail(),
+                        'password' => Hash::make(Str::random(8)),
+                        'social' => User::SOCIALS[2],
+                        'social_id' => $userGoogle->getId(),
+                    ]
+                );
+
+            Auth::loginUsingId($user);
+            return redirect(route('index'));
+        }
+
+        Auth::loginUsingId($userExist->id);
+
+        return redirect(route('index'));
     }
 }

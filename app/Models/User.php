@@ -13,6 +13,12 @@ class User extends Authenticatable
 {
     use HasApiTokens, HasFactory, Notifiable;
 
+    const SOCIALS = [
+        'None',
+        'Facebook',
+        'Google'
+    ];
+
     /**
      * The attributes that are mass assignable.
      *

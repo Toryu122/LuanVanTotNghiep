@@ -15,7 +15,7 @@
         <x-header title="Trang Chủ" />
     </div>
 
-    <div class="container pt-5">
+    <div class="container pt-3">
         <x-carousel />
     </div>
 

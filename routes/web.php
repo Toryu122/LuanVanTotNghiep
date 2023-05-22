@@ -17,6 +17,9 @@ use Laravel\Socialite\Facades\Socialite;
 |
 */
 
+/**
+ * Normal Login
+ */
 Route::get('/dang-nhap', [AuthController::class, 'login'])->name('login');
 Route::get('/dang-ky', [AuthController::class, 'signup'])->name('signup');
 Route::post('/login', [AuthController::class, 'loginUser'])->name('loginUser');
@@ -24,8 +27,21 @@ Route::post('/createUser', [AuthController::class, 'createUser'])->name('createU
 Route::get('/infor', [AuthController::class, 'inforUser'])->name('inforUser');
 Route::get('/dang-xuat', [AuthController::class, 'logoutUser'])->name('logoutUser');
 
+/**
+ * Social Login
+ */
+Route::get('/auth/gg', [AuthController::class, 'loginGoogle']);
+Route::get('/auth/gg/callback', [AuthController::class, 'loginGoogleUser']);
+Route::get('/auth/fb', function () {
+    return Socialite::driver('facebook')->redirect();
+});
+Route::get('/auth/fb/callback', function () {
+    $user = Socialite::driver('facebook')->user();
+    dd($user);
+});
+
+
 Route::get('/', [GameController::class, 'index'])->name('index');
-Route::get('/game/fetch_data', [GameController::class, 'fetch_data']);
 Route::get('/policy', function () {
     return view('policy');
 })->name('policy');
@@ -33,24 +49,4 @@ Route::get('/tos', function () {
     return view('tos');
 })->name('tos');
 
-Route::get('/fb/chinhsachriengtu', function () {
-    return '<h1>Chính sách riêng tư</h1>';
-});
- 
-Route::get('/auth/fb', function () {
-    return Socialite::driver('facebook')->redirect();
-});
 
-Route::get('/auth/fb/callback', function () {
-    $user = Socialite::driver('facebook')->user();
-    dd($user);
-});
-
-Route::get('/auth/gg', function () {
-    return Socialite::driver('google')->redirect();
-});
-
-Route::get('/auth/gg/callback', function () {
-    $user = Socialite::driver('google')->user();
-    dd($user);
-});

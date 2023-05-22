@@ -1,7 +1,6 @@
 <swiper-container 
     class="mySwiper rounded-2 shadow" 
     pagination="true" 
-    pagination-clickable="true" 
     navigation="true" space-between="30"
     loop="true" 
     centered-slides="true" 

@@ -25,12 +25,4 @@ class GameController extends Controller
             'games' => $games
         ]);
     }
-
-    function fetch_data(Request $request)
-    {
-        if ($request->ajax()) {
-            $data = DB::table(Game::retrieveTableName())->paginate($this->perPage);
-            return view('pagination_data', compact('games'))->render();
-        }
-    }
 }
