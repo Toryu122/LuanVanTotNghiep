@@ -25,12 +25,13 @@ Route::get('/infor', [AuthController::class, 'inforUser'])->name('inforUser');
 Route::get('/dang-xuat', [AuthController::class, 'logoutUser'])->name('logoutUser');
 
 Route::get('/', [GameController::class, 'index'])->name('index');
+Route::get('/game/fetch_data', [GameController::class, 'fetch_data']);
 Route::get('/policy', function () {
     return view('policy');
-});
+})->name('policy');
 Route::get('/tos', function () {
     return view('tos');
-});
+})->name('tos');
 
 Route::get('/fb/chinhsachriengtu', function () {
     return '<h1>Chính sách riêng tư</h1>';

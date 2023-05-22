@@ -18,7 +18,7 @@
     </div>
 </div> --}}
 
-<div class="col-3 py-3 mb-3 game">
+<div class="col-3 py-3 mb-3 game" id="game_table">
     <div class="card h-100 border-0">
         <a  
             data-bs-toggle="tooltip" 

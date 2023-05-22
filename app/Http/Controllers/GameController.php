@@ -14,16 +14,23 @@ use Illuminate\Database\Eloquent\Relations\BelongsToMany;
 class GameController extends Controller
 {
     // public $model = Game::class;
-    public $perPage = 12;
+    public $perPage = 8;
 
     public function index()
     {
         $games = DB::table(Game::retrieveTableName())
             ->paginate($this->perPage);
-        
+
         return view('index', [
             'games' => $games
         ]);
     }
 
+    function fetch_data(Request $request)
+    {
+        if ($request->ajax()) {
+            $data = DB::table(Game::retrieveTableName())->paginate($this->perPage);
+            return view('pagination_data', compact('games'))->render();
+        }
+    }
 }
