@@ -30,7 +30,7 @@ Route::get('/dang-xuat', [AuthController::class, 'logoutUser'])->name('logoutUse
 /**
  * Social Login
  */
-Route::get('/auth/gg', [AuthController::class, 'loginGoogle']);
+Route::get('/auth/gg', [AuthController::class, 'loginGoogle'])->name('loginGoogle');
 Route::get('/auth/gg/callback', [AuthController::class, 'loginGoogleUser']);
 Route::get('/auth/fb', function () {
     return Socialite::driver('facebook')->redirect();

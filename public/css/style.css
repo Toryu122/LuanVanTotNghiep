@@ -132,10 +132,20 @@
     color: white !important;
     background-color: #ea4335;
   }
+
+  .btn-google:hover {
+    color: white !important;
+    background-color: #af352a;
+  }
   
   .btn-facebook {
     color: white !important;
     background-color: #3b5998;
+  }
+  
+  .btn-facebook:hover {
+    color: white !important;
+    background-color: #2d4373;
   }
   
   .container-fluid .loginForm {

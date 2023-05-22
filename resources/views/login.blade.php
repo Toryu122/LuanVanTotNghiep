@@ -28,7 +28,7 @@
                 <div class="text-center">
                     @if (Session::has('user_not_found'))
                         <div class="invalid-feedback d-block" role="alert">
-                            <strong>{{ Session::get('user_not_found')}}</strong>
+                            <strong>{{ Session::get('user_not_found') }}</strong>
                         </div>
                     @endif
                 </div>
@@ -55,6 +55,22 @@
                     </div>
                     <div class="form-group pt-4">
                         <button type="submit" class="btn pt-2 btn-primary col-12">Đăng Nhập</button>
+                    </div>
+                    <div class="row pt-5">
+                        <div class="col-md-6 text-center">
+                            <a href="{{ route('loginGoogle') }}">
+                                <button type="button" class="btn pt-2 btn-google col-12">
+                                    <i class="fa-brands fa-google fa-lg" style="color: #ffffff;"></i> Đăng Nhập Google
+                                </button>
+                            </a>
+                        </div>
+                        <div class="col-md-6 text-center">
+                            <a href="">
+                                <button type="button" class="btn pt-2 btn-facebook col-12">
+                                    <i class="fa-brands fa-facebook fa-lg" style="color: #ffffff;"></i> Đăng Nhập Facebook
+                                </button>
+                            </a>
+                        </div>
                     </div>
                 </form>
                 <div class="text-center pt-2"><a href="{{ route('signup') }}">Bạn chưa có tài khoản?</a></div>
