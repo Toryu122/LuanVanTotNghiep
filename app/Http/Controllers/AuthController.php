@@ -24,14 +24,15 @@ class AuthController extends Controller
     {
         return view('login');
     }
-    public function inforUser($id)
+
+
+    public function inforUser()
     {
-        $user = DB::table('users')
-            ->where('id', '=', $id)
-            ->first();   
-        return view('inforUser',['user'=>$user,'title'=>'Thông tin tài khoản']);
+        return view('inforUser');
     }
 
+
+    
     public function createUser(Request $request)
     {
         // dd($request->request);

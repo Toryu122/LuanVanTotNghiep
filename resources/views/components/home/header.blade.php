@@ -60,7 +60,7 @@
                     <ul class="dropdown-menu dropdown-menu-dark" aria-labelledby="navbarDropdown">
                         @if (Auth::user())
                             <li>
-                                <a class="dropdown-item" href="{{ route('inforUser',auth()->user()->id) }}">
+                                <a class="dropdown-item" href="{{ route('inforUser') }}">
                                     Thông tin tài khoản
                                 </a>
                             </li>

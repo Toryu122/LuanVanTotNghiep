@@ -24,7 +24,7 @@ Route::get('/dang-nhap', [AuthController::class, 'login'])->name('login');
 Route::get('/dang-ky', [AuthController::class, 'signup'])->name('signup');
 Route::post('/login', [AuthController::class, 'loginUser'])->name('loginUser');
 Route::post('/createUser', [AuthController::class, 'createUser'])->name('createUser');
-Route::get('/infor/{id}', [AuthController::class, 'inforUser'])->name('inforUser');
+Route::get('/infor', [AuthController::class, 'inforUser'])->name('inforUser');
 Route::get('/dang-xuat', [AuthController::class, 'logoutUser'])->name('logoutUser');
 
 /**

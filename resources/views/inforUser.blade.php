@@ -1,21 +1,21 @@
-@extends('components.home.header')
-@include('cdn')
-@section('content')
-    
-        @if (session()->has('message'))
-            <div class="alert alert-success">
-                {{ session()->get('message') }}
-            </div>
-        @endif
-        <div class="card">
-            <h5 class="card-header">Thông tin sản phẩm</h5>
-            <div class="table-responsive text-nowrap">
-              <a >Tên tài khoản:{{ $user->name }} </a>  
-              <a>Mail:{{ $user->email }} </a> 
-              <a>Thời gian tạo:{{ $user->created_at }} </a> 
-              <a>Thời gian sửa:{{ $user->updated_at }} </a> 
-            </div>
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+
+    @include('cdn')
+</head>
+<body>
+    <x-header title="Thông Tin Tài Khoản"/>
+    <div class="card container col-4">
+        <h5 class="card-header">Thông tin tài khoản</h5>
+        <div class="table-responsive text-nowrap">
+          <p >Tên tài khoản: {{ auth()->user()->name }} </p>  
+          <p>Mail: {{ auth()->user()->email }} </p>  
         </div>
-       
-       
-@endsection
+    </div>
+</body>
+</html>
