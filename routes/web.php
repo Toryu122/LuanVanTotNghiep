@@ -24,7 +24,7 @@ Route::get('/dang-nhap', [AuthController::class, 'login'])->name('login');
 Route::get('/dang-ky', [AuthController::class, 'signup'])->name('signup');
 Route::post('/login', [AuthController::class, 'loginUser'])->name('loginUser');
 Route::post('/createUser', [AuthController::class, 'createUser'])->name('createUser');
-Route::get('/infor', [AuthController::class, 'inforUser'])->name('inforUser');
+Route::get('/infor/{id}', [AuthController::class, 'inforUser'])->name('inforUser');
 Route::get('/dang-xuat', [AuthController::class, 'logoutUser'])->name('logoutUser');
 
 /**
@@ -32,14 +32,20 @@ Route::get('/dang-xuat', [AuthController::class, 'logoutUser'])->name('logoutUse
  */
 Route::get('/auth/gg', [AuthController::class, 'loginGoogle'])->name('loginGoogle');
 Route::get('/auth/gg/callback', [AuthController::class, 'loginGoogleUser']);
+
+Route::get('/auth/fb', [AuthController::class, 'loginFacebook'])->name('loginFacebook');
+Route::get('/auth/fb/callback', [AuthController::class, 'loginFacebookUser']);
+
+
+/* 
 Route::get('/auth/fb', function () {
     return Socialite::driver('facebook')->redirect();
-});
+})
 Route::get('/auth/fb/callback', function () {
     $user = Socialite::driver('facebook')->user();
     dd($user);
 });
-
+ */
 
 Route::get('/', [GameController::class, 'index'])->name('index');
 Route::get('/policy', function () {

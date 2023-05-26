@@ -24,6 +24,13 @@ class AuthController extends Controller
     {
         return view('login');
     }
+    public function inforUser($id)
+    {
+        $user = DB::table('users')
+            ->where('id', '=', $id)
+            ->first();   
+        return view('inforUser',['user'=>$user,'title'=>'Thông tin tài khoản']);
+    }
 
     public function createUser(Request $request)
     {
@@ -126,6 +133,40 @@ class AuthController extends Controller
                         'password' => Hash::make(Str::random(8)),
                         'social' => User::SOCIALS[2],
                         'social_id' => $userGoogle->getId(),
+                    ]
+                );
+
+            Auth::loginUsingId($user);
+            return redirect(route('index'));
+        }
+
+        Auth::loginUsingId($userExist->id);
+
+        return redirect(route('index'));
+    }
+    
+    public function loginFacebook()
+    {
+        return Socialite::driver('facebook')->redirect();
+    }
+
+    public function loginFacebookUser()
+    {
+        $userFB = Socialite::driver('facebook')->user();
+
+        $userExist = DB::table('users')
+            ->where('social_id', '=', $userFB->getId())
+            ->first();
+
+        if (!$userExist) {
+            $user = DB::table('users')
+                ->insertGetId(
+                    [
+                        'name' => $userFB->getName(),
+                        'email' => $userFB->getEmail(),
+                        'password' => Hash::make(Str::random(8)),
+                        'social' => User::SOCIALS[2],
+                        'social_id' => $userFB->getId(),
                     ]
                 );
 

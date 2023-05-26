@@ -5,7 +5,7 @@
     <!-- Container wrapper -->
     <div class="container-fluid">
         <!-- Navbar brand -->
-        <a class="navbar-brand" href="#">Navbar</a>
+        <a class="navbar-brand" href="#">GAMESTORE</a>
 
         <!-- Toggle button -->
         <button class="navbar-toggler" type="button" data-mdb-toggle="collapse" data-mdb-target="#navbarSupportedContent"
@@ -60,7 +60,7 @@
                     <ul class="dropdown-menu dropdown-menu-dark" aria-labelledby="navbarDropdown">
                         @if (Auth::user())
                             <li>
-                                <a class="dropdown-item" href="{{ route('inforUser') }}">
+                                <a class="dropdown-item" href="{{ route('inforUser',auth()->user()->id) }}">
                                     Thông tin tài khoản
                                 </a>
                             </li>

@@ -65,7 +65,7 @@
                             </a>
                         </div>
                         <div class="col-md-6 text-center">
-                            <a href="">
+                            <a href="{{ route('loginFacebook') }}">
                                 <button type="button" class="btn pt-2 btn-facebook col-12">
                                     <i class="fa-brands fa-facebook fa-lg" style="color: #ffffff;"></i> Đăng Nhập Facebook
                                 </button>
