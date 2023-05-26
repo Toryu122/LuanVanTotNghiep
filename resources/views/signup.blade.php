@@ -19,8 +19,16 @@
                 <h1 class="text-center">
                     <stroke>Đăng Ký</stroke><br>
                 </h1>
+                <div class="text-center">
+                    @if (Session::has('user_already_exist'))
+                        <div class="invalid-feedback d-block" role="alert">
+                            <strong>{{ Session::get('user_already_exist') }}</strong>
+                        </div>
+                    @endif
+                </div>
                 <form action="{{ route('createUser') }}" method="POST">
                     @csrf
+                    
                     <div class="form-group">
                         <label>Email</label>
                         <input name="email" type="email" class="form-control" placeholder="Email">

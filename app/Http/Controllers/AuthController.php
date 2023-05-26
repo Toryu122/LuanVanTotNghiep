@@ -32,7 +32,7 @@ class AuthController extends Controller
     }
 
 
-    
+
     public function createUser(Request $request)
     {
         // dd($request->request);
@@ -67,6 +67,11 @@ class AuthController extends Controller
             ]
         );
 
+        $userExist = DB::table('users')
+            ->where('email', '=', $request->get('email'))
+            ->first();
+        if($userExist==NULL)
+        { 
         $user = User::create([
             'name' => $request->get('name'),
             'email' => $request->get('email'),
@@ -76,6 +81,9 @@ class AuthController extends Controller
         auth()->login($user);
 
         return redirect(route('index'));
+        }
+
+        return redirect(route('signup'))->with('user_already_exist', 'Email đã tồn tại!');;
     }
 
     public function loginUser(Request $request)
