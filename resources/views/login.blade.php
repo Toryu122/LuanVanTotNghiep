@@ -60,14 +60,14 @@
                         <div class="col-md-6 text-center">
                             <a href="{{ route('loginGoogle') }}">
                                 <button type="button" class="btn pt-2 btn-google col-12">
-                                    <i class="fa-brands fa-google fa-lg" style="color: #ffffff;"></i> Đăng Nhập Google
+                                    <i class="fa-brands fa-google fa-lg" style="color: #ffffff;"></i>
                                 </button>
                             </a>
                         </div>
                         <div class="col-md-6 text-center">
                             <a href="{{ route('loginFacebook') }}">
                                 <button type="button" class="btn pt-2 btn-facebook col-12">
-                                    <i class="fa-brands fa-facebook fa-lg" style="color: #ffffff;"></i> Đăng Nhập Facebook
+                                    <i class="fa-brands fa-facebook fa-lg" style="color: #ffffff;"></i>
                                 </button>
                             </a>
                         </div>

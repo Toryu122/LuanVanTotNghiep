@@ -37,16 +37,6 @@ Route::get('/auth/fb', [AuthController::class, 'loginFacebook'])->name('loginFac
 Route::get('/auth/fb/callback', [AuthController::class, 'loginFacebookUser']);
 
 
-/* 
-Route::get('/auth/fb', function () {
-    return Socialite::driver('facebook')->redirect();
-})
-Route::get('/auth/fb/callback', function () {
-    $user = Socialite::driver('facebook')->user();
-    dd($user);
-});
- */
-
 Route::get('/', [GameController::class, 'index'])->name('index');
 Route::get('/policy', function () {
     return view('policy');

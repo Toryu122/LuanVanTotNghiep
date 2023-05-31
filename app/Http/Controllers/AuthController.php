@@ -174,7 +174,7 @@ class AuthController extends Controller
                         'name' => $userFB->getName(),
                         'email' => $userFB->getEmail(),
                         'password' => Hash::make(Str::random(8)),
-                        'social' => User::SOCIALS[2],
+                        'social' => User::SOCIALS[1],
                         'social_id' => $userFB->getId(),
                     ]
                 );
