@@ -25,14 +25,6 @@ class AuthController extends Controller
         return view('login');
     }
 
-
-    public function inforUser()
-    {
-        return view('inforUser');
-    }
-
-
-
     public function createUser(Request $request)
     {
         // dd($request->request);

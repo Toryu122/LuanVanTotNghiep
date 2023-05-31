@@ -61,7 +61,7 @@
                         @if (Auth::user())
                             <li>
                                 <a class="dropdown-item" href="{{ route('inforUser') }}">
-                                    Thông tin tài khoản
+                                    Cài đặt tài khoản
                                 </a>
                             </li>
                             <li>

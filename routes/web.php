@@ -4,6 +4,7 @@ use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\AuthController;
 use App\Http\Controllers\GameController;
+use App\Http\Controllers\UserController;
 use Laravel\Socialite\Facades\Socialite;
 
 /*
@@ -24,7 +25,6 @@ Route::get('/dang-nhap', [AuthController::class, 'login'])->name('login');
 Route::get('/dang-ky', [AuthController::class, 'signup'])->name('signup');
 Route::post('/login', [AuthController::class, 'loginUser'])->name('loginUser');
 Route::post('/createUser', [AuthController::class, 'createUser'])->name('createUser');
-Route::get('/infor', [AuthController::class, 'inforUser'])->name('inforUser');
 Route::get('/dang-xuat', [AuthController::class, 'logoutUser'])->name('logoutUser');
 
 /**
@@ -45,4 +45,7 @@ Route::get('/tos', function () {
     return view('tos');
 })->name('tos');
 
-
+/**
+ * User
+ */
+ Route::get('/infor', [UserController::class, 'inforUser'])->name('inforUser');

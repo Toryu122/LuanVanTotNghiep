@@ -19,6 +19,12 @@ class User extends Authenticatable
         'Google'
     ];
 
+    const GENDERS = [
+        'Male',
+        'Female',
+        'Other'
+    ];
+
     /**
      * The attributes that are mass assignable.
      *

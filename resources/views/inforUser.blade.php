@@ -1,6 +1,6 @@
-
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -8,14 +8,52 @@
 
     @include('cdn')
 </head>
+
 <body>
-    <x-header title="Thông Tin Tài Khoản"/>
-    <div class="card container col-4">
-        <h5 class="card-header">Thông tin tài khoản</h5>
-        <div class="table-responsive text-nowrap">
-          <p >Tên tài khoản: {{ auth()->user()->name }} </p>  
-          <p>Mail: {{ auth()->user()->email }} </p>  
+    <x-header title="Cài Đặt Tài Khoản" />
+
+    <div class="container p-0">
+        <h1 class="h3 mb-3">&nbsp;</h1>
+
+        <div class="row">
+            {{-- Tab Menu --}}
+            <div class="col-md-5 col-xl-4">
+                <div class="card">
+                    <div class="card-header">
+                        <h5 class="card-title mb-0">Cài đặt tài khoản</h5>
+                    </div>
+
+                    <div class="list-group list-group-flush" role="tablist">
+                        <a class="list-group-item list-group-item-action active" data-bs-toggle="list" href="#account"
+                            role="tab">
+                            Thông tin tài khoản
+                        </a>
+                        <a class="list-group-item list-group-item-action" data-bs-toggle="list" href="#password"
+                            role="tab">
+                            Đổi mật khẩu
+                        </a>
+                    </div>
+                </div>
+            </div>
+            {{-- Tab Menu --}}
+
+            {{-- Content --}}
+            <div class="col-md-7 col-xl-8">
+                <div class="tab-content">
+
+                    <x-user.basic-info user="yeh" />
+
+                    <x-user.change-password />
+
+                </div>
+            </div>
+            {{-- Content --}}
         </div>
     </div>
 </body>
+
+<footer>
+    <x-footer />
+</footer>
+
 </html>
