@@ -42,7 +42,7 @@
                         <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button"
                             data-mdb-toggle="dropdown" aria-expanded="false">
                             <div>
-                                <i class="fa-solid fa-user"></i>
+                                <img class="rounded-circle img-responsive mt-2" height="24px" width="24px" src="../images/avatars/{{ auth()->user()->avatar }}"/>                        
                             </div>
                             {{ auth()->user()->name }}
                         </a>

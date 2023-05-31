@@ -8,7 +8,7 @@
                     <label for="inputPasswordCurrent">Mật khẩu hiện tại</label>
                     <input type="password" class="form-control" id="inputPasswordCurrent"
                         placeholder="Nhập mật khẩu hiện tại" />
-                    <small><a href="#">Quên mật khẩu?</a></small>
+                    
                 </div>
                 <div class="form-group pt-2">
                     <label for="inputPasswordNew">Mật khẩu mới</label>
@@ -20,7 +20,7 @@
                         placeholder="Nhập mật khẩu mới" />
                 </div>
                 <button type="submit" class="btn btn-primary">
-                    Save changes
+                    Lưu thay đổi
                 </button>
             </form>
         </div>

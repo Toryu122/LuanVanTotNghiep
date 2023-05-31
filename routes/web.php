@@ -38,6 +38,8 @@ Route::get('/auth/fb/callback', [AuthController::class, 'loginFacebookUser']);
 
 
 Route::get('/', [GameController::class, 'index'])->name('index');
+Route::get('/game-detail/{id}', [GameController::class, 'detail_game'])->name('detailgame');
+
 Route::get('/policy', function () {
     return view('policy');
 })->name('policy');
@@ -48,4 +50,5 @@ Route::get('/tos', function () {
 /**
  * User
  */
- Route::get('/infor', [UserController::class, 'inforUser'])->name('inforUser');
+Route::get('user/infor', [UserController::class, 'inforUser'])->name('inforUser');
+Route::post('user/edit', [UserController::class, 'editUser'])->name('editUser');

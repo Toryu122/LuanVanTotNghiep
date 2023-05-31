@@ -25,4 +25,18 @@ class GameController extends Controller
             'games' => $games
         ]);
     }
+
+    public function detail_game($id)
+    {
+        $game = DB::table('games')
+            ->where('id', '=', $id)
+            ->first();
+        $related = DB::table('games')
+            ->whereNotIn('id',[$id])
+            ->where('publisher_id','=',$game->publisher_id)
+            ->get();
+        return view('detail', [
+            'game' => $game, 'related'=>$related
+        ]);
+    }
 }

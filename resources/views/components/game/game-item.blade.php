@@ -17,10 +17,9 @@
         </div>
     </div>
 </div> --}}
-
-<div class="col-3 py-3 mb-3 game" id="game_table">
+<div class="col-3 py-3 mb-3 game" id="game_table" >  
     <div class="card h-100 border-0">
-        <a  
+        <a  href="{{ route('detailgame',['id'=>$game->id]) }}"
             data-bs-toggle="tooltip" 
             data-bs-placement="top" 
             title="{{ $game->name }}"
@@ -30,7 +29,7 @@
         <div class="card-body">
             <div class="text-center">
                 <a class="text-decoration-none text-dark" data-bs-toggle="tooltip" data-bs-placement="top"
-                    title="{{ $game->name }}">
+                    title="{{ $game->name }}" href="{{ route('detailgame',$game->id) }}" >
                     <p class="">{{ $game->name }}</p>
                 </a>
             </div>
