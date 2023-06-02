@@ -52,3 +52,4 @@ Route::get('/tos', function () {
  */
 Route::get('user/infor', [UserController::class, 'inforUser'])->name('inforUser');
 Route::post('user/edit', [UserController::class, 'editUser'])->name('editUser');
+Route::put('user/changepassword', [UserController::class, 'changePassword'])->name('changePassword');

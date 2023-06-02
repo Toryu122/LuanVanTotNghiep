@@ -6,15 +6,14 @@ use Illuminate\View\Component;
 
 class BasicInfo extends Component
 {
-    public $user;
     /**
      * Create a new component instance.
      *
      * @return void
      */
-    public function __construct($user)
+    public function __construct()
     {
-        $this->user = $user;
+        
     }
 
     /**

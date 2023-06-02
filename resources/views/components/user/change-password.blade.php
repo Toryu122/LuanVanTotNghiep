@@ -1,27 +1,52 @@
 <div class="tab-pane fade" id="password" role="tabpanel">
-    <div class="card">
+    <div class="card info">
         <div class="card-body">
             <h5 class="card-title">Đổi mật khẩu</h5>
-
-            <form>
+            <form method="post" action="{{ route('changePassword') }}">
+                @csrf
+                {{-- Required for the PUT method --}}
+                @method('put')
                 <div class="form-group">
-                    <label for="inputPasswordCurrent">Mật khẩu hiện tại</label>
+                    <label for="old_password">Mật khẩu hiện tại</label>
                     <input type="password" class="form-control" id="inputPasswordCurrent"
-                        placeholder="Nhập mật khẩu hiện tại" />
-                    
+                        placeholder="Nhập mật khẩu hiện tại" name="old_password" />
+                    @if (Session::has('old_password_mismatch'))
+                        <div class="invalid-feedback d-block" role="alert">
+                            <strong>{{ Session::get('old_password_mismatch') }}</strong>
+                        </div>
+                    @endif
+                    @error('old_password')
+                        <div class="invalid-feedback d-block" role="alert">
+                            <strong>{{ $message }}</strong>
+                        </div>
+                    @enderror
                 </div>
                 <div class="form-group pt-2">
-                    <label for="inputPasswordNew">Mật khẩu mới</label>
-                    <input type="password" class="form-control" id="inputPasswordNew" placeholder="Nhập mật khẩu mới" />
+                    <label for="new_password">Mật khẩu mới</label>
+                    <input type="password" class="form-control" id="inputPasswordNew" placeholder="Nhập mật khẩu mới"
+                        name="new_password" />
+                    @error('new_password')
+                        <div class="invalid-feedback d-block" role="alert">
+                            <strong>{{ $message }}</strong>
+                        </div>
+                    @enderror
                 </div>
                 <div class="form-group pt-2">
-                    <label for="inputPasswordNew2">Nhập lại mật khẩu mới</label>
-                    <input type="password" class="form-control" id="inputPasswordNew2"
-                        placeholder="Nhập mật khẩu mới" />
+                    <label for="password_confirmation">Nhập lại mật khẩu mới</label>
+                    <input type="password" class="form-control" id="inputPasswordNew2" placeholder="Nhập mật khẩu mới"
+                        name="new_password_confirmation" />
+                    {{-- Convention, <name>_confirmation --}}
+                    @error('new_password_confirmation')
+                        <div class="invalid-feedback d-block" role="alert">
+                            <strong>{{ $message }}</strong>
+                        </div>
+                    @enderror
                 </div>
-                <button type="submit" class="btn btn-primary">
-                    Lưu thay đổi
-                </button>
+                <div class="form-group pt-3">
+                    <button type="submit" class="btn btn-primary">
+                        Lưu thay đổi
+                    </button>
+                </div>
             </form>
         </div>
     </div>

@@ -18,7 +18,7 @@
         <div class="row">
             {{-- Tab Menu --}}
             <div class="col-md-5 col-xl-4">
-                <div class="card">
+                <div class="card info">
                     <div class="card-header">
                         <h5 class="card-title mb-0">Cài đặt tài khoản</h5>
                     </div>
@@ -41,7 +41,7 @@
             <div class="col-md-7 col-xl-8">
                 <div class="tab-content">
 
-                    <x-user.basic-info user="yeh" />
+                    <x-user.basic-info />
 
                     <x-user.change-password />
 

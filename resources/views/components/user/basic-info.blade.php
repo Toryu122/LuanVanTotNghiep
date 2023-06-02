@@ -1,6 +1,6 @@
 
 <div class="tab-pane fade show active" id="account" role="tabpanel">
-    <div class="card">
+    <div class="card info">
         <div class="card-header">
             <div class="card-actions float-right">
             </div>
@@ -53,7 +53,7 @@
         </div>
     </div>
 
-    <div class="card">
+    <div class="card info">
         <div class="card-header">
             <div class="card-actions float-right">
             </div>

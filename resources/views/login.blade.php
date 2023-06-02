@@ -32,6 +32,13 @@
                         </div>
                     @endif
                 </div>
+                <div class="text-center">
+                    @if (Session::has('password_changed'))
+                        <div class="text-success" role="alert">
+                            <strong>{{ Session::get('password_changed') }}</strong>
+                        </div>
+                    @endif
+                </div>
                 <form action="{{ route('loginUser') }}" method="POST">
                     @csrf
                     <div class="form-group pt-3">

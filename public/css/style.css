@@ -245,12 +245,12 @@ swiper-slide img {
   }
 }
 
-.card {
+.info {
   margin-bottom: 1.5rem;
   box-shadow: 0 1px 15px 1px rgba(52, 40, 104, .08);
 }
 
-.card {
+.info {
   position: relative;
   display: -ms-flexbox;
   display: flex;
