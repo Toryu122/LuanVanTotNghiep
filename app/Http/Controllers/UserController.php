@@ -102,6 +102,7 @@ class UserController extends Controller
         $user = Auth::user();
         $currentPassword = $request->get('old_password');
         if (!Hash::check($currentPassword, $user->password)) {
+            notify()->error('Mật khẩu không đúng!');
             return redirect(route('inforUser'))->with('old_password_mismatch', 'Mật khẩu không đúng!');
         }
 

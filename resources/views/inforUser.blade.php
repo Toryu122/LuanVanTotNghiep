@@ -6,12 +6,13 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
 
+    @notifyCss
     @include('cdn')
 </head>
 
 <body>
     <x-header title="Cài Đặt Tài Khoản" />
-
+    @include('notify::components.notify')
     <div class="container p-0">
         <h1 class="h3 mb-3">&nbsp;</h1>
 
@@ -50,6 +51,7 @@
             {{-- Content --}}
         </div>
     </div>
+    @notifyJs
 </body>
 
 <footer>
