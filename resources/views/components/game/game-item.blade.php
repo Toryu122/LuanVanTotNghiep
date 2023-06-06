@@ -48,7 +48,9 @@
                     </form>
                 </div>
                 <div class="pt-2">
-                    <form method="get">
+                    <form action="{{ route('addToCart') }}" method="post">
+                        @csrf
+                        <input type="text" name="id" value="{{ $game->id }}" hidden>
                         <button class="btn btn-primary col-12">
                             <i class="fa-solid fa-cart-shopping fa-lg"></i> Thêm vào giỏ
                         </button>

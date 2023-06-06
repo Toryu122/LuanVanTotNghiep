@@ -42,7 +42,8 @@
                         <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button"
                             data-mdb-toggle="dropdown" aria-expanded="false">
                             <div>
-                                <img class="rounded-circle img-responsive mt-2" height="24px" width="24px" src="../images/avatars/{{ auth()->user()->avatar }}"/>                        
+                                <img class="rounded-circle img-responsive mt-2" height="24px" width="24px"
+                                    src="../images/avatars/{{ auth()->user()->avatar }}" />
                             </div>
                             {{ auth()->user()->name }}
                         </a>
@@ -84,10 +85,25 @@
                     </ul>
                 </li>
                 <li class="nav-item text-center mx-2 mx-lg-1">
-                    <a class="nav-link" aria-current="page" href="#">
+                    <a class="nav-link" aria-current="page" href="{{ route('cart') }}">
                         <div>
                             <i class="fa-solid fa-cart-shopping"></i>
-                            <span class="badge rounded-pill badge-notification bg-info">0</span>
+                            <span class="badge rounded-pill badge-notification bg-info">
+                                {{-- If the session has cart in it get total quantity--}}
+                                @if (Session::has('cart'))
+                                    @php
+                                        $quantity = 0;
+                                    @endphp
+                                    @foreach ((array) session('cart') as $id => $details)
+                                        @php
+                                            $quantity += $details['quantity'];
+                                        @endphp
+                                    @endforeach
+                                    {{ $quantity }}
+                                @else
+                                    0
+                                @endif
+                            </span>
                         </div>
                         Giỏ Hàng
                     </a>

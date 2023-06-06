@@ -4,6 +4,7 @@ use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\AuthController;
 use App\Http\Controllers\GameController;
+use App\Http\Controllers\OrderController;
 use App\Http\Controllers\UserController;
 use Laravel\Socialite\Facades\Socialite;
 
@@ -32,14 +33,14 @@ Route::get('/dang-xuat', [AuthController::class, 'logoutUser'])->name('logoutUse
  */
 Route::get('/auth/gg', [AuthController::class, 'loginGoogle'])->name('loginGoogle');
 Route::get('/auth/gg/callback', [AuthController::class, 'loginGoogleUser']);
-
 Route::get('/auth/fb', [AuthController::class, 'loginFacebook'])->name('loginFacebook');
 Route::get('/auth/fb/callback', [AuthController::class, 'loginFacebookUser']);
 
-
+/**
+ * 
+ */
 Route::get('/', [GameController::class, 'index'])->name('index');
 Route::get('/game-detail/{id}', [GameController::class, 'detail_game'])->name('detailgame');
-
 Route::get('/policy', function () {
     return view('policy');
 })->name('policy');
@@ -53,3 +54,9 @@ Route::get('/tos', function () {
 Route::get('user/infor', [UserController::class, 'inforUser'])->name('inforUser');
 Route::post('user/edit', [UserController::class, 'editUser'])->name('editUser');
 Route::put('user/changepassword', [UserController::class, 'changePassword'])->name('changePassword');
+
+/**
+ * Order
+ */
+Route::get('cart', [OrderController::class, 'index'])->name('cart');
+Route::post('cart/add', [OrderController::class, 'addToCart'])->name('addToCart');
