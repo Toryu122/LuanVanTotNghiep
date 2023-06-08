@@ -59,4 +59,8 @@ Route::put('user/changepassword', [UserController::class, 'changePassword'])->na
  * Order
  */
 Route::get('cart', [OrderController::class, 'index'])->name('cart');
+Route::delete('cart/remove', [OrderController::class, 'removeItemFromCart'])->name('removeItem');
+Route::put('cart/update', [OrderController::class, 'updateCart'])->name('updateCart');
 Route::post('cart/add', [OrderController::class, 'addToCart'])->name('addToCart');
+Route::post('checkout/payMomo', [OrderController::class, 'payMomo'])->name('checkoutMomo');
+Route::post('checkout/payVnpay', [OrderController::class, 'payVnpay'])->name('checkoutVnpay');
