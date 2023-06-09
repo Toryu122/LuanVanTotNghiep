@@ -2,10 +2,15 @@
 
 namespace App\Http\Controllers;
 
+use App\Common\GlobalVariable;
 use App\Models\Game;
+use App\Models\Order;
 use App\Common\Helper;
 use Illuminate\Support\Str;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\DB;
+use Illuminate\Support\Facades\Crypt;
 
 class OrderController extends Controller
 {
@@ -72,6 +77,53 @@ class OrderController extends Controller
         return redirect()->back()->with('unknow_error', "Something went wrong");
     }
 
+    public function vnpayCheckoutSuccess(Request $request)
+    {
+        $user = Auth::user();
+
+        // Get order info from the redirect URL after a successful pay
+        $orderInfo = json_decode($request->vnp_OrderInfo, true);
+        $orderTotal = ($request->vnp_Amount) / 100;
+        $orderIdRef = $request->vnp_TxnRef;
+        $payType = Order::PAY_TYPE[0];
+
+        // Insert then get the newly added order id
+        // The order stay at Pending status until user got email
+        $orderId = DB::table(Order::retrieveTableName())
+            ->insertGetId(
+                [
+                    'user_id' => $user->id,
+                    'email' => $user->email,
+                    'total' => $orderTotal,
+                    'pay_type' => $payType,
+                    'order_id_ref' => $orderIdRef,
+                ]
+            );
+
+        // Map every value and insert to the order detail
+        collect($orderInfo)->map(function ($value) use ($orderId) {
+            DB::table('order_details')
+                ->insert(
+                    [
+                        'order_id' => $orderId,
+                        'game_id' => $value['id'],
+                        'name' => $value['name'],
+                        'price' => $value['price'],
+                        'quantity' => $value['quantity']
+                    ]
+                );
+        });
+
+        // Clear the cart
+        session()->put('cart', null);
+        return redirect()->route('cart')->with('order_success', "Thanh toán thành công! Cảm ơn bạn đã sử dụng dịch vụ của chúng tôi");
+    }
+
+    public function momoCheckoutSuccess(Request $request)
+    {
+        dd($request);
+    }
+
     public function payMomo(Request $request)
     {
         $endpoint = "https://test-payment.momo.vn/v2/gateway/api/create";
@@ -83,7 +135,7 @@ class OrderController extends Controller
         $orderInfo = "Thanh toán qua MoMo";
         $amount = $request->get('total');
         $orderId = time() . "";
-        $redirectUrl = "http://localhost:8000/cart";
+        $redirectUrl = "http://localhost:8000/checkout/successMomo";
         $ipnUrl = "http://localhost:8000/cart";
         $extraData = "";
 
@@ -128,13 +180,16 @@ class OrderController extends Controller
 
     public function payVnpay(Request $request)
     {
-        $vnp_Url = "https://sandbox.vnpayment.vn/paymentv2/vpcpay.html";
-        $vnp_Returnurl = "http://localhost:8000/cart";
-        $vnp_TmnCode = "NGPV5U4Q"; //Mã website tại VNPAY 
-        $vnp_HashSecret = "FYXGGFJSWBPVXDVENZXFQUSCJKXYYANK"; //Chuỗi bí mật
+        // dd(session()->get('cart'));
+        $vnp_Url = env('VNPAY_URL');
+        $vnp_Returnurl = "http://localhost:8000/checkout/successVnpay";
+        $vnp_TmnCode = env('VNPAY_TERMINAL_CODE'); //Mã website tại VNPAY 
+        $vnp_HashSecret = env('VNPAY_SECRET_CODE'); //Chuỗi bí mật
 
-        $vnp_TxnRef = Str::random(8); //Mã đơn hàng. Trong thực tế Merchant cần insert đơn hàng vào DB và gửi mã này sang VNPAY
-        $vnp_OrderInfo = 'Thanh toán VNPAY';
+        $vnp_TxnRef = Str::upper(Str::random(8)); //Mã đơn hàng. Trong thực tế Merchant cần insert đơn hàng vào DB và gửi mã này sang VNPAY
+        $vnp_OrderInfo = json_encode(
+            session()->get('cart')
+        );
         $vnp_OrderType = 'billpayment';
         $vnp_Amount = $request->get('total') * 100;
         $vnp_Locale = 'vn';

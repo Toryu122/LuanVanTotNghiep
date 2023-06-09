@@ -40,7 +40,7 @@ class CreateBase extends Migration
             $table->string('image');
             $table->unsignedInteger('publisher_id')->nullable(false);
             $table->foreign('publisher_id')->references('id')->on(Publisher::retrieveTableName());
-            
+
             $table->timestamp('created_at')->useCurrent();
             $table->timestamp('updated_at')->useCurrent();
         });
@@ -48,7 +48,7 @@ class CreateBase extends Migration
         Schema::create(Genre::retrieveTableName(), function (Blueprint $table) {
             $table->id();
             $table->string('name');
-            
+
             $table->timestamp('created_at')->useCurrent();
             $table->timestamp('updated_at')->useCurrent();
         });
@@ -56,7 +56,7 @@ class CreateBase extends Migration
         Schema::create(Publisher::retrieveTableName(), function (Blueprint $table) {
             $table->id();
             $table->string('name');
-            
+
             $table->timestamp('created_at')->useCurrent();
             $table->timestamp('updated_at')->useCurrent();
         });
@@ -75,7 +75,10 @@ class CreateBase extends Migration
             $table->foreign('user_id')->references('id')->on('users');
             $table->string('email');
             $table->double('total')->nullable(false);
-            
+            $table->enum('order_status', Order::ORDER_STATUS)->default(Order::ORDER_STATUS[0]);
+            $table->enum('pay_type', Order::PAY_TYPE);
+            $table->string('order_id_ref')->nullable(false);
+
             $table->timestamp('created_at')->useCurrent();
             $table->timestamp('updated_at')->useCurrent();
         });
@@ -84,10 +87,12 @@ class CreateBase extends Migration
             $table->id();
             $table->unsignedInteger('order_id')->nullable(false);
             $table->unsignedInteger('game_id')->nullable(false);
+            $table->string('name')->nullable(false);
             $table->foreign('order_id')->references('id')->on(Order::retrieveTableName());
             $table->foreign('game_id')->references('id')->on(Game::retrieveTableName());
             $table->double('price')->nullable(false);
-            
+            $table->unsignedInteger('quantity')->nullable(false);
+
             $table->timestamp('created_at')->useCurrent();
             $table->timestamp('updated_at')->useCurrent();
         });
