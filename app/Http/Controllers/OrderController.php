@@ -41,7 +41,8 @@ class OrderController extends Controller
         }
 
         session()->put('cart', $cart);
-        return redirect()->route('cart')->with('add_to_cart_success', "Thêm vào giỏ hàng thành công");
+        toastr()->success('', 'Thêm vào giỏ hàng thành công');
+        return redirect()->back();
     }
 
     public function updateCart(Request $request)
@@ -50,11 +51,14 @@ class OrderController extends Controller
             if ($request->id && $request->quantity) {
                 $cart = session()->get('cart');
                 $cart[$request->id]["quantity"] = $request->quantity;
+
+                toastr()->info('', 'Cập nhật thành công');
                 session()->put('cart', $cart);
-                return redirect()->back()->with('cart_updated', "Cập nhật thành công");
+                return redirect()->back();
             }
         } catch (\Exception $ex) {
-            return redirect()->back()->with('unknow_error', "Something went wrong");
+            toastr()->error('', 'Something went wrong');
+            return redirect()->back();
         }
     }
 
@@ -67,11 +71,14 @@ class OrderController extends Controller
                 unset($cart[$request->id]);
                 session()->put('cart', $cart);
             }
-            return redirect()->back()->with('remove_item_success', "Xóa sản phẩm thành công");
+            toastr()->info('', 'Xóa sản phẩm thành công');
+            return redirect()->back();
         }
         // If the request has 'clear_all', remove the entire cart
         if ($request->has('clear_all')) {
             session()->put('cart', null);
+
+            toastr()->info('', 'Xóa giỏ hàng thành công');
             return redirect()->back()->with('clear_cart_success', "Xóa giỏ hàng thành công");
         }
         return redirect()->back()->with('unknow_error', "Something went wrong");
