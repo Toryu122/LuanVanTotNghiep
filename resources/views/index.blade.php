@@ -10,7 +10,7 @@
 
 </head>
 
-<body>
+<body class="d-flex flex-column min-vh-100">
     <div>
         <x-header title="Trang Chủ" />
     </div>
@@ -26,7 +26,7 @@
 
     <div class="container">
         <p class="h3">Sản phẩm nổi bật</p>
-        <div class="row gx-4 gx-lg-5 row-cols-2 row-cols-md-3 row-cols-xl-4 justify-content-center">        
+        <div class="row gx-4 gx-lg-5 row-cols-2 row-cols-md-3 row-cols-xl-4 justify-content-center">
             @foreach ($games as $item)
                 <x-game.game-item :game="$item" />
             @endforeach
@@ -40,11 +40,10 @@
     </div>
 
 
-    <script src="{{ asset('js/script.js') }}">
-
-    </script>
+    <script src="{{ asset('js/script.js') }}"></script>
 </body>
-<footer>
+<footer class="mt-auto">
     <x-footer />
 </footer>
+
 </html>

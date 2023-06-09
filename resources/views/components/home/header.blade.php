@@ -1,7 +1,7 @@
 <title>{{ $title }}</title>
 
 <!-- Navbar -->
-<nav class="navbar navbar-expand-lg navbar-dark bg-dark">
+<nav class="navbar navbar-expand-lg navbar-dark bg-dark fixed-top">
     <!-- Container wrapper -->
     <div class="container-fluid">
         <!-- Navbar brand -->
@@ -42,8 +42,7 @@
                         <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button"
                             data-mdb-toggle="dropdown" aria-expanded="false">
                             <div>
-                                <img class="rounded-circle img-responsive mt-2" height="24px" width="24px"
-                                    src="../images/avatars/{{ auth()->user()->avatar }}" />
+                                <i class="fa-solid fa-user"></i>
                             </div>
                             {{ auth()->user()->name }}
                         </a>

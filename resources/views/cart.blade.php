@@ -9,7 +9,7 @@
     @include('cdn')
 </head>
 
-<body>
+<body class="d-flex flex-column min-vh-100">
     <x-header title="Giỏ Hàng" />
     <div class="container-fluid pt-3">
         <div class="container shadow">
@@ -176,7 +176,7 @@
     </script>
 </body>
 
-<footer>
+<footer class="mt-auto">
     <x-footer />
 </footer>
 

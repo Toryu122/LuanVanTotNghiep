@@ -9,7 +9,7 @@
     @include('cdn')
 </head>
 
-<body>
+<body class="d-flex flex-column min-vh-100">
     <x-header title="Cài Đặt Tài Khoản" />
     <div class="container p-0">
         <h1 class="h3 mb-3">&nbsp;</h1>
@@ -51,7 +51,7 @@
     </div>
 </body>
 
-<footer>
+<footer class="mt-auto">
     <x-footer />
 </footer>
 
