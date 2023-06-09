@@ -11,6 +11,17 @@ class Order extends BaseModel
 {
     use HasFactory;
 
+    const ORDER_STATUS = [
+        'Pending',
+        'Done',
+        'Canceled'
+    ];
+
+    const PAY_TYPE = [
+        'VNPAY',
+        'MoMo'
+    ];
+
     /**
      * @return BelongsTo
      */

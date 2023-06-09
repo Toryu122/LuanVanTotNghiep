@@ -64,3 +64,5 @@ Route::put('cart/update', [OrderController::class, 'updateCart'])->name('updateC
 Route::post('cart/add', [OrderController::class, 'addToCart'])->name('addToCart');
 Route::post('checkout/payMomo', [OrderController::class, 'payMomo'])->name('checkoutMomo');
 Route::post('checkout/payVnpay', [OrderController::class, 'payVnpay'])->name('checkoutVnpay');
+Route::get('checkout/successVnpay', [OrderController::class, 'vnpayCheckoutSuccess'])->name('vnpayCheckoutSuccess');
+Route::get('checkout/successMomo', [OrderController::class, 'momoCheckoutSuccess'])->name('momoCheckoutSuccess');

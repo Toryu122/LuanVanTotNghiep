@@ -16,7 +16,24 @@
             <section class="h-100">
                 <div class="container py-5">
                     <div class="row d-flex justify-content-center my-4">
-
+                        <div class="text-center">
+                            @if (Session::has('cart_updated'))
+                                <div class="alert alert-success alert-dismissible fade show" role="alert">
+                                    <strong>{{ Session::get('cart_updated') }}</strong>
+                                    <button type="button" class="btn-close" data-bs-dismiss="alert"
+                                        aria-label="Close"></button>
+                                </div>
+                            @endif
+                        </div>
+                        <div class="text-center">
+                            @if (Session::has('order_success'))
+                                <div class="alert alert-success alert-dismissible fade show" role="alert">
+                                    <strong>{{ Session::get('order_success') }}</strong>
+                                    <button type="button" class="btn-close" data-bs-dismiss="alert"
+                                        aria-label="Close"></button>
+                                </div>
+                            @endif
+                        </div>
                         {{-- Item List --}}
                         <div class="col-md-8">
                             <div class="card mb-4">
@@ -102,16 +119,16 @@
 
                                     {{-- The session has the cart, and it's not empty --}}
                                     @if (Session::has('cart') && !empty(session('cart')))
-                                        <form action="{{ route('checkoutMomo') }}" method="POST">
-                                            @csrf
-                                            <div class="d-flex justify-content-center pt-2">
-                                                <input type="text" name="total" hidden value="{{ $total }}">
-                                                <button type="submit" class="btn btn-momo">
-                                                    <img src="images/common/momo-white-logo.png" width="20"
-                                                        height="20" alt=""> &nbsp; Thanh toán bằng MoMo
-                                                </button>
-                                            </div>
-                                        </form>
+                                        {{-- <form action="{{ route('checkoutMomo') }}" method="POST"> --}}
+                                        @csrf
+                                        <div class="d-flex justify-content-center pt-2">
+                                            <input type="text" name="total" hidden value="{{ $total }}">
+                                            <button type="submit" class="btn btn-momo">
+                                                <img src="images/common/momo-white-logo.png" width="20"
+                                                    height="20" alt=""> &nbsp; Thanh toán bằng MoMo
+                                            </button>
+                                        </div>
+                                        {{-- </form> --}}
                                         <form action="{{ route('checkoutVnpay') }}" method="POST">
                                             @csrf
                                             <div class="d-flex justify-content-center pt-2">
