@@ -2,7 +2,9 @@
 
 namespace App\Http\Controllers;
 
+use App\Common\Helper;
 use App\Models\User;
+use App\Common\Constant;
 use Illuminate\Support\Str;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
@@ -25,9 +27,61 @@ class AuthController extends Controller
         return view('login');
     }
 
+    public function sendSignupMail($email, $otp)
+    {
+        $htmlFilePath = base_path() . '\resources/html/mailVerify.html';
+        $htmlContent = file_get_contents($htmlFilePath);
+
+        $link = env('APP_URL') . '/auth/verify?email=' . $email . "&otp=$otp";
+
+        $htmlContent = str_replace('{{linkVerify}}', $link, $htmlContent);
+        Helper::sendMail($email, 'Verify Account', $htmlContent);
+    }
+
+    public function verifyAccount(Request $request)
+    {
+        try {
+            $validate = Validator::make(
+                $request->all(),
+                [
+                    'email' => [
+                        'required',
+                        'email'
+                    ],
+                    'otp' => [
+                        'required'
+                    ]
+                ]
+            );
+
+            if ($validate->fails()) {
+                toastr()->error('', $validate->errors());
+                return redirect()->route('index');
+            }
+
+            $user = User::where('email', '=', $request->get('email'))->first();
+            if ($user->verified === 1) {
+                toastr()->error('', 'Tài khoản của bạn đã được xác thực từ trước!');
+                return redirect()->route('index');
+            } else {
+                User::where('email', '=', $user->email)
+                    ->update(
+                        [
+                            'verified' => 1
+                        ]
+                    );
+                toastr()->success('', 'Xác thực thành công');
+                return redirect()->route('index');
+            }
+        } catch (\Exception $ex) {
+            Helper::getResponse('', $ex->getMessage());
+            toastr()->error("Nếu bạn thấy thông báo này hãy báo lỗi", "Something went wrong");
+            return redirect()->route('index');
+        }
+    }
+
     public function createUser(Request $request)
     {
-        // dd($request->request);
         $request->validate(
             [
                 'email' => [
@@ -49,8 +103,8 @@ class AuthController extends Controller
                 'email.required' => "Thiếu email!",
                 'email.email' => "Email không hợp lệ!",
 
-                'name.required' => "Thiếu tên đăng nhập!",
-                'name.string' => "Tên đăng nhập cần phải là 1 chuỗi",
+                'name.required' => "Thiếu họ và tên!",
+                'name.string' => "Tên đăng nhập cần phải là 1 chuỗi ký tự chữ",
                 'name.max' => "Tên đăng nhập tối đa 255 ký tự",
 
                 'password.required' => "Thiếu mật khẩu!",
@@ -62,17 +116,24 @@ class AuthController extends Controller
         $userExist = DB::table('users')
             ->where('email', '=', $request->get('email'))
             ->first();
-        if($userExist==NULL)
-        { 
-        $user = User::create([
-            'name' => $request->get('name'),
-            'email' => $request->get('email'),
-            'password' => Hash::make($request->get('password'))
-        ]);
 
-        auth()->login($user);
+        if ($userExist == null) {
+            try {
+                $otp = Str::random(Constant::OTP_LENGTH);
+                User::create([
+                    'name' => $request->get('name'),
+                    'email' => $request->get('email'),
+                    'otp' => $otp,
+                    'password' => Hash::make($request->get('password'))
+                ]);
 
-        return redirect(route('index'));
+                $this->sendSignupMail($request->get('email'), $otp);
+            } catch (\Exception $ex) {
+                Helper::changeKey();
+                $this->createUser($request);
+            }
+
+            return redirect()->back()->with('signup_success', 'Đăng ký thành công');;;
         }
 
         return redirect(route('signup'))->with('user_already_exist', 'Email đã tồn tại!');;
@@ -145,7 +206,7 @@ class AuthController extends Controller
 
         return redirect(route('index'));
     }
-    
+
     public function loginFacebook()
     {
         return Socialite::driver('facebook')->redirect();
