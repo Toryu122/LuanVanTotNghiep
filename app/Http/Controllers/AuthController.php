@@ -73,6 +73,7 @@ class AuthController extends Controller
                     'name' => $request->get('name'),
                     'email' => $request->get('email'),
                     'otp' => $otp,
+                    'last_sent' => (new DateTime)->format('Y-m-d H:i:s'),
                     'password' => Hash::make($request->get('password'))
                 ]);
 
@@ -144,6 +145,7 @@ class AuthController extends Controller
                         'password' => Hash::make(Str::random(8)),
                         'social' => User::SOCIALS[2],
                         'social_id' => $userGoogle->getId(),
+                        'verified' => 1
                     ]
                 );
 
@@ -178,6 +180,7 @@ class AuthController extends Controller
                         'password' => Hash::make(Str::random(8)),
                         'social' => User::SOCIALS[1],
                         'social_id' => $userFB->getId(),
+                        'verified' => 1
                     ]
                 );
 
@@ -220,26 +223,33 @@ class AuthController extends Controller
 
         $email = $request->get('email');
         $otp = Str::random(Constant::OTP_LENGTH);
+        $user = User::where('email', '=', $email)->first();
 
-        User::where('email', '=', $email)
-            ->update(
-                [
-                    'otp' => $otp
-                ]
-            );
-        $htmlFilePath = base_path() . '\resources/html/resetPassword.html';
-        $htmlContent = file_get_contents($htmlFilePath);
-
-        $link = env('APP_URL') . '/resetPassword?email=' . $email . "&otp=$otp";
-
-        $htmlContent = str_replace('{{linkResetPassword}}', $link, $htmlContent);
-        try {
-            Helper::sendMail($email, 'Verify Account', $htmlContent);
-            toastr()->success('', "Gửi thành công, hãy kiểm tra email của bạn");
+        if ($user->social !== User::SOCIALS[0]) {
+            // Check if the user is from social login
+            toastr()->error("", "Email không hợp lệ, vui lòng kiểm tra lại");
             return redirect()->back();
-        } catch (\Exception $ex) {
-            Helper::changeKey();
-            $this->sendResetPasswordMail($request);
+        } else {
+            User::where('email', '=', $email)
+                ->update(
+                    [
+                        'otp' => $otp
+                    ]
+                );
+            $htmlFilePath = base_path() . '\resources/html/resetPassword.html';
+            $htmlContent = file_get_contents($htmlFilePath);
+
+            $link = env('APP_URL') . '/resetPassword?email=' . $email . "&otp=$otp";
+
+            $htmlContent = str_replace('{{linkResetPassword}}', $link, $htmlContent);
+            try {
+                Helper::sendMail($email, 'Verify Account', $htmlContent);
+                toastr()->success('', "Gửi thành công, hãy kiểm tra email của bạn");
+                return redirect()->back();
+            } catch (\Exception $ex) {
+                Helper::changeKey();
+                $this->sendResetPasswordMail($request);
+            }
         }
     }
 
@@ -348,10 +358,15 @@ class AuthController extends Controller
                 return redirect()->route('resetForm');
             }
 
-            return view('resetPassword', [
-                'email' => $request->get('email'),
-                'otp' => $request->get('otp')
-            ]);
+            if ($this->checkTimeout($request->get('email'))) {
+                toastr()->error('', 'OTP hết hạn, vui lòng kiểm tra email');
+                return redirect()->route('index');
+            } else {
+                return view('resetPassword', [
+                    'email' => $request->get('email'),
+                    'otp' => $request->get('otp')
+                ]);
+            }
         } catch (\Exception $ex) {
             Helper::getResponse('', $ex->getMessage());
             toastr()->error("Nếu bạn thấy thông báo này hãy báo lỗi", "Something went wrong");
@@ -361,7 +376,6 @@ class AuthController extends Controller
 
     public function resetPassword(Request $request)
     {
-        // dd($request);
         $request->validate(
             [
                 'email' => [

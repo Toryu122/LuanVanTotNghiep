@@ -81,6 +81,11 @@
                     </div>
                 </form>
                 <div class="text-center pt-2"><a href="{{ route('signup') }}">Bạn chưa có tài khoản?</a></div>
+                <div class="text-center pt-2">
+                    <a href="{{ route('forgotPassword') }}">
+                        Quên mật khẩu?
+                    </a>
+                </div>
             </div>
         </div>
     </section>
