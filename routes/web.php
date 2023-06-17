@@ -38,7 +38,7 @@ Route::get('/tos', function () {
 })->name('tos');
 
 /**
- * Normal Login
+ * Normal Authenticate
  */
 Route::get('/dang-nhap', [AuthController::class, 'login'])->name('login');
 Route::get('/dang-ky', [AuthController::class, 'signup'])->name('signup');
@@ -46,9 +46,14 @@ Route::post('/login', [AuthController::class, 'loginUser'])->name('loginUser');
 Route::post('/createUser', [AuthController::class, 'createUser'])->name('createUser');
 Route::get('/dang-xuat', [AuthController::class, 'logoutUser'])->name('logoutUser');
 Route::get('/auth/verify', [AuthController::class, 'verifyAccount'])->name('verify');
+Route::get('/verify', [AuthController::class, 'verifyAccount'])->name('verifyResult');
+Route::get('forgot-password', [AuthController::class, 'forgotPassword'])->name('forgotPassword');
+Route::post('/forgot-password/send', [AuthController::class, 'sendResetPasswordMail'])->name('reset-send');
+Route::get('/resetPassword', [AuthController::class, 'resetPasswordForm'])->name('resetForm');
+Route::put('/auth/resetPassword', [AuthController::class, 'resetPassword'])->name('resetPassword');
 
 /**
- * Social Login
+ * Social Authenticate
  */
 Route::get('/auth/gg', [AuthController::class, 'loginGoogle'])->name('loginGoogle');
 Route::get('/auth/gg/callback', [AuthController::class, 'loginGoogleUser']);

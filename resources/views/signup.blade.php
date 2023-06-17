@@ -83,6 +83,11 @@
                         <button type="submit" class="btn btn-primary col-12">Đăng Ký</button>
                     </div>
                 </form>
+                <div class="text-center pt-4">
+                    <a href="{{ route('login') }}">
+                        Bạn đã có tài khoản? Đăng nhập ngay
+                    </a>
+                </div>
             </div>
         </div>
     </section>

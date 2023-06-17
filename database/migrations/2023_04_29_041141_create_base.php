@@ -26,6 +26,7 @@ class CreateBase extends Migration
             $table->boolean('verified')->default(false);
             $table->string('otp', Constant::OTP_LENGTH)->nullable(true);
             $table->string('password')->nullable(false);
+            $table->dateTime('last_sent')->nullable();
             $table->rememberToken()->default(null);
             $table->enum('gender', User::GENDERS)->default(User::GENDERS[0]);
             $table->string('biography')->nullable();
