@@ -15,36 +15,13 @@ class GenreSeeder extends Seeder
      */
     public function run()
     {
-        DB::table(Genre::retrieveTableName())->insert([
-            'name' => 'Tower Defense'
-        ]);
+        $publishers = file(storage_path() . "/resources/genre.txt", FILE_IGNORE_NEW_LINES);
+        $publishers = collect($publishers)->map(function ($item) {
+            return [
+                'name' => $item
+            ];
+        })->toArray();
 
-        DB::table(Genre::retrieveTableName())->insert([
-            'name' => '3D'
-        ]);
-
-        DB::table(Genre::retrieveTableName())->insert([
-            'name' => '2D'
-        ]);
-
-        DB::table(Genre::retrieveTableName())->insert([
-            'name' => 'Survival' 
-        ]);
-
-        DB::table(Genre::retrieveTableName())->insert([
-            'name' => 'RPG'
-        ]);
-
-        DB::table(Genre::retrieveTableName())->insert([
-            'name' => 'Action'
-        ]);
-
-        DB::table(Genre::retrieveTableName())->insert([
-            'name' => 'Open World'
-        ]);
-
-        DB::table(Genre::retrieveTableName())->insert([
-            'name' => 'Platformer'
-        ]);
+        Genre::insert($publishers);
     }
 }
