@@ -31,7 +31,6 @@ class CreateBase extends Migration
             $table->enum('gender', User::GENDERS)->default(User::GENDERS[0]);
             $table->string('biography')->nullable();
             $table->string('address')->nullable();
-            $table->string('avatar')->default('null.jpg');
             $table->timestamp('created_at')->useCurrent();
             $table->timestamp('updated_at')->useCurrent();
         });
