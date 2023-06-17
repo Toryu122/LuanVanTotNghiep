@@ -12,7 +12,20 @@
     <div>
         <x-header title="Đăng Ký" />
     </div>
-
+    <div class="container col-8 pt-3">
+        <div class="text-center">
+            @if (Session::has('signup_success'))
+                <div class="alert alert-success alert-dismissible fade show" role="alert">
+                    <strong class="h4">{{ Session::get('signup_success') }}</strong>
+                    <hr class="py-0 text-success" />
+                    <p>
+                        Hãy kiểm tra email bạn vừa đăng ký để xác thực tài khoản
+                    </p>
+                    <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+                </div>
+            @endif
+        </div>
+    </div>
     <section class="backgroundBody pb-5">
         <div class="container-fluid col-4 mt-4 text-white ">
             <div class="loginForm py-4 px-4">
@@ -28,7 +41,7 @@
                 </div>
                 <form action="{{ route('createUser') }}" method="POST">
                     @csrf
-                    
+
                     <div class="form-group">
                         <label>Email</label>
                         <input name="email" type="email" class="form-control" placeholder="Email">
@@ -70,6 +83,11 @@
                         <button type="submit" class="btn btn-primary col-12">Đăng Ký</button>
                     </div>
                 </form>
+                <div class="text-center pt-4">
+                    <a href="{{ route('login') }}">
+                        Bạn đã có tài khoản? Đăng nhập ngay
+                    </a>
+                </div>
             </div>
         </div>
     </section>

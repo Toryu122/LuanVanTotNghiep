@@ -20,18 +20,6 @@ class UserController extends Controller
     {
         $form = $request->get('form');
         if ($form == "1") {
-            $path = $request->file('avatar');
-            if (auth()->user()->avatar == null) {
-                $img = "null.jpg";
-            } else {
-                $img = auth()->user()->avatar;
-            }
-            if ($path != null) {
-                //Storage::delete(auth()->user()->avatar."jpg");
-                $img = $request->user()->id . ".jpg";
-                $request->file('avatar')->storeAs('avatars', $img);
-                Storage::putFileAs('avatars', $request->file('avatar'), $img);
-            }
             $request->validate(
                 [
                     'name' => [
@@ -52,8 +40,7 @@ class UserController extends Controller
                 ->where('id', '=', auth()->user()->id)
                 ->update([
                     'name' => $request->get('name'),
-                    'biography' => $request->get('bio'),
-                    'avatar' => $img
+                    'biography' => $request->get('bio')
                 ]);
         } else {
             $request->validate(
@@ -78,7 +65,6 @@ class UserController extends Controller
 
     public function changePassword(Request $request)
     {
-        // dd($request);
         $request->validate(
             [
                 'old_password' => [
@@ -115,7 +101,7 @@ class UserController extends Controller
         Auth::logout();
         $request->session()->invalidate();
         $request->session()->regenerateToken();
-        
-        return redirect('/dang-nhap')->with('password_changed','Thay đổi mật khẩu thành công');
+
+        return redirect('/dang-nhap')->with('password_changed', 'Thay đổi mật khẩu thành công');
     }
 }

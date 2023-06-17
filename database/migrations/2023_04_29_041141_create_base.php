@@ -1,5 +1,6 @@
 <?php
 
+use App\Common\Constant;
 use App\Models\Game;
 use App\Models\Genre;
 use App\Models\Order;
@@ -22,12 +23,14 @@ class CreateBase extends Migration
             $table->increments('id')->unique();
             $table->string('name')->nullable(false);
             $table->string('email')->nullable(false)->unique();
+            $table->boolean('verified')->default(false);
+            $table->string('otp', Constant::OTP_LENGTH)->nullable(true);
             $table->string('password')->nullable(false);
+            $table->dateTime('last_sent')->nullable();
             $table->rememberToken()->default(null);
             $table->enum('gender', User::GENDERS)->default(User::GENDERS[0]);
             $table->string('biography')->nullable();
             $table->string('address')->nullable();
-            $table->string('avatar')->default('null.jpg');
             $table->timestamp('created_at')->useCurrent();
             $table->timestamp('updated_at')->useCurrent();
         });

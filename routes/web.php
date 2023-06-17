@@ -1,13 +1,14 @@
 <?php
 
-use Illuminate\Support\Facades\Auth;
+use App\Common\Helper;
+use App\Common\Constant;
+use Illuminate\Support\Str;
+use App\Http\Middleware\AuthStore;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\AuthController;
 use App\Http\Controllers\GameController;
-use App\Http\Controllers\OrderController;
 use App\Http\Controllers\UserController;
-use App\Http\Middleware\AuthStore;
-use Laravel\Socialite\Facades\Socialite;
+use App\Http\Controllers\OrderController;
 
 /*
 |--------------------------------------------------------------------------
@@ -37,16 +38,22 @@ Route::get('/tos', function () {
 })->name('tos');
 
 /**
- * Normal Login
+ * Normal Authenticate
  */
 Route::get('/dang-nhap', [AuthController::class, 'login'])->name('login');
 Route::get('/dang-ky', [AuthController::class, 'signup'])->name('signup');
 Route::post('/login', [AuthController::class, 'loginUser'])->name('loginUser');
 Route::post('/createUser', [AuthController::class, 'createUser'])->name('createUser');
 Route::get('/dang-xuat', [AuthController::class, 'logoutUser'])->name('logoutUser');
+Route::get('/auth/verify', [AuthController::class, 'verifyAccount'])->name('verify');
+Route::get('/verify', [AuthController::class, 'verifyAccount'])->name('verifyResult');
+Route::get('forgot-password', [AuthController::class, 'forgotPassword'])->name('forgotPassword');
+Route::post('/forgot-password/send', [AuthController::class, 'sendResetPasswordMail'])->name('reset-send');
+Route::get('/resetPassword', [AuthController::class, 'resetPasswordForm'])->name('resetForm');
+Route::put('/auth/resetPassword', [AuthController::class, 'resetPassword'])->name('resetPassword');
 
 /**
- * Social Login
+ * Social Authenticate
  */
 Route::get('/auth/gg', [AuthController::class, 'loginGoogle'])->name('loginGoogle');
 Route::get('/auth/gg/callback', [AuthController::class, 'loginGoogleUser']);
