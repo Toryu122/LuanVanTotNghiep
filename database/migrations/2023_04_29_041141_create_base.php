@@ -51,6 +51,7 @@ class CreateBase extends Migration
         Schema::create(Genre::retrieveTableName(), function (Blueprint $table) {
             $table->id();
             $table->string('name');
+            $table->unique('name');
 
             $table->timestamp('created_at')->useCurrent();
             $table->timestamp('updated_at')->useCurrent();
@@ -59,6 +60,7 @@ class CreateBase extends Migration
         Schema::create(Publisher::retrieveTableName(), function (Blueprint $table) {
             $table->id();
             $table->string('name');
+            $table->unique('name');
 
             $table->timestamp('created_at')->useCurrent();
             $table->timestamp('updated_at')->useCurrent();

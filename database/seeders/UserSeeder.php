@@ -22,7 +22,6 @@ class UserSeeder extends Seeder
             'password' => Hash::make('password'),
             'verified' => 1,
             'remember_token' => null,
-            'avatar' =>'avatar.jpg'
         ]);
     }
 }
