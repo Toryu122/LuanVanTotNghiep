@@ -33,7 +33,7 @@
                             <div class="form-floating mb-3">
                                 <input type="number" name="fromPrice" class="form-control" id="fromPrice"
                                     placeholder="Mức giá từ"
-                                    value="{{ Request::get('fromPrice') ? Request::get('fromPrice') : '' }}"  />
+                                    value="{{ Request::get('fromPrice') ? Request::get('fromPrice') : '' }}" />
                                 <label for="fromPrice">Mức giá từ</label>
                             </div>
                         </div>
@@ -79,7 +79,13 @@
             </div>
         </form>
     </div>
-
+    <div class="container col-2">
+        <a href="/tim-kiem?q=">
+            <button class="col-md-12 btn btn-danger">
+                <i class="fa-solid fa-arrows-rotate"></i> Xóa bộ lọc
+            </button>
+        </a>
+    </div>
     <div class="container" id="content">
         <div class="container" id="game-list">
             <div class="row gx-4 gx-lg-5 row-cols-2 row-cols-md-3 row-cols-xl-4 justify-content-center">
@@ -93,6 +99,13 @@
             <div class="text-center">
                 {{ $games->links() }}
             </div>
+        </div>
+        <div class="container col-md-2 pb-3">
+            <a href="/tim-kiem?q=">
+                <button class="col-md-12 btn btn-danger">
+                    <i class="fa-solid fa-arrows-rotate"></i> Xóa bộ lọc
+                </button>
+            </a>
         </div>
     </div>
 </body>
