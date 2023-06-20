@@ -41,7 +41,9 @@
             {{-- <div class="text-center"><a class="btn btn-outline-dark mt-auto" href="#">View options</a></div> --}}
             <div class="align-text-bottom">
                 <div>
-                    <form method="get">
+                    <form action="{{ route('buyNow') }}" method="post">
+                        @csrf
+                        <input type="text" name="id" value="{{ $game->id }}" hidden>
                         <button class="btn btn-outline-primary col-12">
                             <i class="fa-solid fa-cart-shopping fa-lg"></i> Mua ngay
                         </button>

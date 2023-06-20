@@ -27,6 +27,7 @@ use App\Http\Controllers\OrderController;
  */
 Route::get('/', [GameController::class, 'index'])->name('index');
 Route::get('/game-detail/{id}', [GameController::class, 'detail_game'])->name('detailgame');
+Route::get('/tim-kiem', [GameController::class, 'search'])->name('searchPage');
 Route::get('/policy', function () {
     return view('policy');
 })->name('policy');
@@ -74,6 +75,7 @@ Route::middleware(['auth:sanctum', AuthStore::class])->group(function () {
     Route::delete('cart/remove', [OrderController::class, 'removeItemFromCart'])->name('removeItem');
     Route::put('cart/update', [OrderController::class, 'updateCart'])->name('updateCart');
     Route::post('cart/add', [OrderController::class, 'addToCart'])->name('addToCart');
+    Route::post('cart/buyNow', [OrderController::class, 'buyNow'])->name('buyNow');
     Route::post('checkout/payMomo', [OrderController::class, 'payMomo'])->name('checkoutMomo');
     Route::post('checkout/payVnpay', [OrderController::class, 'payVnpay'])->name('checkoutVnpay');
     Route::get('checkout/successVnpay', [OrderController::class, 'vnpayCheckoutSuccess'])->name('vnpayCheckoutSuccess');

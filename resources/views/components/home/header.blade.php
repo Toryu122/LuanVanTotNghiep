@@ -28,9 +28,10 @@
             </ul>
 
             <!-- Search form -->
-            <form class="d-flex input-group w-auto ms-lg-3 my-3 my-lg-0">
-                <input type="search" class="form-control search" placeholder="Tìm kiếm sản phẩm" aria-label="Search" />
-                <button class="btn btn-primary" type="button" data-mdb-ripple-color="dark">
+            <form action="{{ route('searchPage') }}" method="GET"
+                class="d-flex input-group w-auto ms-lg-3 my-3 my-lg-0">
+                <input type="search" name="q" class="form-control search" placeholder="Tìm kiếm sản phẩm" aria-label="Search" />
+                <button class="btn btn-primary" data-mdb-ripple-color="dark">
                     <i class="fa-solid fa-magnifying-glass"></i>
                 </button>
             </form>
@@ -88,7 +89,7 @@
                         <div>
                             <i class="fa-solid fa-cart-shopping"></i>
                             <span class="badge rounded-pill badge-notification bg-info">
-                                {{-- If the session has cart in it get total quantity--}}
+                                {{-- If the session has cart in it get total quantity --}}
                                 @if (Session::has('cart'))
                                     @php
                                         $quantity = 0;

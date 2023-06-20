@@ -45,6 +45,13 @@ class OrderController extends Controller
         return redirect()->back();
     }
 
+    public function buyNow(Request $request)
+    {
+        $this->addToCart($request);
+
+        return redirect()->route('cart');
+    }
+
     public function updateCart(Request $request)
     {
         try {

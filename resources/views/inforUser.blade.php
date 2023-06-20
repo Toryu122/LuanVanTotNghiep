@@ -31,6 +31,10 @@
                             role="tab">
                             Đổi mật khẩu
                         </a>
+                        <a class="list-group-item list-group-item-action" data-bs-toggle="list" href="#order"
+                            role="tab">
+                            Lịch sử mua hàng
+                        </a>
                     </div>
                 </div>
             </div>
@@ -43,6 +47,8 @@
                     <x-user.basic-info />
 
                     <x-user.change-password />
+
+                    <x-user.order-history />
 
                 </div>
             </div>
