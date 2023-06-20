@@ -9,6 +9,7 @@ use App\Http\Controllers\AuthController;
 use App\Http\Controllers\GameController;
 use App\Http\Controllers\UserController;
 use App\Http\Controllers\OrderController;
+use App\Http\Controllers\TestController;
 
 /*
 |--------------------------------------------------------------------------
@@ -88,3 +89,7 @@ Route::middleware(['auth:sanctum', AuthStore::class])->group(function () {
     Route::post('user/edit', [UserController::class, 'editUser'])->name('editUser');
     Route::put('user/changepassword', [UserController::class, 'changePassword'])->name('changePassword');
 });
+
+Route::get('/assignform', [TestController::class, 'form'])->name('genreAssign');
+Route::post('/assign', [TestController::class, 'assignGen'])->name('assignGen');
+Route::post('/addGen', [TestController::class, 'addGen'])->name('addGen');

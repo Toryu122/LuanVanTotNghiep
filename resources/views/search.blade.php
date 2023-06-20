@@ -12,8 +12,6 @@
 <body>
     <x-header title="Tìm kiếm sản phẩm" />
 
-    {{ $query }}
-    {{-- {{ dd($games) }} --}}
     <div id="filter" class="container pt-3">
         <div class="fw-bold">
             <h3>Tìm kiếm sản phẩm</h3>
