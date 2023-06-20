@@ -34,14 +34,16 @@
                         <div class="col-6">
                             <div class="form-floating mb-3">
                                 <input type="number" name="fromPrice" class="form-control" id="fromPrice"
-                                    placeholder="Mức giá từ" />
+                                    placeholder="Mức giá từ"
+                                    value="{{ Request::get('fromPrice') ? Request::get('fromPrice') : '' }}"  />
                                 <label for="fromPrice">Mức giá từ</label>
                             </div>
                         </div>
                         <div class="col-6">
                             <div class="form-floating">
                                 <input type="number" name="toPrice" class="form-control" id="toPrice"
-                                    placeholder="Mức giá đến" />
+                                    placeholder="Mức giá đến"
+                                    value="{{ Request::get('toPrice') ? Request::get('toPrice') : '' }}" />
                                 <label for="toPrice">Mức giá đến</label>
                             </div>
                         </div>
@@ -52,11 +54,21 @@
                     <div class="form-floating">
                         <select class="form-select mb-3" name="sortBy" id="sortBy">
                             <option value="">Mặc định</option>
-                            <option value="bestSale">Bán chạy nhất</option>
-                            <option value="lowest">Giá thấp nhất</option>
-                            <option value="highest">Giá cao nhất</option>
-                            <option value="AZ">Theo tên A => Z</option>
-                            <option value="ZA">Theo tên Z => A</option>
+                            <option value="bestSale" {{ Request::get('sortBy') === 'bestSale' ? 'selected' : '' }}>
+                                Bán chạy nhất
+                            </option>
+                            <option value="lowest" {{ Request::get('sortBy') === 'lowest' ? 'selected' : '' }}>
+                                Giá thấp nhất
+                            </option>
+                            <option value="highest" {{ Request::get('sortBy') === 'highest' ? 'selected' : '' }}>
+                                Giá cao nhất
+                            </option>
+                            <option value="AZ" {{ Request::get('sortBy') === 'AZ' ? 'selected' : '' }}>
+                                Theo tên A => Z
+                            </option>
+                            <option value="ZA" {{ Request::get('sortBy') === 'ZA' ? 'selected' : '' }}>
+                                Theo tên Z => A
+                            </option>
                         </select>
                         <label for="sortBy">Sắp xếp theo</label>
                     </div>
