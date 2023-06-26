@@ -7,13 +7,10 @@
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
     @include('cdn')
 
-
+    <x-header title="Trang Chủ" />
 </head>
 
 <body class="d-flex flex-column min-vh-100">
-    <div>
-        <x-header title="Trang Chủ" />
-    </div>
 
     <div class="container pt-3">
         <x-carousel />

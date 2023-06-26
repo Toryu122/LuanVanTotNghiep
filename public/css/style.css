@@ -6,10 +6,6 @@
       rgba(8, 22, 48, 0.9));
 }
 
-body {
-  padding-top: 75px;
-}
-
 .dropdown:hover>.dropdown-menu {
   display: block;
 }

@@ -17,11 +17,11 @@
         </div>
     </div>
 </div> --}}
-<div class="col-3 py-3 mb-3 game" id="game_table" >  
+<div class="col-3 py-3 mb-3 game" id="game_table">  
     <div class="card h-100 border-0">
-        <a  href="{{ route('detailgame',['id'=>$game->id]) }}"
-            data-bs-toggle="tooltip" 
-            data-bs-placement="top" 
+        <a href="{{ route('detailgame',['id'=>$game->id]) }}"
+            data-bs-toggle="tooltip"
+            data-bs-placement="top"
             title="{{ $game->name }}"
         >
             <img class="card-img-top game-img center-img" src="images/{{ $game->image }}" alt="..." loading="lazy" />
