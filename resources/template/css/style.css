@@ -288,6 +288,16 @@ main > div p {
     background-color: #2d4373;
 }
 
+.btn-search {
+    color: white !important;
+    background-color: #000C66;
+}
+
+.btn-search:hover {
+    color: white !important;
+    background-color: #07178f;
+}
+
 .btn-momo {
     color: white;
     background-color: #d82d8b;

@@ -10,37 +10,216 @@
     <x-header title="Trang Chủ" />
 </head>
 
-<body class="d-flex flex-column min-vh-100">
+<body class="d-flex flex-column vh-100">
 
-    <div class="container pt-3">
+    <!-- Carousel -->
+    <div class="container-fluid pt-3">
         <x-carousel />
     </div>
+    <!-- Carousel -->
 
+    <!-- Thanh giá phù hợp -->
     <div class="container pt-5">
-        <p class="h3">Lọc theo giá</p>
-        <x-recommend-price />
-    </div>
+        <p class="display-6 text-white text-capitalize">Lọc theo giá</p>
+        <hr class="border-bottom border-secondary">
+        <div class="row text-center text-white fs-4 rec-price fw-bold">
+            <div class="col-md-2 col-sm-6 col-6">
+                <div class="card shadow p-3 mb-5 rounded">
+                    <div class="card-body">
+                        <p class="card-text">20.000đ</p>
+                    </div>
+                </div>
+            </div>
+            <div class="col-md-2 col-sm-6 col-6">
+                <div class="card shadow p-3 mb-5 rounded">
+                    <div class="card-body">
+                        <p class="card-text">50.000đ</p>
+                    </div>
+                </div>
+            </div>
+            <div class="col-md-2 col-sm-6 col-6">
+                <div class="card shadow p-3 mb-5 rounded">
+                    <div class="card-body">
+                        <p class="card-text">75.000đ</p>
+                    </div>
+                </div>
+            </div>
 
-    <div class="container">
-        <p class="h3">Sản phẩm nổi bật</p>
-        <div class="row gx-4 gx-lg-5 row-cols-2 row-cols-md-3 row-cols-xl-4 justify-content-center">
+            <div class="col-md-2 col-sm-6 col-6">
+                <div class="card shadow p-3 mb-5 rounded">
+                    <div class="card-body">
+                        <p class="card-text">100.000đ</p>
+                    </div>
+                </div>
+            </div>
+            <div class="col-md-2 col-sm-6 col-6">
+                <div class="card shadow p-3 mb-5 rounded">
+                    <div class="card-body">
+                        <p class="card-text">125.000đ</p>
+                    </div>
+                </div>
+            </div>
+            <div class="col-md-2 col-sm-6 col-6">
+                <div class="card shadow p-3 mb-5 rounded">
+                    <div class="card-body">
+                        <p class="card-text">150.000đ</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <!-- Thanh giá phù hợp -->
+
+    <!-- Lọc theo thể loại-->
+    <div class="container pt-3">
+        <p class="display-6 text-white text-capitalize">Lọc theo thể loại</p>
+        <hr class="border-bottom border-secondary">
+        <div class="row text-center text-white rec-price fw-bold">
+            <div class="col-md-2 col-sm-6 col-6">
+                <div class="card shadow p-3 mb-5 rounded">
+                    <div class="card-body">
+                        <p class="card-text">Action</p>
+                    </div>
+                </div>
+            </div>
+            <div class="col-md-2 col-sm-6 col-6">
+                <div class="card shadow p-3 mb-5 rounded">
+                    <div class="card-body">
+                        <p class="card-text">Tower Defense</p>
+                    </div>
+                </div>
+            </div>
+            <div class="col-md-2 col-sm-6 col-6">
+                <div class="card shadow p-3 mb-5 rounded">
+                    <div class="card-body">
+                        <p class="card-text">3D</p>
+                    </div>
+                </div>
+            </div>
+
+            <div class="col-md-2 col-sm-6 col-6">
+                <div class="card shadow p-3 mb-5 rounded">
+                    <div class="card-body">
+                        <p class="card-text">RPG</p>
+                    </div>
+                </div>
+            </div>
+            <div class="col-md-2 col-sm-6 col-6">
+                <div class="card shadow p-3 mb-5 rounded">
+                    <div class="card-body">
+                        <p class="card-text">Open World</p>
+                    </div>
+                </div>
+            </div>
+            <div class="col-md-2 col-sm-6 col-6">
+                <div class="card shadow p-3 mb-5 rounded">
+                    <div class="card-body">
+                        <p class="card-text">Co-op</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="row text-center text-white fs-6 rec-price fw-bold">
+            <div class="col-md-2 col-sm-6 col-6">
+                <div class="card shadow p-3 mb-5 rounded">
+                    <div class="card-body">
+                        <p class="card-text">2D</p>
+                    </div>
+                </div>
+            </div>
+            <div class="col-md-2 col-sm-6 col-6">
+                <div class="card shadow p-3 mb-5 rounded">
+                    <div class="card-body">
+                        <p class="card-text">Survival</p>
+                    </div>
+                </div>
+            </div>
+            <div class="col-md-2 col-sm-6 col-6">
+                <div class="card shadow p-3 mb-5 rounded">
+                    <div class="card-body">
+                        <p class="card-text">Strategy</p>
+                    </div>
+                </div>
+            </div>
+
+            <div class="col-md-2 col-sm-6 col-6">
+                <div class="card shadow p-3 mb-5 rounded">
+                    <div class="card-body">
+                        <p class="card-text">FPS</p>
+                    </div>
+                </div>
+            </div>
+            <div class="col-md-2 col-sm-6 col-6">
+                <div class="card shadow p-3 mb-5 rounded">
+                    <div class="card-body">
+                        <p class="card-text">PvP</p>
+                    </div>
+                </div>
+            </div>
+            <div class="col-md-2 col-sm-6 col-6">
+                <div class="card shadow p-3 mb-5 rounded">
+                    <div class="card-body">
+                        <p class="card-text">Fantasy</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <!-- Lọc theo thể loại-->
+
+
+    <!-- Sản phẩm nổi bật -->
+    <div class="container pt-3">
+        <div class="row">
             @foreach ($games as $item)
                 <x-game.game-item :game="$item" />
             @endforeach
         </div>
     </div>
+    <!-- Sản phẩm nổi bật -->
 
-    <div class="container text-center d-flex justify-content-center">
-        <div class="text-center">
-            {{ $games->links() }}
-        </div>
-    </div>
-
+    <script>
+        let swiper = new Swiper(".swiper", {
+            effect: "coverflow",
+            grabCursor: true,
+            centeredSlides: true,
+            coverflowEffect: {
+                rotate: 0,
+                stretch: 0,
+                depth: 100,
+                modifier: 3,
+                slideShadows: true
+            },
+            loop: true,
+            autoplay: {
+                delay: 2500,
+                disableOnInteraction: false,
+            },
+            pagination: {
+                el: ".swiper-pagination",
+                clickable: true
+            },
+            breakpoints: {
+                640: {
+                    slidesPerView: 2
+                },
+                768: {
+                    slidesPerView: 1
+                },
+                1024: {
+                    slidesPerView: 2
+                },
+                1560: {
+                    slidesPerView: 5
+                }
+            }
+        });
+    </script>
 
     <script src="{{ asset('js/script.js') }}"></script>
-</body>
-<footer class="mt-auto">
+
     <x-footer />
-</footer>
+</body>
 
 </html>

@@ -1,23 +1,4 @@
-{{-- <div class="col-3 py-3 game">
-    <img src="images/book/{{ $book['img'] }}" alt="" class="card-img-top game-img center-img">
-    <div class="card-body text-center">
-        <h5 class='card-title'>{{ $book['book_name'] }}</h5>
-        <p class='card-text'>{{ $book['price'] }} đ</p>
-    </div>
-    <div class="align-text-bottom">
-        <div>
-            <a href="" class="btn btn-outline-primary col-12">
-                <i class="fa-solid fa-cart-shopping fa-lg"></i> Mua ngay
-            </a>
-        </div>
-        <div class="pt-2">
-            <a href="{{ route('detail', $book['book_id']) }}" class="btn btn-primary col-12">
-                Thông tin chi tiết
-            </a>
-        </div>
-    </div>
-</div> --}}
-<div class="col-3 py-3 mb-3 game" id="game_table">  
+{{-- <div class="col-3 py-3 mb-3 game" id="game_table">  
     <div class="card h-100 border-0">
         <a href="{{ route('detailgame',['id'=>$game->id]) }}"
             data-bs-toggle="tooltip"
@@ -38,7 +19,6 @@
             <h5 class="text-danger ">{{ $game->price }} đ</h5>
         </div>
         <div class="card-footer border-top-0 bg-transparent">
-            {{-- <div class="text-center"><a class="btn btn-outline-dark mt-auto" href="#">View options</a></div> --}}
             <div class="align-text-bottom">
                 <div>
                     <form action="{{ route('buyNow') }}" method="post">
@@ -57,6 +37,257 @@
                             <i class="fa-solid fa-cart-shopping fa-lg"></i> Thêm vào giỏ
                         </button>
                     </form>
+                </div>
+            </div>
+        </div>
+    </div>
+</div> --}}
+<div class="col-md-4 border-end border-secondary">
+    <div class="title text-center text-capitalize">
+        <p class="display-6 text-white">Bán chạy nhất</p>
+    </div>
+    <hr class="border-bottom border-secondary">
+    <div class="product">
+        <div class="row mb-4">
+            <div class="col-md-5">
+                <div class="img">
+                    <img class="img-fluid" src="20xx.webp" alt="">
+                </div>
+            </div>
+            <div class="col-md-7">
+                <div class="h5 name fw-bolder text-white">
+                    20XX
+                </div>
+                <div class="price text-white">
+                    165000 đ
+                </div>
+            </div>
+        </div>
+        <div class="row mb-4">
+            <div class="col-md-5">
+                <div class="img">
+                    <img class="img-fluid" src="30xx.webp" alt="">
+                </div>
+            </div>
+            <div class="col-md-7">
+                <div class="h5 name fw-bolder text-white">
+                    30XX
+                </div>
+                <div class="price text-white">
+                    188000 đ
+                </div>
+            </div>
+        </div>
+        <div class="row mb-4">
+            <div class="col-md-5">
+                <div class="img">
+                    <img class="img-fluid" src="adofai.webp" alt="">
+                </div>
+            </div>
+            <div class="col-md-7">
+                <div class="h5 name fw-bolder text-white">
+                    A Dance of Fire and Ice
+                </div>
+                <div class="price text-white">
+                    80000 đ
+                </div>
+            </div>
+        </div>
+        <div class="row mb-4">
+            <div class="col-md-5">
+                <div class="img">
+                    <img class="img-fluid" src="among-us.webp" alt="">
+                </div>
+            </div>
+            <div class="col-md-7">
+                <div class="h5 name fw-bolder text-white">
+                    Among Us
+                </div>
+                <div class="price text-white">
+                    70000
+                </div>
+            </div>
+        </div>
+        <div class="row mb-4">
+            <div class="col-md-5">
+                <div class="img">
+                    <img class="img-fluid" src="angels-of-death.webp" alt="">
+                </div>
+            </div>
+            <div class="col-md-7">
+                <div class="h5 name fw-bolder text-white">
+                    Angels of Death
+                </div>
+                <div class="price text-white">
+                    120000 đ
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div class="col-md-4 border-end border-secondary">
+    <div class="title text-center text-capitalize">
+        <p class="display-6 text-white">Đề cử tuần này</p>
+    </div>
+    <hr class="border-bottom border-secondary">
+    <div class="product">
+        <div class="row mb-4">
+            <div class="col-md-5">
+                <div class="img">
+                    <img class="img-fluid" src="20xx.webp" alt="">
+                </div>
+            </div>
+            <div class="col-md-7">
+                <div class="h5 name fw-bolder text-white">
+                    20XX
+                </div>
+                <div class="price text-white">
+                    165000 đ
+                </div>
+            </div>
+        </div>
+        <div class="row mb-4">
+            <div class="col-md-5">
+                <div class="img">
+                    <img class="img-fluid" src="30xx.webp" alt="">
+                </div>
+            </div>
+            <div class="col-md-7">
+                <div class="h5 name fw-bolder text-white">
+                    30XX
+                </div>
+                <div class="price text-white">
+                    188000 đ
+                </div>
+            </div>
+        </div>
+        <div class="row mb-4">
+            <div class="col-md-5">
+                <div class="img">
+                    <img class="img-fluid" src="adofai.webp" alt="">
+                </div>
+            </div>
+            <div class="col-md-7">
+                <div class="h5 name fw-bolder text-white">
+                    A Dance of Fire and Ice
+                </div>
+                <div class="price text-white">
+                    80000 đ
+                </div>
+            </div>
+        </div>
+        <div class="row mb-4">
+            <div class="col-md-5">
+                <div class="img">
+                    <img class="img-fluid" src="among-us.webp" alt="">
+                </div>
+            </div>
+            <div class="col-md-7">
+                <div class="h5 name fw-bolder text-white">
+                    Among Us
+                </div>
+                <div class="price text-white">
+                    70000
+                </div>
+            </div>
+        </div>
+        <div class="row mb-4">
+            <div class="col-md-5">
+                <div class="img">
+                    <img class="img-fluid" src="angels-of-death.webp" alt="">
+                </div>
+            </div>
+            <div class="col-md-7">
+                <div class="h5 name fw-bolder text-white">
+                    Angels of Death
+                </div>
+                <div class="price text-white">
+                    120000 đ
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div class="col-md-4">
+    <div class="title text-center text-capitalize">
+        <p class="display-6 text-white">Được yêu thích nhất</p>
+    </div>
+    <hr class="border-bottom border-secondary">
+    <div class="product">
+        <div class="row mb-4">
+            <div class="col-md-5">
+                <div class="img">
+                    <img class="img-fluid" src="20xx.webp" alt="">
+                </div>
+            </div>
+            <div class="col-md-7">
+                <div class="h5 name fw-bolder text-white">
+                    20XX
+                </div>
+                <div class="price text-white">
+                    165000 đ
+                </div>
+            </div>
+        </div>
+        <div class="row mb-4">
+            <div class="col-md-5">
+                <div class="img">
+                    <img class="img-fluid" src="30xx.webp" alt="">
+                </div>
+            </div>
+            <div class="col-md-7">
+                <div class="h5 name fw-bolder text-white">
+                    30XX
+                </div>
+                <div class="price text-white">
+                    188000 đ
+                </div>
+            </div>
+        </div>
+        <div class="row mb-4">
+            <div class="col-md-5">
+                <div class="img">
+                    <img class="img-fluid" src="adofai.webp" alt="">
+                </div>
+            </div>
+            <div class="col-md-7">
+                <div class="h5 name fw-bolder text-white">
+                    A Dance of Fire and Ice
+                </div>
+                <div class="price text-white">
+                    80000 đ
+                </div>
+            </div>
+        </div>
+        <div class="row mb-4">
+            <div class="col-md-5">
+                <div class="img">
+                    <img class="img-fluid" src="among-us.webp" alt="">
+                </div>
+            </div>
+            <div class="col-md-7">
+                <div class="h5 name fw-bolder text-white">
+                    Among Us
+                </div>
+                <div class="price text-white">
+                    70000
+                </div>
+            </div>
+        </div>
+        <div class="row mb-4">
+            <div class="col-md-5">
+                <div class="img">
+                    <img class="img-fluid" src="angels-of-death.webp" alt="">
+                </div>
+            </div>
+            <div class="col-md-7">
+                <div class="h5 name fw-bolder text-white">
+                    Angels of Death
+                </div>
+                <div class="price text-white">
+                    120000 đ
                 </div>
             </div>
         </div>

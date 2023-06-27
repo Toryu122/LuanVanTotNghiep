@@ -13,9 +13,9 @@
     <div>
         <x-header title="Đăng Nhập" />
     </div>
-    <section class="container-fluid backgroundBody pb-5">
-        <div class="container-fluid col-4 mt-4 text-white ">
-            <div class="loginForm py-4 px-4">
+    <section class="container backgroundBody pb-5">
+        <div class="container-fluid col-md-4 col-sm-12 mt-4 text-white ">
+            <div class="loginForm col-sm-12 py-4 px-4">
                 <h1 class="text-center">
                     <stroke class="mb-2">Đăng Nhập</stroke>
                 </h1>
@@ -63,15 +63,18 @@
                     <div class="form-group pt-4">
                         <button type="submit" class="btn pt-2 btn-primary col-12">Đăng Nhập</button>
                     </div>
-                    <div class="row pt-5">
-                        <div class="col-md-6 text-center">
+                    <div class="container-fluid">
+                        <hr class="border-secondary py-0">
+                    </div>
+                    <div class="row">
+                        <div class="col-md-6 col-6 text-center">
                             <a href="{{ route('loginGoogle') }}">
                                 <button type="button" class="btn pt-2 btn-google col-12">
                                     <i class="fa-brands fa-google fa-lg" style="color: #ffffff;"></i>
                                 </button>
                             </a>
                         </div>
-                        <div class="col-md-6 text-center">
+                        <div class="col-md-6 col-6 text-center">
                             <a href="{{ route('loginFacebook') }}">
                                 <button type="button" class="btn pt-2 btn-facebook col-12">
                                     <i class="fa-brands fa-facebook fa-lg" style="color: #ffffff;"></i>
