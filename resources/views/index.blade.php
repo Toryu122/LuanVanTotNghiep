@@ -33,48 +33,60 @@
         <p class="display-6 text-white text-capitalize">Lọc theo giá</p>
         <hr class="border-bottom border-secondary">
         <div class="row text-center text-white fs-4 rec-price fw-bold">
-            <div class="price col-md-2 col-sm-6 col-6" id="20" onclick="clicked('20')">
-                <div class="card shadow p-3 mb-5 rounded">
-                    <div class="card-body">
-                        <p class="card-text">20.000đ</p>
+            <div class="price col-md-2 col-sm-6 col-6">
+                <a href="/tim-kiem?genre=&fromPrice=75000&toPrice=&sortBy=" class="text-decoration-none text-white">
+                    <div class="card shadow p-3 mb-5 rounded">
+                        <div class="card-body">
+                            <p class="card-text">75.000đ</p>
+                        </div>
                     </div>
-                </div>
+                </a>
             </div>
-            <div class="price col-md-2 col-sm-6 col-6" id="50" onclick="clicked('50)'">
-                <div class="card shadow p-3 mb-5 rounded">
-                    <div class="card-body">
-                        <p class="card-text">50.000đ</p>
+            <div class="price col-md-2 col-sm-6 col-6">
+                <a href="/tim-kiem?genre=&fromPrice=100000&toPrice=&sortBy=" class="text-decoration-none text-white">
+                    <div class="card shadow p-3 mb-5 rounded">
+                        <div class="card-body">
+                            <p class="card-text">100.000đ</p>
+                        </div>
                     </div>
-                </div>
+                </a>
             </div>
-            <div class="price col-md-2 col-sm-6 col-6" id="75" onclick="clicked('75)'">
-                <div class="card shadow p-3 mb-5 rounded">
-                    <div class="card-body">
-                        <p class="card-text">75.000đ</p>
+            <div class="price col-md-2 col-sm-6 col-6">
+                <a href="/tim-kiem?genre=&fromPrice=150000&toPrice=&sortBy=" class="text-decoration-none text-white">
+                    <div class="card shadow p-3 mb-5 rounded">
+                        <div class="card-body">
+                            <p class="card-text">150.000đ</p>
+                        </div>
                     </div>
-                </div>
+                </a>
             </div>
 
-            <div class="price col-md-2 col-sm-6 col-6" id="100" onclick="clicked('100')">
-                <div class="card shadow p-3 mb-5 rounded">
-                    <div class="card-body">
-                        <p class="card-text">100.000đ</p>
+            <div class="price col-md-2 col-sm-6 col-6">
+                <a href="/tim-kiem?genre=&fromPrice=175000&toPrice=&sortBy=" class="text-decoration-none text-white">
+                    <div class="card shadow p-3 mb-5 rounded">
+                        <div class="card-body">
+                            <p class="card-text">175.000đ</p>
+                        </div>
                     </div>
-                </div>
+                </a>
             </div>
-            <div class="price col-md-2 col-sm-6 col-6" id="125" onclick="clicked('125')">
-                <div class="card shadow p-3 mb-5 rounded">
-                    <div class="card-body">
-                        <p class="card-text">125.000đ</p>
+            <div class="price col-md-2 col-sm-6 col-6">
+                <a href="/tim-kiem?genre=&fromPrice=200000&toPrice=&sortBy=" class="text-decoration-none text-white">
+                    <div class="card shadow p-3 mb-5 rounded">
+                        <div class="card-body">
+                            <p class="card-text">200.000đ</p>
+                        </div>
                     </div>
-                </div>
+                </a>
             </div>
-            <div class="price col-md-2 col-sm-6 col-6" id="150" onclick="clicked('150')">
-                <div class="card shadow p-3 mb-5 rounded">
-                    <div class="card-body">
-                        <p class="card-text">150.000đ</p>
+            <div class="price col-md-2 col-sm-6 col-6">
+                <a href="/tim-kiem?genre=&fromPrice=250000&toPrice=&sortBy=" class="text-decoration-none text-white">
+                    <div class="card shadow p-3 mb-5 rounded">
+                        <div class="card-body">
+                            <p class="card-text">250.000đ</p>
+                        </div>
                     </div>
-                </div>
+                </a>
             </div>
         </div>
     </div>
@@ -85,94 +97,122 @@
         <p class="display-6 text-white text-capitalize">Lọc theo thể loại</p>
         <hr class="border-bottom border-secondary">
         <div class="row text-center text-white rec-price fw-bold">
-            <div class="col-md-2 col-sm-6 col-6">
-                <div class="card shadow p-3 mb-5 rounded">
-                    <div class="card-body">
-                        <p class="card-text">Action</p>
+            <div class="price col-md-2 col-sm-6 col-6">
+                <a class="text-white text-decoration-none" href="/tim-kiem?genre=Action&fromPrice=&toPrice=&sortBy=">
+                    <div class="card shadow p-3 mb-5 rounded">
+                        <div class="card-body">
+                            <p class="card-text">Action</p>
+                        </div>
                     </div>
-                </div>
+                </a>
             </div>
-            <div class="col-md-2 col-sm-6 col-6">
-                <div class="card shadow p-3 mb-5 rounded">
-                    <div class="card-body">
-                        <p class="card-text">Tower Defense</p>
+            <div class="price col-md-2 col-sm-6 col-6">
+                <a class="text-white text-decoration-none"
+                    href="/tim-kiem?genre=Tower+Defense&fromPrice=&toPrice=&sortBy=">
+                    <div class="card shadow p-3 mb-5 rounded">
+                        <div class="card-body">
+                            <p class="card-text">Tower Defense</p>
+                        </div>
                     </div>
-                </div>
+                </a>
             </div>
-            <div class="col-md-2 col-sm-6 col-6">
-                <div class="card shadow p-3 mb-5 rounded">
-                    <div class="card-body">
-                        <p class="card-text">3D</p>
+            <div class="price col-md-2 col-sm-6 col-6">
+                <a class="text-white text-decoration-none" href="/tim-kiem?genre=3D&fromPrice=&toPrice=&sortBy=">
+                    <div class="card shadow p-3 mb-5 rounded">
+                        <div class="card-body">
+                            <p class="card-text">3D</p>
+                        </div>
                     </div>
-                </div>
+                </a>
             </div>
 
-            <div class="col-md-2 col-sm-6 col-6">
-                <div class="card shadow p-3 mb-5 rounded">
-                    <div class="card-body">
-                        <p class="card-text">RPG</p>
+            <div class="price col-md-2 col-sm-6 col-6">
+                <a class="text-white text-decoration-none" href="/tim-kiem?genre=RPG&fromPrice=&toPrice=&sortBy=">
+                    <div class="card shadow p-3 mb-5 rounded">
+                        <div class="card-body">
+                            <p class="card-text">RPG</p>
+                        </div>
                     </div>
-                </div>
+                </a>
             </div>
-            <div class="col-md-2 col-sm-6 col-6">
-                <div class="card shadow p-3 mb-5 rounded">
-                    <div class="card-body">
-                        <p class="card-text">Open World</p>
+            <div class="price col-md-2 col-sm-6 col-6">
+                <a class="text-white text-decoration-none"
+                    href="/tim-kiem?genre=Open+World&fromPrice=&toPrice=&sortBy=">
+                    <div class="card shadow p-3 mb-5 rounded">
+                        <div class="card-body">
+                            <p class="card-text">Open World</p>
+                        </div>
                     </div>
-                </div>
+                </a>
             </div>
-            <div class="col-md-2 col-sm-6 col-6">
-                <div class="card shadow p-3 mb-5 rounded">
-                    <div class="card-body">
-                        <p class="card-text">Co-op</p>
+            <div class="price col-md-2 col-sm-6 col-6">
+                <a class="text-white text-decoration-none" href="/tim-kiem?genre=Co-op&fromPrice=&toPrice=&sortBy=">
+                    <div class="card shadow p-3 mb-5 rounded">
+                        <div class="card-body">
+                            <p class="card-text">Co-op</p>
+                        </div>
                     </div>
-                </div>
+                </a>
             </div>
         </div>
 
         <div class="row text-center text-white fs-6 rec-price fw-bold">
-            <div class="col-md-2 col-sm-6 col-6">
-                <div class="card shadow p-3 mb-5 rounded">
-                    <div class="card-body">
-                        <p class="card-text">2D</p>
+            <div class="price col-md-2 col-sm-6 col-6">
+                <a class="text-white text-decoration-none" href="/tim-kiem?genre=2D&fromPrice=&toPrice=&sortBy=">
+                    <div class="card shadow p-3 mb-5 rounded">
+                        <div class="card-body">
+                            <p class="card-text">2D</p>
+                        </div>
                     </div>
-                </div>
+                </a>
             </div>
-            <div class="col-md-2 col-sm-6 col-6">
-                <div class="card shadow p-3 mb-5 rounded">
-                    <div class="card-body">
-                        <p class="card-text">Survival</p>
+            <div class="price col-md-2 col-sm-6 col-6">
+                <a class="text-white text-decoration-none"
+                    href="/tim-kiem?genre=Survival&fromPrice=&toPrice=&sortBy=">
+                    <div class="card shadow p-3 mb-5 rounded">
+                        <div class="card-body">
+                            <p class="card-text">Survival</p>
+                        </div>
                     </div>
-                </div>
+                </a>
             </div>
-            <div class="col-md-2 col-sm-6 col-6">
-                <div class="card shadow p-3 mb-5 rounded">
-                    <div class="card-body">
-                        <p class="card-text">Strategy</p>
+            <div class="price col-md-2 col-sm-6 col-6">
+                <a class="text-white text-decoration-none"
+                    href="/tim-kiem?genre=Strategy&fromPrice=&toPrice=&sortBy=">
+                    <div class="card shadow p-3 mb-5 rounded">
+                        <div class="card-body">
+                            <p class="card-text">Strategy</p>
+                        </div>
                     </div>
-                </div>
+                </a>
             </div>
 
-            <div class="col-md-2 col-sm-6 col-6">
-                <div class="card shadow p-3 mb-5 rounded">
-                    <div class="card-body">
-                        <p class="card-text">FPS</p>
+            <div class="price col-md-2 col-sm-6 col-6">
+                <a class="text-white text-decoration-none" href="/tim-kiem?genre=FPS&fromPrice=&toPrice=&sortBy=">
+                    <div class="card shadow p-3 mb-5 rounded">
+                        <div class="card-body">
+                            <p class="card-text">FPS</p>
+                        </div>
                     </div>
-                </div>
+                </a>
             </div>
-            <div class="col-md-2 col-sm-6 col-6">
-                <div class="card shadow p-3 mb-5 rounded">
-                    <div class="card-body">
-                        <p class="card-text">PvP</p>
+            <div class="price col-md-2 col-sm-6 col-6">
+                <a class="text-white text-decoration-none" href="/tim-kiem?genre=PvP&fromPrice=&toPrice=&sortBy=">
+                    <div class="card shadow p-3 mb-5 rounded">
+                        <div class="card-body">
+                            <p class="card-text">PvP</p>
+                        </div>
                     </div>
-                </div>
+                </a>
             </div>
-            <div class="col-md-2 col-sm-6 col-6">
-                <div class="card shadow p-3 mb-5 rounded">
-                    <div class="card-body">
-                        <p class="card-text">Fantasy</p>
+            <div class="price col-md-2 col-sm-6 col-6">
+                <a class="text-white text-decoration-none" href="/tim-kiem?genre=Fantasy&fromPrice=&toPrice=&sortBy=">
+                    <div class="card shadow p-3 mb-5 rounded">
+                        <div class="card-body">
+                            <p class="card-text">Fantasy</p>
+                        </div>
                     </div>
-                </div>
+                </a>
             </div>
         </div>
     </div>
@@ -259,11 +299,6 @@
                 }
             }
         });
-
-        const clicked = (id) => {
-            const div = document.getElementById(id);
-            div.classList.toggle('clicked')
-        }
     </script>
 
     <script src="{{ asset('js/script.js') }}"></script>

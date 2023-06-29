@@ -439,3 +439,13 @@ footer {
     background-color: #fff;
     border-bottom: 1px solid #e5e9f2;
 }
+
+.price {
+    transition: transform 0.2s;
+}
+
+.price:active {
+    -ms-transform: scale(1.5);
+    -webkit-transform: scale(0.9);
+    transform: scale(0.95);
+}

@@ -119,7 +119,7 @@
                     <a class="nav-link" aria-current="page" href="{{ route('cart') }}">
                         <div>
                             <i class="fa-solid fa-cart-shopping"></i>
-                            <span class="badge rounded-pill badge-notification bg-info">
+                            <span class="badge rounded-pill badge-notification bg-primary">
                                 <!-- If the session has cart in it get total quantity -->
                                 @if (Session::has('cart'))
                                     @php
