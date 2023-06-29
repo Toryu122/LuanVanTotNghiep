@@ -1,27 +1,8 @@
-{{-- <div class="col-3 py-3 game">
-    <img src="images/book/{{ $book['img'] }}" alt="" class="card-img-top game-img center-img">
-    <div class="card-body text-center">
-        <h5 class='card-title'>{{ $book['book_name'] }}</h5>
-        <p class='card-text'>{{ $book['price'] }} đ</p>
-    </div>
-    <div class="align-text-bottom">
-        <div>
-            <a href="" class="btn btn-outline-primary col-12">
-                <i class="fa-solid fa-cart-shopping fa-lg"></i> Mua ngay
-            </a>
-        </div>
-        <div class="pt-2">
-            <a href="{{ route('detail', $book['book_id']) }}" class="btn btn-primary col-12">
-                Thông tin chi tiết
-            </a>
-        </div>
-    </div>
-</div> --}}
-<div class="col-3 py-3 mb-3 game" id="game_table" >  
+{{-- <div class="col-3 py-3 mb-3 game" id="game_table">  
     <div class="card h-100 border-0">
-        <a  href="{{ route('detailgame',['id'=>$game->id]) }}"
-            data-bs-toggle="tooltip" 
-            data-bs-placement="top" 
+        <a href="{{ route('detailgame',['id'=>$game->id]) }}"
+            data-bs-toggle="tooltip"
+            data-bs-placement="top"
             title="{{ $game->name }}"
         >
             <img class="card-img-top game-img center-img" src="images/{{ $game->image }}" alt="..." loading="lazy" />
@@ -38,7 +19,6 @@
             <h5 class="text-danger ">{{ $game->price }} đ</h5>
         </div>
         <div class="card-footer border-top-0 bg-transparent">
-            {{-- <div class="text-center"><a class="btn btn-outline-dark mt-auto" href="#">View options</a></div> --}}
             <div class="align-text-bottom">
                 <div>
                     <form action="{{ route('buyNow') }}" method="post">
@@ -59,6 +39,26 @@
                     </form>
                 </div>
             </div>
+        </div>
+    </div>
+</div> --}}
+
+<div class="row mb-4">
+    <div class="col-md-5">
+        <div class="img">
+            <a href="{{ route('detailgame', ['id' => $game->id]) }}" data-bs-toggle="tooltip" data-bs-placement="top"
+                title="{{ $game->name }}">
+                <img class="card-img-top game-img center-img" src="images/{{ $game->image }}" alt="..."
+                    loading="lazy" />
+            </a>
+        </div>
+    </div>
+    <div class="col-md-7">
+        <div class="h5 name fw-bolder text-white">
+            {{ $game->name }}
+        </div>
+        <div class="price text-white">
+            {{ number_format($game->price, 0, ',', '.') }}đ
         </div>
     </div>
 </div>

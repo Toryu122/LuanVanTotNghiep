@@ -1,20 +1,20 @@
 <?php
 
-namespace App\View\Components;
+namespace App\View\Components\Game;
 
 use Illuminate\View\Component;
 
-class Carousel extends Component
+class SearchResult extends Component
 {
-    public $item;
+    public $gameList;
     /**
      * Create a new component instance.
      *
      * @return void
      */
-    public function __construct($item)
+    public function __construct($gameList)
     {
-        $this->item = $item;
+        $this->gameList = $gameList;
     }
 
     /**
@@ -24,6 +24,6 @@ class Carousel extends Component
      */
     public function render()
     {
-        return view('components.home.carousel');
+        return view('components.game.search-result');
     }
 }

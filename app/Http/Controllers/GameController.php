@@ -19,11 +19,26 @@ class GameController extends Controller
 
     public function index()
     {
-        $games = DB::table(Game::retrieveTableName())
-            ->paginate($this->perPage);
+        // This is just temporary, must have an algorithm or something, idk
+        // To take out 5 of each
+
+        $bestSellers = DB::table(Game::retrieveTableName())
+            ->inRandomOrder()->limit(5)->get();
+
+        $recommendThisWeek = DB::table(Game::retrieveTableName())
+            ->inRandomOrder()->limit(5)->get();
+
+        $topFavorite = DB::table(Game::retrieveTableName())
+            ->inRandomOrder()->limit(5)->get();
+
+        $carousel = DB::table(Game::retrieveTableName())
+            ->inRandomOrder()->limit(5)->get();
 
         return view('index', [
-            'games' => $games
+            'carousel' => $carousel,
+            'bestSellers' => $bestSellers,
+            'recommendThisWeek' => $recommendThisWeek,
+            'topFavorite' => $topFavorite
         ]);
     }
 
@@ -80,7 +95,7 @@ class GameController extends Controller
                 $game = $game->orderBy('name', 'desc');
             }
         }
-        
+
         // Get current page, default is 1
         $currentPage = $request->query('page', 1);
         // Paginate the query

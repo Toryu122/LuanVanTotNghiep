@@ -1,15 +1,12 @@
-<swiper-container 
-    class="mySwiper rounded-2 shadow" 
-    pagination="true" 
-    navigation="true" space-between="30"
-    loop="true" 
-    centered-slides="true" 
-    autoplay-delay="2500" 
-    autoplay-disable-on-interaction="false"
->
-    <swiper-slide><img src="{{ asset('images/banners/chatGPT.jpg') }}" alt="" srcset=""></swiper-slide>
-    <swiper-slide><img src="{{ asset('images/banners/nitro_discord.jpg') }}" alt="" srcset=""></swiper-slide>
-    <swiper-slide><img src="{{ asset('images/banners/chatGPT.jpg') }}" alt="" srcset=""></swiper-slide>
-    <swiper-slide><img src="{{ asset('images/banners/nitro_discord.jpg') }}" alt="" srcset=""></swiper-slide>
-    <swiper-slide><img src="{{ asset('images/banners/chatGPT.jpg') }}" alt="" srcset=""></swiper-slide>
-</swiper-container>
+<div class="swiper-slide swiper-slide--item">
+    <img src="images/{{ $item->image }}" alt="">
+    <div class="pt-1">
+        <a class="text-decoration-none" href="{{ route('detailgame', ['id'=>$item->id]) }}">
+            <h2>{{ $item->name }}</h2>
+        </a>
+        <p>{{ $item->description }}</p>
+        <div class="pt-0">
+            &nbsp;
+        </div>
+    </div>
+</div>

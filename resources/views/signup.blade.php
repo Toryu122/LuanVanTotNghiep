@@ -27,7 +27,7 @@
         </div>
     </div>
     <section class="backgroundBody pb-5">
-        <div class="container-fluid col-4 mt-4 text-white ">
+        <div class="container-fluid col-md-4 col-sm-12  mt-4 text-white ">
             <div class="loginForm py-4 px-4">
                 <h1 class="text-center">
                     <stroke>Đăng Ký</stroke><br>
