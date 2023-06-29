@@ -263,9 +263,14 @@ main > div p {
     color: white;
 }
 
+.btn-default {
+    background-color: #0074e4 !important;
+    color: white;
+}
+
 .btn-default:hover {
-    border-color: var(--myBlue2);
-    color: var(--myBlue2);
+    background-color: #097eec !important;
+    color: white;
 }
 
 .btn-google {
@@ -290,7 +295,7 @@ main > div p {
 
 .btn-search {
     color: white !important;
-    background-color: #000C66;
+    background-color: #000c66;
 }
 
 .btn-search:hover {

@@ -1,5 +1,5 @@
-<div class="tab-pane fade" id="password" role="tabpanel">
-    <div class="card info">
+<div class="tab-pane text-white bg-navbar-dark fade" id="password" role="tabpanel">
+    <div class="card bg-navbar-dark info">
         <div class="card-body">
             <h5 class="card-title">Đổi mật khẩu</h5>
             @if (Auth::user()->social !== 'None')

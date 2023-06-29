@@ -290,7 +290,7 @@ main > div p {
 
 .btn-search {
     color: white !important;
-    background-color: #000C66;
+    background-color: #000c66;
 }
 
 .btn-search:hover {
@@ -431,4 +431,18 @@ footer {
     color: inherit;
     background-color: #fff;
     border-bottom: 1px solid #e5e9f2;
+}
+
+.list-group-item-dark.list-group-item-action.active {
+    color: #fff;
+    background-color: #2a2a2a;
+    border-color: #2a2a2a;
+}
+
+.price {
+    transition: transform 0.3s ease;
+}
+
+.price.clicked {
+    transform: scale(1.2);
 }

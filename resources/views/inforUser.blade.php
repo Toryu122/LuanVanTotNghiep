@@ -17,21 +17,21 @@
         <div class="row">
             {{-- Tab Menu --}}
             <div class="col-md-5 col-xl-4">
-                <div class="card info">
-                    <div class="card-header">
+                <div class="card border-secondary info">
+                    <div class="card-header border-secondary bg-navbar-dark text-white">
                         <h5 class="card-title mb-0">Cài đặt tài khoản</h5>
                     </div>
 
                     <div class="list-group list-group-flush" role="tablist">
-                        <a class="list-group-item list-group-item-action active" data-bs-toggle="list" href="#account"
+                        <a class="list-group-item-dark list-group-item list-group-item-action active" data-bs-toggle="list" href="#account"
                             role="tab">
                             Thông tin tài khoản
                         </a>
-                        <a class="list-group-item list-group-item-action" data-bs-toggle="list" href="#password"
+                        <a class="list-group-item-dark list-group-item list-group-item-action" data-bs-toggle="list" href="#password"
                             role="tab">
                             Đổi mật khẩu
                         </a>
-                        <a class="list-group-item list-group-item-action" data-bs-toggle="list" href="#order"
+                        <a class="list-group-item-dark list-group-item list-group-item-action" data-bs-toggle="list" href="#order"
                             role="tab">
                             Lịch sử mua hàng
                         </a>

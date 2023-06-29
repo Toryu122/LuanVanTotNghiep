@@ -14,7 +14,17 @@
 
     <!-- Carousel -->
     <div class="container-fluid pt-3">
-        <x-carousel />
+        <main>
+            <div class="swiper">
+                <div class="swiper-wrapper">
+                    @foreach ($carousel as $item)
+                        <x-carousel :item="$item" />
+                    @endforeach
+                </div>
+                <!-- Add Pagination -->
+                <div class="swiper-pagination"></div>
+            </div>
+        </main>
     </div>
     <!-- Carousel -->
 
@@ -23,21 +33,21 @@
         <p class="display-6 text-white text-capitalize">Lọc theo giá</p>
         <hr class="border-bottom border-secondary">
         <div class="row text-center text-white fs-4 rec-price fw-bold">
-            <div class="col-md-2 col-sm-6 col-6">
+            <div class="price col-md-2 col-sm-6 col-6" id="20" onclick="clicked('20')">
                 <div class="card shadow p-3 mb-5 rounded">
                     <div class="card-body">
                         <p class="card-text">20.000đ</p>
                     </div>
                 </div>
             </div>
-            <div class="col-md-2 col-sm-6 col-6">
+            <div class="price col-md-2 col-sm-6 col-6" id="50" onclick="clicked('50)'">
                 <div class="card shadow p-3 mb-5 rounded">
                     <div class="card-body">
                         <p class="card-text">50.000đ</p>
                     </div>
                 </div>
             </div>
-            <div class="col-md-2 col-sm-6 col-6">
+            <div class="price col-md-2 col-sm-6 col-6" id="75" onclick="clicked('75)'">
                 <div class="card shadow p-3 mb-5 rounded">
                     <div class="card-body">
                         <p class="card-text">75.000đ</p>
@@ -45,21 +55,21 @@
                 </div>
             </div>
 
-            <div class="col-md-2 col-sm-6 col-6">
+            <div class="price col-md-2 col-sm-6 col-6" id="100" onclick="clicked('100')">
                 <div class="card shadow p-3 mb-5 rounded">
                     <div class="card-body">
                         <p class="card-text">100.000đ</p>
                     </div>
                 </div>
             </div>
-            <div class="col-md-2 col-sm-6 col-6">
+            <div class="price col-md-2 col-sm-6 col-6" id="125" onclick="clicked('125')">
                 <div class="card shadow p-3 mb-5 rounded">
                     <div class="card-body">
                         <p class="card-text">125.000đ</p>
                     </div>
                 </div>
             </div>
-            <div class="col-md-2 col-sm-6 col-6">
+            <div class="price col-md-2 col-sm-6 col-6" id="150" onclick="clicked('150')">
                 <div class="card shadow p-3 mb-5 rounded">
                     <div class="card-body">
                         <p class="card-text">150.000đ</p>
@@ -172,10 +182,44 @@
     <!-- Sản phẩm nổi bật -->
     <div class="container pt-3">
         <div class="row">
-            @foreach ($games as $item)
-                <x-game.game-item :game="$item" />
-            @endforeach
+            <div class="col-md-4 border-end border-secondary">
+                <div class="title text-center text-capitalize">
+                    <p class="display-6 text-white">Bán chạy nhất</p>
+                </div>
+                <hr class="border-bottom border-secondary">
+                <div class="product">
+                    @foreach ($bestSellers as $item)
+                        <x-game.game-item :game="$item" />
+                    @endforeach
+                </div>
+            </div>
+
+            <div class="col-md-4 border-end border-secondary">
+                <div class="title text-center text-capitalize">
+                    <p class="display-6 text-white">Đề cử tuần này</p>
+                </div>
+                <hr class="border-bottom border-secondary">
+                <div class="product">
+                    @foreach ($recommendThisWeek as $item)
+                        <x-game.game-item :game="$item" />
+                    @endforeach
+                </div>
+            </div>
+
+            <div class="col-md-4">
+                <div class="title text-center text-capitalize">
+                    <p class="display-6 text-white">Được yêu thích nhất</p>
+                </div>
+                <hr class="border-bottom border-secondary">
+                <div class="product">
+                    @foreach ($topFavorite as $item)
+                        <x-game.game-item :game="$item" />
+                    @endforeach
+                </div>
+            </div>
+
         </div>
+    </div>
     </div>
     <!-- Sản phẩm nổi bật -->
 
@@ -215,6 +259,11 @@
                 }
             }
         });
+
+        const clicked = (id) => {
+            const div = document.getElementById(id);
+            div.classList.toggle('clicked')
+        }
     </script>
 
     <script src="{{ asset('js/script.js') }}"></script>

@@ -1,7 +1,7 @@
 <title>{{ $title }}</title>
 
 <!-- Navbar -->
-<nav class="navbar navbar-expand-lg navbar-dark bg-dark">
+<nav class="navbar navbar-expand-lg navbar-dark bg-navbar-dark">
     <!-- Container wrapper -->
     <div class="container-fluid">
         <!-- Navbar brand -->
@@ -147,7 +147,7 @@
                 class="d-flex input-group w-auto ms-lg-3 my-3 my-lg-0">
                 <input type="search" name="q" class="form-control" placeholder="Tìm kiếm sản phẩm"
                     aria-label="Search" />
-                <button class="btn btn-primary" data-bs-ripple-color="dark">
+                <button class="btn btn-default" data-bs-ripple-color="dark">
                     <i class="fa-solid fa-magnifying-glass"></i>
                 </button>
             </form>
