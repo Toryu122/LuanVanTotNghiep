@@ -93,3 +93,24 @@ Route::middleware(['auth:sanctum', AuthStore::class])->group(function () {
 Route::get('/assignform', [TestController::class, 'form'])->name('genreAssign');
 Route::post('/assign', [TestController::class, 'assignGen'])->name('assignGen');
 Route::post('/addGen', [TestController::class, 'addGen'])->name('addGen');
+Route::post('/addGen', [TestController::class, 'addGen'])->name('addGen');
+
+
+//========================= ADMIN =========================//
+
+Route::prefix('admin')->group(function () {
+    Route::get('', [DashboardController::class, 'Index']);
+    Route::get('/dashboard', [DashboardController::class, 'Index'])->name('admindashboard');
+
+    Route::prefix('game')->group(function () {
+        Route::get('', [AdGameController::class, 'Index'])->name('admingame');
+        Route::get('/add', [AdGameController::class, 'add'])->name('addgame');
+        Route::post('/store', [AdGameController::class, 'store'])->name('storegame');
+        Route::get('/edit', [AdGameController::class, 'edit'])->name('editgame');
+        Route::post('/update', [AdGameController::class, 'update'])->name('updategame');
+        Route::get('/delete', [AdGameController::class, 'del'])->name('deletegame');
+
+    });
+    
+
+});
