@@ -58,14 +58,14 @@ class OrderController extends Controller
             if ($request->id && $request->quantity) {
                 $cart = session()->get('cart');
                 $cart[$request->id]["quantity"] = $request->quantity;
-
-                toastr()->info('', 'Cập nhật thành công');
                 session()->put('cart', $cart);
-                return redirect()->back();
+
+                toastr()->success('', 'Cập nhật thành công');
+                return response()->json(['success' => true]);
             }
         } catch (\Exception $ex) {
             toastr()->error('', 'Something went wrong');
-            return redirect()->back();
+            return response()->json(['success' => false]);
         }
     }
 

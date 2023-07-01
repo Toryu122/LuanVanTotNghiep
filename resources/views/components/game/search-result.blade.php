@@ -9,7 +9,7 @@
             <div class="">
                 <a class="text-decoration-none text-dark" data-bs-toggle="tooltip" data-bs-placement="top"
                     title="{{ $gameList->name }}" href="{{ route('detailgame', $gameList->id) }}">
-                    <h5 class="text-white">20XX</h5>
+                    <h5 class="text-white">{{ $gameList->name }}</h5>
                 </a>
             </div>
             <div class="">
