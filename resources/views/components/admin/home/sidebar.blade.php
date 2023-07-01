@@ -2,7 +2,7 @@
     <div class="sb-sidenav-menu">
         <div class="nav">
             <div class="sb-sidenav-menu-heading">Core</div>
-            <a class="nav-link" href="index.html">
+            <a class="nav-link" href="{{ route('admindashboard') }}">
                 <div class="sb-nav-link-icon"><i class="fa-solid fa-chart-line"></i></div>
                 Dashboard
             </a>
@@ -32,10 +32,25 @@
             </a>
             <div class="collapse" id="collapsePages" aria-labelledby="headingTwo" data-bs-parent="#sidenavAccordion">
                 <nav class="sb-sidenav-menu-nested nav accordion" id="sidenavAccordionPages">
-                    <a class="nav-link" href="layout-static.html"><i class="fa-solid fa-gamepad"></i>&nbsp;
-                        Games</a>
-                    <a class="nav-link" href="layout-static.html"><i class="fa-solid fa-tags"></i>&nbsp;
-                        Genres</a>
+                    <table>
+                        <td>
+                            <a class="nav-link" href="{{ route('admingame') }}"><i
+                                    class="fa-solid fa-gamepad"></i>&nbsp;
+                                Games </a>
+                        </td>
+                        <td>
+                            <a href="{{ route('addgame') }}"type="submit" class="nav-link"> + </a>
+                        </td>
+                    </table>
+                    <table>
+                        <td>
+                            <a class="nav-link" href="layout-static.html"><i class="fa-solid fa-tags"></i>&nbsp;
+                                Genres</a>
+                        </td>
+                        <th>
+                            <a href="{{ route('addgame') }}"type="submit" class="nav-link"> + </a>
+                        </th>
+                    </table>
                     <!-- <a class="nav-link collapsed" href="#" data-bs-toggle="collapse" data-bs-target="#pagesCollapseAuth" aria-expanded="false" aria-controls="pagesCollapseAuth">
                                     Authentication
                                     <div class="sb-sidenav-collapse-arrow"><i class="fas fa-angle-down"></i></div>

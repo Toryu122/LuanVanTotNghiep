@@ -38,18 +38,6 @@
                     </div>
                     <h4 class="fw-bold py-3 mb-4"><span class="text-muted fw-light">Admin/</span>
                     </h4>
-                    <div class="text-center">
-                        @if ($errors->any())
-                            <div class="text-danger h3 text-lg-start fw-bold">
-                                Something went wrong...
-                            </div>
-                            <ul class="list-group list-unstyled">
-                                @foreach ($errors->all() as $item)
-                                    <li class="alert alert-danger">{{ $item }}</li>
-                                @endforeach
-                            </ul>
-                        @endif
-                    </div>
                     <div class="col-xxl">
                         <div class="card mb-4">
                             <div class="card-header d-flex align-items-center justify-content-between">

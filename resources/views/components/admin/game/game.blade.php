@@ -59,18 +59,7 @@
                                 </tfoot>
                                 <tbody class="table-border-bottom-0">
                                     @foreach ($games as $item)
-                                        <tr>
-                                            {{-- <td><img src="../images/{{ $item->image }}"width="150" height="100" /></td> --}}
-                                            <td>{{ $item->id }}</td>
-                                            <td>{{ $item->name }}</td>
-                                            <td>{{ $item->price }}</td>
-                                            <td>{{ date('d-m-Y', strtotime($item->created_at)) }}</td>
-                                            <td>{{ date('d-m-Y', strtotime($item->updated_at)) }}</td>
-                                            <td><a href="{{ route('editgame', ['id' => $item->id]) }}" type="submit"
-                                                    class="btn btn-outline-warning">Sửa</a></td>
-                                            <td><a href="{{ route('deletegame', ['id' => $item->id]) }}" type="submit"
-                                                    class="btn btn-outline-danger">Xóa</a></td>
-                                        </tr>
+                                        <x-admin.home.content.table :game="$item" />
                                     @endforeach
                                 </tbody>
                             </table>

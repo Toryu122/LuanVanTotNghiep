@@ -72,6 +72,7 @@ class CreateBase extends Migration
             $table->unsignedInteger('genre_id')->nullable(false);
             $table->foreign('game_id')->references('id')->on(Game::retrieveTableName());
             $table->foreign('genre_id')->references('id')->on(Genre::retrieveTableName());
+            $table->unique(['game_id', 'genre_id']);
             
             $table->timestamp('created_at')->useCurrent();
             $table->timestamp('updated_at')->useCurrent();

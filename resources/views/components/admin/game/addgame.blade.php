@@ -9,12 +9,18 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
     @include('cdn')
-    <x-header title="Trang Quản Trị Game" />
+
+    <link rel="stylesheet" href="{{ asset('css/admin.style.css') }}">
 </head>
 
 <body>
+
+    <x-admin.home.header title="Game" />
+
     <div id="layoutSidenav">
-        <x-admin.layouts.sidenav />
+        <div id="layoutSidenav_nav">
+            <x-admin.home.sidebar />
+        </div>
         <div id="layoutSidenav_content">
             <main>
                 <div class="container-xxl flex-grow-1 container-p-y">
@@ -63,18 +69,18 @@
                                     <div class="row mb-3">
                                         <label class="col-sm-2 col-form-label" for="basic-default-name">Chọn thể
                                             loại</label>
-                                            <div class="col-sm-10">
-                                                <input id='genres' type='hidden' name='my_match[]' />
-                                                <div class='controls'>
-                                                    @foreach ($genres as $gen)
-                                                        <div>
-                                                            <label class="checkbox">
-                                                                <input type="checkbox" name="my_match[]"
-                                                                    value="{{ $gen->id }}">{{ $gen->name }}</label>
-                                                        </div>
-                                                    @endforeach
-                                                </div>
+                                        <div class="col-sm-10">
+                                            <input id='genres' type='hidden' name='my_match[]' />
+                                            <div class='controls'>
+                                                @foreach ($genres as $gen)
+                                                    <div>
+                                                        <label class="checkbox">
+                                                            <input type="checkbox" name="my_match[]"
+                                                                value="{{ $gen->id }}">{{ $gen->name }}</label>
+                                                    </div>
+                                                @endforeach
                                             </div>
+                                        </div>
                                     </div>
                                     <div class="row mb-3">
                                         <label class="col-sm-2 col-form-label" for="basic-default-name">Chọn nhà sản
