@@ -63,8 +63,18 @@
                                     <div class="row mb-3">
                                         <label class="col-sm-2 col-form-label" for="basic-default-name">Chọn thể
                                             loại</label>
-                                        <div class="col-sm-10">
-                                        </div>
+                                            <div class="col-sm-10">
+                                                <input id='genres' type='hidden' name='my_match[]' />
+                                                <div class='controls'>
+                                                    @foreach ($genres as $gen)
+                                                        <div>
+                                                            <label class="checkbox">
+                                                                <input type="checkbox" name="my_match[]"
+                                                                    value="{{ $gen->id }}">{{ $gen->name }}</label>
+                                                        </div>
+                                                    @endforeach
+                                                </div>
+                                            </div>
                                     </div>
                                     <div class="row mb-3">
                                         <label class="col-sm-2 col-form-label" for="basic-default-name">Chọn nhà sản

@@ -62,7 +62,7 @@
                                                         src="{{ asset('images/' . $game->image) }}"width="150"
                                                         height="100" />
                                                 </td>
-                                                    <td>
+                                                <td>
                                                     <input class="form-control" type="file" id="img"
                                                         name="img" />
                                                 </td>
@@ -94,6 +94,16 @@
                                         <label class="col-sm-2 col-form-label" for="basic-default-name">Chọn thể
                                             loại</label>
                                         <div class="col-sm-10">
+                                            <input id='genres' type='hidden' name='my_match[]' />
+                                            <div class='controls'>
+                                                @foreach ($genres as $gen)
+                                                    <div>
+                                                        <label class="checkbox">
+                                                            <input type="checkbox" name="my_match[]"
+                                                                value="{{ $gen->id }}">{{ $gen->name }}</label>
+                                                    </div>
+                                                @endforeach
+                                            </div>
                                         </div>
                                     </div>
                                     <div class="row mb-3">
@@ -104,7 +114,8 @@
                                                 aria-label="Default select example">
                                                 @foreach ($pubs as $nsx)
                                                     @if ($nsx->id == $game->publisher_id)
-                                                        <option selected value="{{ $nsx->id }}">{{ $nsx->name }}
+                                                        <option selected value="{{ $nsx->id }}">
+                                                            {{ $nsx->name }}
                                                         </option>
                                                     @else
                                                         <option value="{{ $nsx->id }}">{{ $nsx->name }}
