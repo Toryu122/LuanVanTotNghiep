@@ -9,12 +9,18 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
     @include('cdn')
-    <x-header title="Trang Quản Trị Game" />
+
+    <link rel="stylesheet" href="{{ asset('css/admin.style.css') }}">
 </head>
 
 <body>
+
+    <x-admin.home.header title="Game" />
+
     <div id="layoutSidenav">
-        <x-admin.layouts.sidenav />
+        <div id="layoutSidenav_nav">
+            <x-admin.home.sidebar />
+        </div>
         <div id="layoutSidenav_content">
             <main>
                 <div class="container-xxl flex-grow-1 container-p-y">
@@ -145,6 +151,38 @@
             </main>
         </div>
     </div>
+
+
+    <script>
+        window.addEventListener('DOMContentLoaded', event => {
+
+            // Toggle the side navigation
+            const sidebarToggle = document.body.querySelector('#sidebarToggle');
+            if (sidebarToggle) {
+                // Uncomment Below to persist sidebar toggle between refreshes
+                // if (localStorage.getItem('sb|sidebar-toggle') === 'true') {
+                //     document.body.classList.toggle('sb-sidenav-toggled');
+                // }
+                sidebarToggle.addEventListener('click', event => {
+                    event.preventDefault();
+                    document.body.classList.toggle('sb-sidenav-toggled');
+                    localStorage.setItem('sb|sidebar-toggle', document.body.classList.contains(
+                        'sb-sidenav-toggled'));
+                });
+            }
+
+        });
+
+        window.addEventListener('DOMContentLoaded', event => {
+            // Simple-DataTables
+            // https://github.com/fiduswriter/Simple-DataTables/wiki
+
+            const datatablesSimple = document.getElementById('datatablesSimple');
+            if (datatablesSimple) {
+                new simpleDatatables.DataTable(datatablesSimple);
+            }
+        });
+    </script>
 </body>
 
 </html>

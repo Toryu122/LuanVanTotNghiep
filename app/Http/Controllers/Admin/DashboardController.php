@@ -10,6 +10,6 @@ class DashboardController extends Controller
     //
     public function Index()
     {
-        return view('components.admin.dashboard');
+        return view('admin.index');
     }
 }

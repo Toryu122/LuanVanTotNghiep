@@ -98,7 +98,8 @@ Route::get('/assignform', [TestController::class, 'form'])->name('genreAssign');
 Route::post('/assign', [TestController::class, 'assignGen'])->name('assignGen');
 Route::post('/addGen', [TestController::class, 'addGen'])->name('addGen');
 
-//Admin
+//========================= ADMIN =========================//
+
 Route::prefix('admin')->group(function () {
     Route::get('', [DashboardController::class, 'Index']);
     Route::get('/dashboard', [DashboardController::class, 'Index'])->name('admindashboard');
@@ -110,8 +111,5 @@ Route::prefix('admin')->group(function () {
         Route::get('/edit', [AdGameController::class, 'edit'])->name('editgame');
         Route::post('/update', [AdGameController::class, 'update'])->name('updategame');
         Route::get('/delete', [AdGameController::class, 'del'])->name('deletegame');
-
     });
-    
-
 });

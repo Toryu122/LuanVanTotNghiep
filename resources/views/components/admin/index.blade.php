@@ -14,6 +14,7 @@
 <body>
     <div id="layoutSidenav">
         <x-admin.layouts.sidenav />
+        
         <div id="layoutSidenav_content">
             <main>
                 <div class="container-fluid px-4">
