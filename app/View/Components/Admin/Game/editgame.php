@@ -1,21 +1,19 @@
 <?php
 
-namespace App\View\Components\Game;
+namespace App\View\Components\Admin\Game;
 
 use Illuminate\View\Component;
 
-class GameItem extends Component
+class editgame extends Component
 {
-    
     /**
      * Create a new component instance.
      *
      * @return void
      */
-    public $game;
-    public function __construct($game)
+    public function __construct()
     {
-        $this->game = $game;
+        //
     }
 
     /**
@@ -25,6 +23,6 @@ class GameItem extends Component
      */
     public function render()
     {
-        return view('components.game.game-item');
+        return view('components.admin.game.editgame');
     }
 }

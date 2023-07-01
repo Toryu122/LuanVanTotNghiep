@@ -2,6 +2,8 @@
 
 use App\Common\Helper;
 use App\Common\Constant;
+use App\Http\Controllers\Admin\AdGameController;
+use App\Http\Controllers\Admin\DashboardController;
 use Illuminate\Support\Str;
 use App\Http\Middleware\AuthStore;
 use Illuminate\Support\Facades\Route;
@@ -10,6 +12,7 @@ use App\Http\Controllers\GameController;
 use App\Http\Controllers\UserController;
 use App\Http\Controllers\OrderController;
 use App\Http\Controllers\TestController;
+
 
 /*
 |--------------------------------------------------------------------------
@@ -42,6 +45,7 @@ Route::get('/tos', function () {
 /**
  * Normal Authenticate
  */
+
 Route::get('/dang-nhap', [AuthController::class, 'login'])->name('login');
 Route::get('/dang-ky', [AuthController::class, 'signup'])->name('signup');
 Route::post('/login', [AuthController::class, 'loginUser'])->name('loginUser');
@@ -93,3 +97,21 @@ Route::middleware(['auth:sanctum', AuthStore::class])->group(function () {
 Route::get('/assignform', [TestController::class, 'form'])->name('genreAssign');
 Route::post('/assign', [TestController::class, 'assignGen'])->name('assignGen');
 Route::post('/addGen', [TestController::class, 'addGen'])->name('addGen');
+
+//Admin
+Route::prefix('admin')->group(function () {
+    Route::get('', [DashboardController::class, 'Index']);
+    Route::get('/dashboard', [DashboardController::class, 'Index'])->name('admindashboard');
+
+    Route::prefix('game')->group(function () {
+        Route::get('', [AdGameController::class, 'Index'])->name('admingame');
+        Route::get('/add', [AdGameController::class, 'add'])->name('addgame');
+        Route::post('/store', [AdGameController::class, 'store'])->name('storegame');
+        Route::get('/edit', [AdGameController::class, 'edit'])->name('editgame');
+        Route::post('/update', [AdGameController::class, 'update'])->name('updategame');
+        Route::get('/delete', [AdGameController::class, 'del'])->name('deletegame');
+
+    });
+    
+
+});

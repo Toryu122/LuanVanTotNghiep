@@ -12,7 +12,7 @@ class Game extends BaseModel
 {
     use HasFactory;
 
-
+    protected $fillable = ['name','price','description','publisher_id','image'];
     /**
      * @return BelongsTo
      */
