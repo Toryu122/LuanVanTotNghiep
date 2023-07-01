@@ -362,11 +362,12 @@ footer {
     color: #ab8181;
 }
 
-.main-section {
-    /* position: absolute; */
-    left: 50%;
-    right: 50%;
-    transform: translate(10%, 5%);
+@media (min-width: 768px) {
+    .main-section {
+        left: 50%;
+        right: 50%;
+        transform: translate(10%, 5%);
+    }
 }
 
 .left-side-product-box img {

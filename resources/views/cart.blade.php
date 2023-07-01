@@ -11,6 +11,7 @@
 
 <body class="d-flex flex-column min-vh-100">
     <x-header title="Giỏ Hàng" />
+
     <div class="container-fluid pt-3">
         <div class="container shadow">
             <section class="h-100">
@@ -36,8 +37,8 @@
                         </div>
                         {{-- Item List --}}
                         <div class="col-md-8">
-                            <div class="card mb-4">
-                                <div class="card-header py-3">
+                            <div class="card bg-navbar-dark border-secondary mb-4">
+                                <div class="card-header bg-transparent border-secondary text-white py-3">
                                     <div class="row">
                                         {{-- If the session has cart in it get total quantity --}}
                                         @if (Session::has('cart') && !empty(session('cart')))
@@ -50,15 +51,15 @@
                                                     $quantity += $details['quantity'];
                                                 @endphp
                                             @endforeach
-                                            <div class="col-7">
+                                            <div class="col-md-7 col-6">
                                                 <h5 class="mb-0">Giỏ hàng - {{ $quantity }} món</h5>
                                             </div>
-                                            <div class="col-5 d-flex justify-content-end">
+                                            <div class="col-md-5 col-6 d-flex justify-content-end">
                                                 <form action="{{ route('removeItem') }}" method="post">
                                                     @csrf
                                                     @method('delete')
                                                     <button name="clear_all" type="submit" class="btn btn-danger">Xóa
-                                                        hết giỏ</button>
+                                                        hết</button>
                                                 </form>
                                             </div>
                                         @else
@@ -72,7 +73,7 @@
                                             <x-order.item-list :cart-item="$details" />
                                         @endforeach
                                     @else
-                                        <p class="h3 mb-0">Giỏ hàng trống!</p>
+                                        <p class="text-white h3 mb-0">Giỏ hàng trống!</p>
                                     @endif
                                 </div>
 
@@ -81,9 +82,9 @@
                         {{-- Item List --}}
 
                         {{-- Payment --}}
-                        <div class="col-md-4">
-                            <div class="card mb-4">
-                                <div class="card-header py-3">
+                        <div class="col-md-4 text-white">
+                            <div class="card mb-4 bg-navbar-dark border-secondary">
+                                <div class="card-header bg-transparent py-3 border-secondary">
                                     <h5 class="mb-0">Thanh toán</h5>
                                 </div>
                                 <div class="card-body">
@@ -95,9 +96,9 @@
                                         @if (Session::has('cart'))
                                             @foreach ((array) session('cart') as $id => $details)
                                                 <li
-                                                    class="list-group-item d-flex justify-content-between align-items-center border-0 px-0 pb-0">
+                                                    class="bg-navbar-dark text-white list-group-item d-flex justify-content-between align-items-center border-0 px-0 pb-0">
                                                     {{ $details['name'] }}
-                                                    <span>{{ $details['price'] }} đ</span>
+                                                    <span>{{ number_format($details['price'], 0, ',', '.') }}đ</span>
                                                 </li>
                                                 @php
                                                     $total += $details['price'] * $details['quantity'];
@@ -105,13 +106,16 @@
                                             @endforeach
                                         @endif
                                         <li
-                                            class="list-group-item d-flex justify-content-between align-items-center border-0 px-0 mb-3">
+                                            class="bg-navbar-dark text-white list-group-item d-flex justify-content-between align-items-center border-0 px-0 mb-3">
                                             <div>
                                                 <strong>Tổng cộng</strong>
                                             </div>
                                             <span>
                                                 <strong>
-                                                    <div name="total">{{ $total }} đ</div>
+                                                    <input type="hidden" id="totalTemp" value="">
+                                                    <div id="totalPrice" name="total">
+                                                        {{ number_format($total, 0, ',', '.') }}đ
+                                                    </div>
                                                 </strong>
                                             </span>
                                         </li>
@@ -161,17 +165,99 @@
 
     <script>
         function decrementQuantity(button) {
-            const quantityInput = button.parentNode.nextElementSibling.querySelector('input[type="number"]');
-            if (quantityInput) {
-                quantityInput.stepDown();
+            const quantityInput = $(button).parent().next().find('input[type="number"]');
+            if (quantityInput.length) {
+                quantityInput[0].stepDown();
+                updateQuantity(quantityInput[0], "decrease");
             }
         }
 
         function incrementQuantity(button) {
-            const quantityInput = button.parentNode.previousElementSibling.querySelector('input[type="number"]');
-            if (quantityInput) {
-                quantityInput.stepUp();
+            const quantityInput = $(button).parent().prev().find('input[type="number"]');
+            if (quantityInput.length) {
+                quantityInput[0].stepUp();
+                updateQuantity(quantityInput[0], "increase");
             }
+        }
+
+        // function extractValues(obj) {
+        //     const stack = [obj];
+        //     const result = [];
+
+        //     while (stack.length) {
+        //         const currentObj = stack.pop();
+
+        //         let price = 0;
+        //         for (let key in currentObj) {
+        //             const value = currentObj[key];
+        //             if (typeof value === 'object' && value !== null) {
+        //                 // If the value is an object, push it onto the stack for further iteration
+        //                 stack.push(value);
+        //             } else {
+        //                 // Push the desired value into the result array
+        //                 if (key == "price") {
+        //                     price = value;
+        //                 }
+        //                 if (key == "quantity") {
+        //                     console.log(price);
+        //                     result.push(value * price);
+        //                 }
+        //             }
+        //         }
+        //     }
+
+        //     return result;
+        // }
+
+        // function numberFormat(number, decimals, decimalSeparator, thousandsSeparator) {
+        //     decimals = decimals || 0;
+        //     decimalSeparator = decimalSeparator || '.';
+        //     thousandsSeparator = thousandsSeparator || ',';
+
+        //     const fixedNumber = number.toFixed(decimals);
+        //     const parts = fixedNumber.toString().split('.');
+        //     parts[0] = parts[0].replace(/\B(?=(\d{3})+(?!\d))/g, thousandsSeparator);
+
+        //     return parts.join(decimalSeparator);
+        // }
+
+        function updateQuantity(quantityInput, action) {
+            const quantityForm = $(quantityInput).closest('form');
+            const formData = new FormData(quantityForm[0]);
+
+            $.ajax({
+                url: quantityForm.attr('action'),
+                method: 'POST',
+                data: formData,
+                processData: false,
+                contentType: false,
+                dataType: 'json',
+                success: function(data) {
+                    if (data.success) {
+                        // let sessionData = $.parseJSON('{!! json_encode(session()->all()) !!}');
+                        // let priceArr = extractValues(sessionData.cart);
+                        // let total = priceArr.reduce((sum, value) => sum + value, 0);
+                        // console.log(total);
+
+                        // formData.forEach((value, key) => {
+                        //     if (key == "price") {
+                        //         if (action == "decrease") {
+                        //             total = total - parseInt(value);
+                        //         } else if (action == "increase") {
+                        //             total = total + parseInt(value);
+                        //         }
+                        //     }
+                        // });
+                        location.reload();
+                        toastr.success('', 'Cập nhật thành công');
+                    } else {
+                        toastr.error('', 'Something went wrong');
+                    }
+                },
+                error: function() {
+                    toastr.error('', 'Something went wrong');
+                }
+            });
         }
     </script>
 </body>

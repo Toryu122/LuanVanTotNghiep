@@ -16,19 +16,22 @@ class GameController extends Controller
 {
     // public $model = Game::class;
     public $perPage = 8;
+    public $bestSellers;
+    public $recommendThisWeek;
+    public $topFavorite;
 
     public function index()
     {
         // This is just temporary, must have an algorithm or something, idk
         // To take out 5 of each
 
-        $bestSellers = DB::table(Game::retrieveTableName())
+        $this->bestSellers = DB::table(Game::retrieveTableName())
             ->inRandomOrder()->limit(5)->get();
 
-        $recommendThisWeek = DB::table(Game::retrieveTableName())
+        $this->recommendThisWeek = DB::table(Game::retrieveTableName())
             ->inRandomOrder()->limit(5)->get();
 
-        $topFavorite = DB::table(Game::retrieveTableName())
+        $this->topFavorite = DB::table(Game::retrieveTableName())
             ->inRandomOrder()->limit(5)->get();
 
         $carousel = DB::table(Game::retrieveTableName())
@@ -36,23 +39,24 @@ class GameController extends Controller
 
         return view('index', [
             'carousel' => $carousel,
-            'bestSellers' => $bestSellers,
-            'recommendThisWeek' => $recommendThisWeek,
-            'topFavorite' => $topFavorite
+            'bestSellers' => $this->bestSellers,
+            'recommendThisWeek' => $this->recommendThisWeek,
+            'topFavorite' => $this->topFavorite
         ]);
     }
 
     public function detail_game($id)
     {
-        $game = DB::table('games')
+        $game = DB::table(Game::retrieveTableName())
             ->where('id', '=', $id)
             ->first();
-        $related = DB::table('games')
+        $related = DB::table(Game::retrieveTableName())
             ->whereNotIn('id', [$id])
             ->where('publisher_id', '=', $game->publisher_id)
             ->get();
         return view('detail', [
-            'game' => $game, 'related' => $related
+            'game' => $game,
+            'related' => $related
         ]);
     }
 
