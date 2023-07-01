@@ -60,9 +60,11 @@ class OrderController extends Controller
                 $cart[$request->id]["quantity"] = $request->quantity;
                 session()->put('cart', $cart);
 
+                toastr()->success('', 'Cập nhật thành công');
                 return response()->json(['success' => true]);
             }
         } catch (\Exception $ex) {
+            toastr()->error('', 'Something went wrong');
             return response()->json(['success' => false]);
         }
     }
