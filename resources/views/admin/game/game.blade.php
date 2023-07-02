@@ -8,7 +8,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
-    
+
     @include('cdn')
     <link rel="stylesheet" href="{{ asset('css/admin.style.css') }}">
 </head>
@@ -36,30 +36,51 @@
                                 <thead>
                                     <tr>
                                         {{-- <th>Ảnh</th> --}}
-                                        <th>Mã game</th>
+                                        {{-- <th>Mã game</th> --}}
                                         <th>Tên</th>
                                         <th>Giá</th>
                                         <th>Ngày Tạo</th>
                                         <th>Ngày Sửa</th>
-                                        <th></th>
-                                        <th></th>
+                                        <th data-sortable="false"></th>
+                                        <th data-sortable="false"></th>
                                     </tr>
                                 </thead>
                                 <tfoot>
                                     <tr>
                                         {{-- <th>Ảnh</th> --}}
-                                        <th>Mã game</th>
+                                        {{-- <th>Mã game</th> --}}
                                         <th>Tên</th>
                                         <th>Giá</th>
                                         <th>Ngày Tạo</th>
                                         <th>Ngày Sửa</th>
-                                        <th></th>
-                                        <th></th>
+                                        <th data-sortable="false"></th>
+                                        <th data-sortable="false"></th>
                                     </tr>
                                 </tfoot>
                                 <tbody class="table-border-bottom-0">
                                     @foreach ($games as $item)
-                                        <x-admin.home.content.table :game="$item" />
+                                        <tr>
+                                            {{-- <td><img src="../images/{{ $item->image }}"width="150" height="100" /></td> --}}
+                                            {{-- <td>{{ $item->id }}</td> --}}
+                                            <td>{{ $item->name }}</td>
+                                            <td>{{ $item->price }}</td>
+                                            <td>{{ date('d-m-Y', strtotime($item->created_at)) }}</td>
+                                            <td>{{ date('d-m-Y', strtotime($item->updated_at)) }}</td>
+                                            <td>
+                                                <form method="GET" action="{{ route('editgame', ['id' => $item->id]) }}">
+                                                    @csrf
+                                                    <button class="btn btn-warning">Sửa</button>
+                                                </form>
+                                            </td>
+                                            <td>
+                                                <form method="post"
+                                                    action="{{ route('deletegame', ['id' => $item->id]) }}">
+                                                    @csrf
+                                                    @method('delete')
+                                                    <button class="btn btn-danger">Xóa</button>
+                                                </form>
+                                            </td>
+                                        </tr>
                                     @endforeach
                                 </tbody>
                             </table>

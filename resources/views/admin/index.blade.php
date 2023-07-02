@@ -34,7 +34,11 @@
                     <!-- General -->
 
                     <!-- Chart -->
-                    <x-admin.home.content.chart />
+                    <div class="row">
+                        <div class="col-md-12">
+                            <x-admin.home.content.chart :chart="$saleChart" />
+                        </div>
+                    </div>
                     <!-- Chart -->
 
                     <!-- Data table -->
@@ -537,6 +541,8 @@
 
     </div>
 
+    <script src="{{ $saleChart->cdn() }}"></script>
+    {{ $saleChart->script() }}
     <script>
         window.addEventListener('DOMContentLoaded', event => {
 

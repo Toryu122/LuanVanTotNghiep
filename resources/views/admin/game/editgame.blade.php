@@ -45,7 +45,8 @@
                                 {{-- <small class="text-muted float-end">Default label</small> --}}
                             </div>
                             <div class="card-body">
-                                <form action="{{ route('updategame') }}" method="POST" enctype="multipart/form-data">
+                                <form action="{{ route('updategame', ['id' => $game->id]) }}" method="POST"
+                                    enctype="multipart/form-data">
                                     @csrf
                                     <div class="row mb-3 align-items-center">
                                         <label class="col-sm-2 col-form-label" for="basic-default-name">Ảnh</label>
@@ -63,7 +64,6 @@
                                             </table>
                                         </div>
                                     </div>
-                                    <input type="hidden" value="{{ $game->id }}" name="id" />
                                     <div class="row mb-3">
                                         <label class="col-sm-2 col-form-label" for="basic-default-name">ID</label>
                                         <div class="col-sm-10">

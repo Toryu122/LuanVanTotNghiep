@@ -2,8 +2,10 @@
 
 use App\Common\Helper;
 use App\Common\Constant;
-use App\Http\Controllers\Admin\AdGameController;
 use App\Http\Controllers\Admin\DashboardController;
+use App\Http\Controllers\Admin\GameController as AdminGameController;
+use App\Http\Controllers\Admin\GenreController as AdminGenreController;
+use App\Http\Controllers\Admin\PublisherController as AdminPublicController;
 use Illuminate\Support\Str;
 use App\Http\Middleware\AuthStore;
 use Illuminate\Support\Facades\Route;
@@ -105,11 +107,30 @@ Route::prefix('admin')->group(function () {
     Route::get('/dashboard', [DashboardController::class, 'Index'])->name('admindashboard');
 
     Route::prefix('game')->group(function () {
-        Route::get('', [AdGameController::class, 'Index'])->name('admingame');
-        Route::get('/add', [AdGameController::class, 'add'])->name('addgame');
-        Route::post('/store', [AdGameController::class, 'store'])->name('storegame');
-        Route::get('/edit', [AdGameController::class, 'edit'])->name('editgame');
-        Route::post('/update', [AdGameController::class, 'update'])->name('updategame');
-        Route::get('/delete', [AdGameController::class, 'del'])->name('deletegame');
+        Route::get('', [AdminGameController::class, 'index'])->name('admingame');
+        Route::get('/add', [AdminGameController::class, 'add'])->name('addgame');
+        Route::post('/store', [AdminGameController::class, 'store'])->name('storegame');
+        Route::get('/edit/{id}', [AdminGameController::class, 'edit'])->name('editgame');
+        // "Post" method because Laravel can't handle update image with "Put" method
+        Route::post('/update/{id}', [AdminGameController::class, 'update'])->name('updategame');
+        Route::delete('/delete/{id}', [AdminGameController::class, 'delete'])->name('deletegame');
+    });
+
+    Route::prefix('genre')->group(function () {
+        Route::get('', [AdminGenreController::class, 'index'])->name('admingenre');
+        Route::get('/add', [AdminGenreController::class, 'create'])->name('addgenre');
+        Route::post('/store', [AdminGenreController::class, 'store'])->name('storegenre');
+        Route::get('/edit/{id}', [AdminGenreController::class, 'edit'])->name('editgenre');
+        Route::put('/update/{id}', [AdminGenreController::class, 'update'])->name('updategenre');
+        Route::delete('/delete/{id}', [AdminGenreController::class, 'delete'])->name('deletegenre');
+    });
+
+    Route::prefix('publisher')->group(function () {
+        Route::get('', [AdminPublicController::class, 'index'])->name('adminpublisher');
+        Route::get('/add', [AdminPublicController::class, 'create'])->name('addpublisher');
+        Route::post('/store', [AdminPublicController::class, 'store'])->name('storepublisher');
+        Route::get('/edit/{id}', [AdminPublicController::class, 'edit'])->name('editpublisher');
+        Route::put('/update/{id}', [AdminPublicController::class, 'update'])->name('updatepublisher');
+        Route::delete('/delete/{id}', [AdminPublicController::class, 'delete'])->name('deletepublisher');
     });
 });

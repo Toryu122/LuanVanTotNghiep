@@ -2,34 +2,34 @@
 
 namespace App\Http\Controllers\Admin;
 
-use App\Http\Controllers\Controller;
+use Carbon\Carbon;
 use App\Models\Game;
-use App\View\Components\Admin\index;
+use App\Models\Genre;
 use Illuminate\Http\Request;
-use Illuminate\Support\Carbon;
 use Illuminate\Support\Facades\DB;
-use Illuminate\Support\Facades\Redirect;
-use Illuminate\Support\Facades\Storage;
+use App\Http\Controllers\Controller;
 
-class AdGameController extends Controller
+class GameController extends Controller
 {
-    public function Index()
+    public function index()
     {
         $games = DB::table('games')
             ->get();
         return view(
-            'components.admin.game.game',
+            "admin.game.game",
             ['games' => $games]
         );
     }
+
     public function add()
     {
         $pubs = DB::table('publishers')
             ->get();
         $genres = DB::table('genres')
             ->get();
-        return view('components.admin.game.addgame', ['pubs' => $pubs, 'genres' => $genres]);
+        return view("admin.game.addgame", ['pubs' => $pubs, 'genres' => $genres]);
     }
+
     public function store(Request $request)
     {
         $request->validate([
@@ -56,25 +56,30 @@ class AdGameController extends Controller
             return redirect('admin/game/add')->with('message', 'Thêm sản phẩm thất bại!');
         return redirect('admin/game')->with('message', 'Thêm sản phẩm thành công!');
     }
-    public function edit(Request $request)
+
+    public function edit($id)
     {
         $game = DB::table('games')
-            ->where('id', '=', $request['id'])
+            ->where('id', '=', $id)
             ->first();
         $pubs = DB::table('publishers')
             ->get();
         $genres = DB::table('genres')
             ->get();
         return view(
-            'components.admin.game.editgame',
-            ['game' => $game, 'pubs' => $pubs, 'genres' => $genres]
+            "admin.game.editgame",
+            [
+                'game' => $game, 
+                'pubs' => $pubs, 
+                'genres' => $genres
+            ]
         );
     }
-    public function update(Request $request)
+
+    public function update(Request $request, $id)
     {
-        $game = $request->id;
         $request->validate([
-            'img' => 'required|image|mimes:jpg,png,jpeg|max:5048',
+            'img' => 'required|image|mimes:jpg,png,jpeg,webp|max:5048',
             'game_name' => 'required',
             'price' => 'required',
             'description' => 'required',
@@ -87,7 +92,7 @@ class AdGameController extends Controller
         $price = $request->price;
         $desc = $request->description;
         $pub = $request->pub_id;
-        Game::findOrfail($game)->update([
+        Game::findOrfail($id)->update([
             'name' => $name,
             'price' => $price,
             'description' => $desc,
@@ -97,9 +102,31 @@ class AdGameController extends Controller
         ]);
         return redirect('admin/game');
     }
-    public function del(Request $request)
+
+    public function delete($id)
     {
-        Game::findOrfail($request->id)->delete();
+        Game::findOrfail($id)->delete();
         return redirect('admin/game');
+    }
+
+    public function assignGenre(Request $request)
+    {
+        // dd($request);
+        $gameId = DB::table(Game::retrieveTableName())
+            ->where('name', '=', $request->get('name'))
+            ->first();
+        $genreId = DB::table(Genre::retrieveTableName())
+            ->where('name', '=', $request->get('genre'))
+            ->first();
+
+        DB::table(Genre::INTERMEDIATE_TABLE[0])
+            ->insert(
+                [
+                    'game_id' => $gameId->id,
+                    'genre_id' => $genreId->id
+                ]
+            );
+
+        return redirect()->back();
     }
 }

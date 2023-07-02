@@ -135,6 +135,46 @@ class Helper
         }
     }
 
+    public static function encryptAndHash($string, $key)
+    {
+        // Generate a random Initialization Vector (IV)
+        $iv = openssl_random_pseudo_bytes(openssl_cipher_iv_length('AES-256-CBC'));
+
+        // Encrypt the string using AES encryption with the generated IV
+        $encryptedString = openssl_encrypt($string, 'AES-256-CBC', $key, 0, $iv);
+
+        // Hash the encrypted string using a hashing algorithm (e.g., SHA-256)
+        $hashedString = hash('sha256', $encryptedString);
+
+        // Compress the hashed string
+        $compressedString = gzcompress($hashedString);
+
+        // Combine the IV, encrypted string, and compressed hashed string
+        $encryptedHashedString = base64_encode($iv . $encryptedString . $compressedString);
+
+        // Return the encrypted, hashed, and compressed string
+        return $encryptedHashedString;
+    }
+
+    public static function decryptAndUnhash($encryptedHashedString, $key)
+    {
+        // Separate the IV, encrypted string, and compressed hashed string
+        $combinedString = base64_decode($encryptedHashedString);
+        $ivLength = openssl_cipher_iv_length('AES-256-CBC');
+        $iv = substr($combinedString, 0, $ivLength);
+        $encryptedString = substr($combinedString, $ivLength);
+        $compressedString = substr($encryptedString, -$ivLength);
+
+        // Decompress the compressed hashed string
+        $hashedString = gzuncompress($compressedString);
+
+        // Decrypt the encrypted string using AES decryption with the IV
+        $decryptedString = openssl_decrypt($encryptedString, 'AES-256-CBC', $key, 0, $iv);
+
+        // Return the decrypted string
+        return $decryptedString;
+    }
+
     public static function execPostRequest($url, $data)
     {
         $ch = curl_init($url);

@@ -1,6 +1,6 @@
 <tr>
     {{-- <td><img src="../images/{{ $game->image }}"width="150" height="100" /></td> --}}
-    <td>{{ $game->id }}</td>
+    {{-- <td>{{ $game->id }}</td> --}}
     <td>{{ $game->name }}</td>
     <td>{{ $game->price }}</td>
     <td>{{ date('d-m-Y', strtotime($game->created_at)) }}</td>

@@ -6,14 +6,15 @@ use Illuminate\View\Component;
 
 class Chart extends Component
 {
+    public $chart;
     /**
      * Create a new component instance.
      *
      * @return void
      */
-    public function __construct()
+    public function __construct($chart)
     {
-        //
+        $this->chart = $chart;
     }
 
     /**

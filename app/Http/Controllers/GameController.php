@@ -34,8 +34,7 @@ class GameController extends Controller
         $this->topFavorite = DB::table(Game::retrieveTableName())
             ->inRandomOrder()->limit(5)->get();
 
-        $carousel = DB::table(Game::retrieveTableName())
-            ->inRandomOrder()->limit(5)->get();
+        $carousel = DB::table(Game::retrieveTableName())->limit(5)->get();
 
         return view('index', [
             'carousel' => $carousel,

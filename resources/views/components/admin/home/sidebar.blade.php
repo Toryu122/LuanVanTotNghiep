@@ -7,7 +7,7 @@
                 Dashboard
             </a>
             <div class="sb-sidenav-menu-heading">Interface</div>
-            <a class="nav-link collapsed" href="#" data-bs-toggle="collapse" data-bs-target="#collapseLayouts"
+            <a class="nav-link" href="#" data-bs-toggle="collapse" data-bs-target="#collapseLayouts"
                 aria-expanded="false" aria-controls="collapseLayouts">
                 <div class="sb-nav-link-icon"><i class="fa-solid fa-user"></i></div>
                 User Manage
@@ -24,13 +24,14 @@
                         Roles</a>
                 </nav>
             </div>
-            <a class="nav-link collapsed" href="#" data-bs-toggle="collapse" data-bs-target="#collapsePages"
+            <a class="nav-link" href="#" data-bs-toggle="collapse" data-bs-target="#collapsePages"
                 aria-expanded="false" aria-controls="collapsePages">
                 <div class="sb-nav-link-icon"><i class="fa-solid fa-gamepad"></i></div>
-                Games / Genres
+                Games
                 <div class="sb-sidenav-collapse-arrow"><i class="fas fa-angle-down"></i></div>
             </a>
-            <div class="collapse" id="collapsePages" aria-labelledby="headingTwo" data-bs-parent="#sidenavAccordion">
+            <div class="collapse show" id="collapsePages" aria-labelledby="headingTwo"
+                data-bs-parent="#sidenavAccordion">
                 <nav class="sb-sidenav-menu-nested nav accordion" id="sidenavAccordionPages">
                     <table>
                         <td>
@@ -44,11 +45,20 @@
                     </table>
                     <table>
                         <td>
-                            <a class="nav-link" href="layout-static.html"><i class="fa-solid fa-tags"></i>&nbsp;
+                            <a class="nav-link" href="{{ route('admingenre') }}"><i class="fa-solid fa-tags"></i>&nbsp;
                                 Genres</a>
                         </td>
                         <th>
-                            <a href="{{ route('addgame') }}"type="submit" class="nav-link"> + </a>
+                            <a href="{{ route('addgenre') }}"type="submit" class="nav-link"> + </a>
+                        </th>
+                    </table>
+                    <table>
+                        <td>
+                            <a class="nav-link" href="{{ route('adminpublisher') }}"><i class="fa-solid fa-user-tie"></i>&nbsp;
+                                Publishers</a>
+                        </td>
+                        <th>
+                            <a href="{{ route('addpublisher') }}"type="submit" class="nav-link"> + </a>
                         </th>
                     </table>
                     <!-- <a class="nav-link collapsed" href="#" data-bs-toggle="collapse" data-bs-target="#pagesCollapseAuth" aria-expanded="false" aria-controls="pagesCollapseAuth">
@@ -75,12 +85,6 @@
                                 </div> -->
                 </nav>
             </div>
-            <a class="nav-link" href="layout-static.html">
-                <div class="sb-nav-link-icon">
-                    <i class="fa-solid fa-user-tie"></i>
-                </div>
-                Publishers
-            </a>
             <div class="sb-sidenav-menu-heading">Orders</div>
             <a class="nav-link" href="charts.html">
                 <div class="sb-nav-link-icon"><i class="fa-solid fa-receipt"></i></div>
