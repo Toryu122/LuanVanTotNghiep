@@ -1,4 +1,4 @@
-<title>{{ $title }}</title>
+<title>{{ html_entity_decode($title) }}</title>
 
 <!-- Navbar -->
 <nav class="navbar navbar-expand-lg navbar-dark bg-navbar-dark">

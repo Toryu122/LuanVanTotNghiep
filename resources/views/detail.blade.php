@@ -13,12 +13,31 @@
         <x-header title="{{ $game->name }} | GameStore" />
     </div>
 
+    {{-- {{ dd($requirements['minimum']) }} --}}
+
     <div class="container">
         <!-- col-md-10 border p-3 main-section bg-white -->
         <div class="col-md-10 bg-navbar-dark text-white border main-section p-3 bg-white">
             <div class="row m-0">
                 <div class="col-md-4 left-side-product-box pb-3">
-                    <img src="../images/{{ $game->image }}" class="border-0 p-3 rounded" />
+                    <div>
+                        <img src="../images/{{ $game->image }}" class="border-0 p-3 rounded" />
+                    </div>
+                    <div class="text-center h5" name="total_like">{{ $game->like }}</div>
+                    <div class="d-flex justify-content-center">
+                        <form method="POST" action="{{ route('likeGame', ['id' => $game->id]) }}">
+                            @csrf
+                            @if (Cache::has('like_game_' . $game->id))
+                                <button class="btn btn-outline-primary">
+                                    <i class="fa-solid fa-heart"></i> Liked
+                                </button>
+                            @else
+                                <button class="btn btn-default">
+                                    <i class="fa-solid fa-heart"></i> Like
+                                </button>
+                            @endif
+                        </form>
+                    </div>
                 </div>
                 <div class="col-md-8">
                     <div class="right-side-pro-detail border-0 p-3 m-0">
@@ -93,24 +112,24 @@
                     <div class="col-md-9 col-sm-12 col-12 text-white">
                         <div class="minimum text-white">
                             <p class="fw-bold h5">Minimum</p>
-                            <div>OS: Windows Vista (Service Pack 1) 32-bit</div>
-                            <div>Processor: Intel Core 2 Duo E6600 2.4GHz, Athlon 64 X2 Dual Core 5600+</div>
-                            <div>Memory: 4 GB System RAM</div>
-                            <div>Hard Drive: 30 GB</div>
-                            <div>Video Card:DirectX 10.1 compatible with 512 MB RAM Nvidia GeForce 8800 GT, AMD Radeon
-                                HD
-                                3870</div>
-                            <div>Sound Card: DirectX 9.0c compatible</div>
+                            @if (!is_null($minimum))
+                                @for ($i = 0; $i < count($minimum); $i++)
+                                    <div>{{ $minimum[$i] }}</div>
+                                @endfor
+                            @else
+                                <div class="h6">Tạm thời chưa có cấu hình</div>
+                            @endif
                         </div>
+
                         <div class="maximum text-white pt-5">
-                            <p class="fw-bold h5">Maximum</p>
-                            <div>OS: Windows 7 64-bitProcessor: Quad-core CPU</div>
-                            <div>Memory: 8 GB</div>
-                            <div>Hard Drive: 30 GB</div>
-                            <div>Video Card: DirectX 11 compatible with 1024 MB RAM (NVIDIA GeForce GTX 660 or ATI
-                                Radeon
-                                7870)</div>
-                            <div>Sound Card: DirectX 9.0c compatible</div>
+                            <p class="fw-bold h5">Recommended</p>
+                            @if (!is_null($recommended))
+                                @for ($i = 0; $i < count($recommended); $i++)
+                                    <div>{{ $recommended[$i] }}</div>
+                                @endfor
+                            @else
+                                <div class="h6">Tạm thời chưa có cấu hình</div>
+                            @endif
                         </div>
                     </div>
                 </div>
@@ -119,29 +138,29 @@
             <div class="container">
                 <div class="row">
                     <div class="col-md-3 col-sm-12 col-12 text-white">
-                        <h4>Cấu hình</h4>
+                        <p class="h3 text-white">Cấu hình</p>
                     </div>
                     <div class="col-md-9 col-sm-12 col-12 text-white">
                         <div class="minimum text-white">
                             <p class="fw-bold h5">Minimum</p>
-                            <div>OS: Windows Vista (Service Pack 1) 32-bit</div>
-                            <div>Processor: Intel Core 2 Duo E6600 2.4GHz, Athlon 64 X2 Dual Core 5600+</div>
-                            <div>Memory: 4 GB System RAM</div>
-                            <div>Hard Drive: 30 GB</div>
-                            <div>Video Card:DirectX 10.1 compatible with 512 MB RAM Nvidia GeForce 8800 GT, AMD Radeon
-                                HD
-                                3870</div>
-                            <div>Sound Card: DirectX 9.0c compatible</div>
+                            @if (!is_null($minimum))
+                                @for ($i = 0; $i < count($minimum); $i++)
+                                    <div>{{ $minimum[$i] }}</div>
+                                @endfor
+                            @else
+                                <div class="h6">Tạm thời chưa có cấu hình</div>
+                            @endif
                         </div>
+
                         <div class="maximum text-white pt-5">
-                            <p class="fw-bold h5">Maximum</p>
-                            <div>OS: Windows 7 64-bitProcessor: Quad-core CPU</div>
-                            <div>Memory: 8 GB</div>
-                            <div>Hard Drive: 30 GB</div>
-                            <div>Video Card: DirectX 11 compatible with 1024 MB RAM (NVIDIA GeForce GTX 660 or ATI
-                                Radeon
-                                7870)</div>
-                            <div>Sound Card: DirectX 9.0c compatible</div>
+                            <p class="fw-bold h5">Recommended</p>
+                            @if (!is_null($recommended))
+                                @for ($i = 0; $i < count($recommended); $i++)
+                                    <div>{{ $recommended[$i] }}</div>
+                                @endfor
+                            @else
+                                <div class="h6">Tạm thời chưa có cấu hình</div>
+                            @endif
                         </div>
                     </div>
                 </div>
