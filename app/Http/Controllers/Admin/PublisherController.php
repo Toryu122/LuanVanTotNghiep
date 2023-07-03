@@ -111,7 +111,7 @@ class PublisherController extends Controller
         if ($isExist) {
             return redirect()->back()->with('game_existed', "Xóa thất bại, vẫn còn game thuộc nhà phát hành này");
         }
-
+    
         Publisher::destroy($id);
 
         return redirect()->route('adminpublisher')->with('delete_success', "Xóa thành công");

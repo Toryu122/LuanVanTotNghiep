@@ -5,6 +5,7 @@ use App\Common\Constant;
 use App\Http\Controllers\Admin\DashboardController;
 use App\Http\Controllers\Admin\GameController as AdminGameController;
 use App\Http\Controllers\Admin\GenreController as AdminGenreController;
+use App\Http\Controllers\Admin\OrderController as AdminOrderController;
 use App\Http\Controllers\Admin\PublisherController as AdminPublicController;
 use Illuminate\Support\Str;
 use App\Http\Middleware\AuthStore;
@@ -132,5 +133,10 @@ Route::prefix('admin')->group(function () {
         Route::get('/edit/{id}', [AdminPublicController::class, 'edit'])->name('editpublisher');
         Route::put('/update/{id}', [AdminPublicController::class, 'update'])->name('updatepublisher');
         Route::delete('/delete/{id}', [AdminPublicController::class, 'delete'])->name('deletepublisher');
+    });
+    Route::prefix('order')->group(function () {
+        Route::get('', [AdminOrderController::class, 'index'])->name('adminorder');
+        Route::get('/detail', [AdminOrderController::class, 'detail'])->name('adminorderdetail');
+        Route::delete('/delete/{id}', [AdminOrderController::class, 'delete'])->name('deleteorder');
     });
 });

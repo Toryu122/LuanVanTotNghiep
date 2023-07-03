@@ -22,14 +22,14 @@
                         <div class="d-flex justify-content-start align-items-center">
                             <p class="fa fa-long-arrow-down"></p>
                             <p class="text mx-3">Income</p>
-                            <p class="text-white ml-4 money">$9,758.23</p>
+                            <p class="text-black ml-4 money">$9,758.23</p>
                         </div>
                     </div>
                     <div class="col-md-6">
                         <div class="d-flex justify-content-md-end align-items-center">
                             <div class="fa fa-long-arrow-up"></div>
                             <div class="text mx-3">Expense</div>
-                            <div class="text-white ml-4 money">$961.23</div>
+                            <div class="text-black ml-4 money">$961.23</div>
                         </div>
                     </div>
                 </div>
@@ -39,7 +39,85 @@
                         <li class="nav-item"> <a class="nav-link" href="#">Reports</a> </li>
                     </ul> <button class="btn btn-primary">New Transaction</button>
                 </div>
+
                 <div class="table-responsive mt-3">
+                    <table class="table table-dark table-borderless">
+                        <thead>
+                            <tr>
+                                <th scope="col">Receipt</th>
+                                <th scope="col">PayMode</th>
+                                <th scope="col">Time</th>
+                                <th scope="col">Status</th>
+                                <th scope="col" class="text-right">Total</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            @php
+                                $orders = DB::table('orders')
+                                    ->where('user_id', '=', auth()->user()->id)
+                                    ->get();
+                            @endphp
+                            @foreach ($orders as $order)
+                                <tr>
+                                    <td scope="row">
+                                        <a class="nav-link" href="#" data-bs-toggle="collapse"
+                                            data-bs-target="#{{ $order->order_id_ref }}" aria-expanded="false"
+                                            aria-controls="{{ $order->order_id_ref }}">
+                                            <span class="fa fa-cart-shopping mr-1"></span>{{ $order->order_id_ref }}
+                                        </a>
+                                        <div class="collapse hidden" id="{{ $order->order_id_ref }}">
+                                            <nav>
+                                                @php
+                                                    $order_detail = DB::table('order_details')
+                                                        ->where('order_id', '=', $order->id)
+                                                        ->get();
+                                                @endphp
+                                                @foreach ( $order_detail as $item)
+                                                <table class="table table-dark table-borderless">
+                                                    <thead>
+                                                        <tr>
+                                                            <th scope="col">Tên game</th>
+                                                            <th scope="col">Giá</th>
+                                                            <th scope="col">Số lượng</th>                                                         
+                                                        </tr>  
+                                                    </thead>
+                                                    <tbody>
+                                                        <tr>
+                                                            <td>{{ $item->name }}</td>
+                                                            <td>{{ $item->price }}</td>
+                                                            <td>{{ $item->quantity }}</td>
+                                                        </tr>
+                                                        </tbody>
+                                                </table>            
+                                                @endforeach                      
+                                            </nav>
+                                        </div>
+                                    </td>
+                                    <td><span class="fa fa-wallet"></span>{{ $order->pay_type }}</td>
+                                    <td class="text-muted">{{ date('G:i j-m-Y', strtotime($order->created_at)) }}</td>
+                                    <td scope="row"> <span class="fa fa-bars-progress"></span>
+                                        {{ $order->order_status }} </td>
+                                    <td class="d-flex justify-content-end align-items-center"> <span
+                                            class="fa fa-dollar-sign mr-1"></span>{{ number_format($order->total, 0, ',', '.') }}đ
+                                    </td>
+                                </tr>
+                                {{-- <tr>                             
+                                    <td scope="row"> <span
+                                            class="fa fa-cart-shopping mr-1"></span>{{ $order->order_id_ref }}
+                                    </td>
+                                    <td><span class="fa fa-wallet"></span>{{ $order->pay_type }}</td>
+                                    <td class="text-muted">{{ date('G:i j-m-Y', strtotime($order->created_at)) }}</td>
+                                    <td scope="row"> <span class="fa fa-bars-progress"></span>
+                                        {{ $order->order_status }} </td>
+                                    <td class="d-flex justify-content-end align-items-center"> <span
+                                            class="fa fa-dollar-sign mr-1"></span>{{ number_format($order->total, 0, ',', '.') }}đ
+                                    </td>
+                                </tr> --}}
+                            @endforeach
+                        </tbody>
+                    </table>
+                </div>
+                {{-- <div class="table-responsive mt-3">
                     <table class="table table-dark table-borderless">
                         <thead>
                             <tr>
@@ -101,9 +179,9 @@
                             </tr>
                         </tbody>
                     </table>
-                </div>
-                <div class="d-flex justify-content-between align-items-center results"> <span
-                        class="pl-md-3">Showing<b class="text-white"> 1-7 0f 200 </b> trasactions</span>
+                </div> --}}
+                <div class="d-flex justify-content-between align-items-center results"> <span class="pl-md-3">Showing<b
+                            class="text-white"> 1-7 0f 200 </b> trasactions</span>
                     <div class="pt-3">
                         <nav aria-label="Page navigation example">
                             <ul class="pagination">

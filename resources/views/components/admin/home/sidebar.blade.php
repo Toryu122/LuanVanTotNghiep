@@ -86,11 +86,11 @@
                 </nav>
             </div>
             <div class="sb-sidenav-menu-heading">Orders</div>
-            <a class="nav-link" href="charts.html">
+            <a class="nav-link" href="{{ route('adminorder') }}">
                 <div class="sb-nav-link-icon"><i class="fa-solid fa-receipt"></i></div>
                 Orders
             </a>
-            <a class="nav-link" href="tables.html">
+            <a class="nav-link" href="{{ route('adminorderdetail') }}">
                 <div class="sb-nav-link-icon"><i class="fa-solid fa-circle-info"></i></div>
                 Orders Detail
             </a>
