@@ -35,6 +35,7 @@ use App\Http\Controllers\TestController;
 Route::get('/', [GameController::class, 'index'])->name('index');
 Route::get('/game-detail/{id}', [GameController::class, 'detail_game'])->name('detailgame');
 Route::get('/tim-kiem', [GameController::class, 'search'])->name('searchPage');
+Route::post('/like/{id}', [GameController::class, 'likeGame'])->name('likeGame');
 Route::get('/policy', function () {
     return view('policy');
 })->name('policy');

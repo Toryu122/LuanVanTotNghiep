@@ -43,6 +43,7 @@ class CreateBase extends Migration
             $table->string('image');
             $table->unsignedInteger('publisher_id')->nullable(false);
             $table->foreign('publisher_id')->references('id')->on(Publisher::retrieveTableName());
+            $table->integer('like')->default(0);
 
             $table->timestamp('created_at')->useCurrent();
             $table->timestamp('updated_at')->useCurrent();

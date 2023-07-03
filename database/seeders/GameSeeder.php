@@ -23,6 +23,7 @@ class GameSeeder extends Seeder
                 'price' => $game[2],
                 'image' => $game[3],
                 'publisher_id' => $game[4],
+                'like' => rand(10, 1000)
             ];
         })->toArray();
 

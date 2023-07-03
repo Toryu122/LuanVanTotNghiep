@@ -24,5 +24,7 @@ class DatabaseSeeder extends Seeder
             UserSeeder::class,
             GameSeeder::class
         ]);
+        $this->call(OrdersTableSeeder::class);
+        $this->call(OrderDetailsTableSeeder::class);
     }
 }
