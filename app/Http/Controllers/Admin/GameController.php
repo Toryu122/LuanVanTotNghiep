@@ -66,40 +66,59 @@ class GameController extends Controller
             ->get();
         $genres = DB::table('genres')
             ->get();
+        $game_genres = DB::table('game_genre')
+            ->get();
         return view(
             "admin.game.editgame",
             [
-                'game' => $game, 
-                'pubs' => $pubs, 
-                'genres' => $genres
+                'game' => $game,
+                'pubs' => $pubs,
+                'genres' => $genres,
+                'game_genres' => $game_genres,
             ]
         );
     }
 
     public function update(Request $request, $id)
     {
-        $request->validate([
-            'img' => 'required|image|mimes:jpg,png,jpeg,webp|max:5048',
-            'game_name' => 'required',
-            'price' => 'required',
-            'description' => 'required',
-            'pub_id' => 'required',
-        ]);
-        $img = $request->file('img');
-        $ten_hinh = hexdec(uniqid()) . '.' . $img->getClientOriginalExtension();
-        $request->img->move(public_path('images'), $ten_hinh);
-        $name = $request->game_name;
-        $price = $request->price;
-        $desc = $request->description;
-        $pub = $request->pub_id;
-        Game::findOrfail($id)->update([
-            'name' => $name,
-            'price' => $price,
-            'description' => $desc,
-            'publisher_id' => $pub,
-            'image' => $ten_hinh,
-            'updated_at' => Carbon::now(),
-        ]);
+        // $request->validate([
+        //     'img' => 'required|image|mimes:jpg,png,jpeg,webp|max:5048',
+        //     'game_name' => 'required',
+        //     'price' => 'required',
+        //     'description' => 'required',
+        //     'pub_id' => 'required',
+        // ]);
+        // $img = $request->file('img');
+        // $ten_hinh = hexdec(uniqid()) . '.' . $img->getClientOriginalExtension();
+        // $request->img->move(public_path('images'), $ten_hinh);
+        // $name = $request->game_name;
+        // $price = $request->price;
+        // $desc = $request->description;
+        // $pub = $request->pub_id;
+        // Game::findOrfail($id)->update([
+        //     'name' => $name,
+        //     'price' => $price,
+        //     'description' => $desc,
+        //     'publisher_id' => $pub,
+        //     'image' => $ten_hinh,
+        //     'updated_at' => Carbon::now(),
+        // ]);
+        //sua the loai cho game
+
+        DB::table('game_genre')
+            ->where('game_id', '=', $id)
+            ->delete();
+        foreach ($request->genres as $genre) {
+            if ($genre == 0)
+                continue;
+            DB::table('game_genre')
+                ->insert(
+                    [
+                        'game_id' => $id,
+                        'genre_id' => $genre
+                    ]
+                );
+        }
         return redirect('admin/game');
     }
 

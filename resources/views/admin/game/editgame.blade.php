@@ -88,14 +88,32 @@
                                         <label class="col-sm-2 col-form-label" for="basic-default-name">Chọn thể
                                             loại</label>
                                         <div class="col-sm-10">
-                                            <input id='genres' type='hidden' name='my_match[]' />
+                                            <input id='genres' type='hidden' name='genres[]' />
                                             <div class='controls'>
                                                 @foreach ($genres as $gen)
-                                                    <div>
-                                                        <label class="checkbox">
-                                                            <input type="checkbox" name="my_match[]"
-                                                                value="{{ $gen->id }}">{{ $gen->name }}</label>
-                                                    </div>
+                                                <!-- xuat 1 lan cho moi the loai, game co the loai thi checked-->
+                                                    @php
+                                                        $flag = 0;
+                                                    @endphp
+                                                    @foreach ($game_genres as $item)
+                                                        @if ($item->genre_id == $gen->id && $item->game_id == $game->id)
+                                                            @php
+                                                                $flag = 1;
+                                                            @endphp
+                                                            <div>
+                                                                <label class="checkbox">
+                                                                    <input checked type="checkbox" name="genres[]"
+                                                                        value="{{ $gen->id }}">{{ $gen->name }}</label>
+                                                            </div>
+                                                        @endif
+                                                    @endforeach
+                                                    @if ($flag == 0)
+                                                        <div>
+                                                            <label class="checkbox">
+                                                                <input type="checkbox" name="genres[]"
+                                                                    value="{{ $gen->id }}">{{ $gen->name }}</label>
+                                                        </div>
+                                                    @endif
                                                 @endforeach
                                             </div>
                                         </div>
