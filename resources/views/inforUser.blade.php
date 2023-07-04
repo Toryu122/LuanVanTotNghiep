@@ -6,11 +6,65 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
     @include('cdn')
+    <style>
+        /* Custom styles for the DataTable */
+        .data-table {
+            background-color: #2a2a2a;
+            color: #fff;
+            border-collapse: collapse;
+        }
+
+        .data-table th,
+        .data-table td {
+            border: 1px solid #444;
+            padding: 8px;
+        }
+
+        .data-table th.sortable:not(.th--asc):not(.th--desc):hover {
+            background-color: #ddd;
+            cursor: pointer;
+        }
+
+        .data-table th.sortable.th--asc,
+        .data-table th.sortable.th--desc {
+            background-color: #bbb;
+        }
+
+        .datatable-sorter::before {
+            border-top: 4px solid #e9e5e5;
+            bottom: 0px;
+        }
+
+        .datatable-sorter::after {
+            border-bottom: 4px solid #e9e5e5;
+            border-top: 4px solid transparent;
+            top: 0px;
+        }
+
+        .datatable-pagination .datatable-active a,
+        .datatable-pagination .datatable-active a:focus,
+        .datatable-pagination .datatable-active a:hover {
+            background-color: #d9d9d9;
+            cursor: default;
+            color: #000;
+        }
+
+        .datatable-pagination a {
+            border: 1px solid transparent;
+            float: left;
+            margin-left: 2px;
+            padding: 6px 12px;
+            position: relative;
+            text-decoration: none;
+            color: #fff;
+            cursor: pointer;
+        }
+    </style>
 </head>
 
 <body class="d-flex flex-column min-vh-100">
     <x-header title="Cài Đặt Tài Khoản" />
-    
+
     <div class="container p-0">
         <h1 class="h3 mb-3">&nbsp;</h1>
 

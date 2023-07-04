@@ -21,12 +21,15 @@ class OrderController extends Controller
             ->get();
         return view('admin.order.detail', ['details' => $details]);
     }
-    public function delete($id)
-    {
-        DB::table('order_details')
-            ->where('order_id', '=', $id)
-            ->delete();   
-        Order::destroy($id);
-        return redirect('admin/order');
-    }
+
+    
+    // Orders shouldn't be delete by anyone except user
+    // public function delete($id)
+    // {
+    //     DB::table('order_details')
+    //         ->where('order_id', '=', $id)
+    //         ->delete();
+    //     Order::destroy($id);
+    //     return redirect('admin/order');
+    // }
 }

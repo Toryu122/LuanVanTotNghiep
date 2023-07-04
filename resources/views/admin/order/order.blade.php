@@ -23,7 +23,7 @@
 
         <div id="layoutSidenav_content">
             <main>
-                <div class="container-fluid px-4">                  
+                <div class="container-fluid px-4">
                     <div class="text-center">
                         @if (Session::has('delete_success'))
                             <div class="alert alert-success" role="alert">
@@ -48,7 +48,7 @@
                                         <th>Biên lai</th>
                                         <th>Ngày Tạo</th>
                                         <th>Ngày Sửa</th>
-                                        <th data-sortable="false"></th>
+                                        {{-- <th data-sortable="false"></th> --}}
                                     </tr>
                                 </thead>
                                 <tfoot>
@@ -61,7 +61,7 @@
                                         <th>Biên lai</th>
                                         <th>Ngày Tạo</th>
                                         <th>Ngày Sửa</th>
-                                        <th data-sortable="false"></th>
+                                        {{-- <th data-sortable="false"></th> --}}
                                     </tr>
                                 </tfoot>
                                 <tbody class="table-border-bottom-0">
@@ -75,14 +75,14 @@
                                             <td>{{ $item->order_id_ref }}</td>
                                             <td>{{ date('d-m-Y', strtotime($item->created_at)) }}</td>
                                             <td>{{ date('d-m-Y', strtotime($item->updated_at)) }}</td>
-                                            <td>
+                                            {{-- <td>
                                                 <form method="post"
                                                     action="{{ route('deleteorder', ['id' => $item->id]) }}">
                                                     @csrf
                                                     @method('delete')
                                                     <button class="btn btn-danger">Xóa</button>
                                                 </form>
-                                            </td>
+                                            </td> --}}
                                         </tr>
                                     @endforeach
                                 </tbody>

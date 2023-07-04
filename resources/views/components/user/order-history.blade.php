@@ -1,13 +1,13 @@
 <div class="tab-pane fade" id="order" role="tabpanel">
-    <div class="card info">
-        <div class="card-header">
+    <div class="card bg-navbar-dark info">
+        <div class="card-header bg-navbar-dark text-white">
             <i class="fas fa-table me-1"></i>
             Lịch sử mua hàng
         </div>
         <div class="card-body">
             <div class="rounded">
                 <div class="mt-3">
-                    <table class="" id="datatablesSimple" style="border: 1px solid #ccc; padding: 8px;">
+                    <table class="data-table" id="datatablesSimple" style="border: 1px solid #ccc; padding: 8px;">
                         <thead>
                             <tr>
                                 <th scope="row">Mã đơn</th>
@@ -42,7 +42,7 @@
                                             <i class="fas fa-info me-2"></i> Chi tiết
                                         </button>
 
-                                        <div class="modal fade" id="{{ $item->order_status }}_{{ $item->order_id_ref }}"
+                                        <div class="modal fade text-dark" id="{{ $item->order_status }}_{{ $item->order_id_ref }}"
                                             tabindex="-1" aria-labelledby="orderDetailModal" aria-hidden="true">
                                             <div class="modal-dialog">
                                                 <div class="modal-content">
