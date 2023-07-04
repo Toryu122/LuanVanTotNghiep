@@ -35,6 +35,7 @@ class User extends Authenticatable
         'email',
         'password',
         'otp',
+        'biography',
         'last_sent'
     ];
 

@@ -4,7 +4,7 @@
             <i class="fas fa-table me-1"></i>
             Lịch sử mua hàng
         </div>
-        <div class="card-body">
+        <div class="card-body text-white">
             <div class="rounded">
                 <div class="mt-3">
                     <table class="data-table" id="datatablesSimple" style="border: 1px solid #ccc; padding: 8px;">

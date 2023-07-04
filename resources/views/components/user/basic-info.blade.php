@@ -24,7 +24,9 @@
 
                         <div class="form-group pt-2">
                             <label for="bio">Ghi chú</label>
-                            <textarea name="bio" rows="4" class="form-control border-secondary bg-navbar-dark text-white" id="bio" placeholder="Mô tả ngắn gọn về bạn"></textarea>
+                            <textarea name="bio" rows="4" class="form-control border-secondary bg-navbar-dark text-white" id="bio" placeholder="Mô tả ngắn gọn về bạn">
+                                {{ auth()->user()->biography }}
+                            </textarea>
                         </div>
                     </div>
                 </div>

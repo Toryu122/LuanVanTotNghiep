@@ -7,6 +7,7 @@ use App\Http\Controllers\Admin\GameController as AdminGameController;
 use App\Http\Controllers\Admin\GenreController as AdminGenreController;
 use App\Http\Controllers\Admin\OrderController as AdminOrderController;
 use App\Http\Controllers\Admin\PublisherController as AdminPublicController;
+use App\Http\Controllers\Admin\UserController as AdminUserController;
 use Illuminate\Support\Str;
 use App\Http\Middleware\AuthStore;
 use Illuminate\Support\Facades\Route;
@@ -135,6 +136,16 @@ Route::prefix('admin')->group(function () {
         Route::put('/update/{id}', [AdminPublicController::class, 'update'])->name('updatepublisher');
         Route::delete('/delete/{id}', [AdminPublicController::class, 'delete'])->name('deletepublisher');
     });
+
+    Route::prefix('user')->group(function () {
+        Route::get('', [AdminUserController::class, 'index'])->name('adminuser');
+        Route::get('/add', [AdminUserController::class, 'create'])->name('adduser');
+        Route::post('/store', [AdminUserController::class, 'store'])->name('storeuser');
+        Route::put('/update/{id}', [AdminUserController::class, 'update'])->name('updateuser');
+        // It should be 'disable user' or something like that, idk
+        Route::delete('/delete/{id}', [AdminUserController::class, 'delete'])->name('deleteuser');
+    });
+    
     Route::prefix('order')->group(function () {
         Route::get('', [AdminOrderController::class, 'index'])->name('adminorder');
         Route::get('/detail', [AdminOrderController::class, 'detail'])->name('adminorderdetail');
