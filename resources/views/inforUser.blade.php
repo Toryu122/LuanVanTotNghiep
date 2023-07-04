@@ -10,6 +10,7 @@
 
 <body class="d-flex flex-column min-vh-100">
     <x-header title="Cài Đặt Tài Khoản" />
+    
     <div class="container p-0">
         <h1 class="h3 mb-3">&nbsp;</h1>
 
@@ -22,16 +23,16 @@
                     </div>
 
                     <div class="list-group list-group-flush" role="tablist">
-                        <a class="list-group-item-dark list-group-item list-group-item-action active" data-bs-toggle="list" href="#account"
-                            role="tab">
+                        <a class="list-group-item-dark list-group-item list-group-item-action active"
+                            data-bs-toggle="list" href="#account" role="tab">
                             Thông tin tài khoản
                         </a>
-                        <a class="list-group-item-dark list-group-item list-group-item-action" data-bs-toggle="list" href="#password"
-                            role="tab">
+                        <a class="list-group-item-dark list-group-item list-group-item-action" data-bs-toggle="list"
+                            href="#password" role="tab">
                             Đổi mật khẩu
                         </a>
-                        <a class="list-group-item-dark list-group-item list-group-item-action" data-bs-toggle="list" href="#order"
-                            role="tab">
+                        <a class="list-group-item-dark list-group-item list-group-item-action" data-bs-toggle="list"
+                            href="#order" role="tab">
                             Lịch sử mua hàng
                         </a>
                     </div>
@@ -47,13 +48,25 @@
 
                     <x-user.change-password />
 
-                    <x-user.order-history  />
+                    <x-user.order-history :orders="$orders" />
 
                 </div>
             </div>
             {{-- Content --}}
         </div>
     </div>
+
+    <script>
+        window.addEventListener('DOMContentLoaded', event => {
+            // Simple-DataTables
+            // https://github.com/fiduswriter/Simple-DataTables/wiki
+
+            const datatablesSimple = document.getElementById('datatablesSimple');
+            if (datatablesSimple) {
+                new simpleDatatables.DataTable(datatablesSimple);
+            }
+        });
+    </script>
 </body>
 
 <footer class="mt-auto">

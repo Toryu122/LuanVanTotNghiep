@@ -4,6 +4,7 @@ use App\Common\Constant;
 use App\Models\Game;
 use App\Models\Genre;
 use App\Models\Order;
+use App\Models\OrderDetails;
 use App\Models\Publisher;
 use App\Models\User;
 use Illuminate\Database\Migrations\Migration;
@@ -93,7 +94,7 @@ class CreateBase extends Migration
             $table->timestamp('updated_at')->useCurrent();
         });
 
-        Schema::create('order_details', function (Blueprint $table) {
+        Schema::create(OrderDetails::retrieveTableName(), function (Blueprint $table) {
             $table->id();
             $table->unsignedInteger('order_id')->nullable(false);
             $table->unsignedInteger('game_id')->nullable(false);
@@ -121,6 +122,6 @@ class CreateBase extends Migration
         Schema::dropIfExists(Publisher::retrieveTableName());
         Schema::dropIfExists(Genre::INTERMEDIATE_TABLE[0]);
         Schema::dropIfExists(Order::retrieveTableName());
-        Schema::dropIfExists('order_details');
+        Schema::dropIfExists(OrderDetails::retrieveTableName());
     }
 }

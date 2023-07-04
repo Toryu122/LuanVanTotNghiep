@@ -3,9 +3,10 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Order;
+use Illuminate\Http\Request;
 use Illuminate\Validation\Rule;
 use Illuminate\Support\Facades\DB;
-use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\Storage;
@@ -14,7 +15,11 @@ class UserController extends Controller
 {
     public function inforUser()
     {
-        return view('inforUser');
+        $user = Auth::user();
+
+        $orders = Order::with('orderDetails')->where('user_id', $user->id)->get();
+
+        return view("inforUser", ['orders' => $orders]);
     }
     public function editUser(Request $request)
     {
