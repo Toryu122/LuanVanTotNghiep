@@ -15,6 +15,5 @@ class Role extends BaseModel
         'leader',
         'hr',
         'finance',
-        'user-manage',
     ];
 }

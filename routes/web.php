@@ -2,22 +2,23 @@
 
 use App\Common\Helper;
 use App\Common\Constant;
-use App\Http\Controllers\Admin\DashboardController;
-use App\Http\Controllers\Admin\GameController as AdminGameController;
-use App\Http\Controllers\Admin\GenreController as AdminGenreController;
-use App\Http\Controllers\Admin\OrderController as AdminOrderController;
-use App\Http\Controllers\Admin\PublisherController as AdminPublicController;
-use App\Http\Controllers\Admin\UserController as AdminUserController;
-use App\Http\Controllers\AuthAdminController;
+use App\Http\Controllers\Admin\AuthController as AdminAuthController;
 use Illuminate\Support\Str;
 use App\Http\Middleware\AuthStore;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\AuthController;
 use App\Http\Controllers\GameController;
+use App\Http\Controllers\TestController;
 use App\Http\Controllers\UserController;
 use App\Http\Controllers\OrderController;
-use App\Http\Controllers\TestController;
 
+use App\Http\Controllers\Admin\DashboardController;
+use App\Http\Controllers\Admin\GameController as AdminGameController;
+use App\Http\Controllers\Admin\UserController as AdminUserController;
+use App\Http\Controllers\Admin\GenreController as AdminGenreController;
+use App\Http\Controllers\Admin\OrderController as AdminOrderController;
+use App\Http\Controllers\Admin\PublisherController as AdminPublicController;
+use App\Http\Middleware\AdminMiddleware;
 
 /*
 |--------------------------------------------------------------------------
@@ -106,9 +107,9 @@ Route::post('/addGen', [TestController::class, 'addGen'])->name('addGen');
 
 //========================= ADMIN =========================//
 
-Route::prefix('admin')->group(function () {
-    Route::get('/loginForm', [AuthAdminController::class, 'loginForm'])->name('adminloginform');
-    Route::post('/login', [AuthAdminController::class, 'login'])->name('adminglogin');
+Route::prefix('admin')->middleware(['auth', AdminMiddleware::class])->group(function () {
+    Route::get('/login', [AdminAuthController::class, 'loginForm'])->name('adminloginform');
+    Route::post('/loginAdmin', [AdminAuthController::class, 'login'])->name('loginadmin');
 
     Route::get('', [DashboardController::class, 'Index']);
     Route::get('/dashboard', [DashboardController::class, 'Index'])->name('admindashboard');
