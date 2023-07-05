@@ -8,6 +8,7 @@ use App\Http\Controllers\Admin\GenreController as AdminGenreController;
 use App\Http\Controllers\Admin\OrderController as AdminOrderController;
 use App\Http\Controllers\Admin\PublisherController as AdminPublicController;
 use App\Http\Controllers\Admin\UserController as AdminUserController;
+use App\Http\Controllers\AuthAdminController;
 use Illuminate\Support\Str;
 use App\Http\Middleware\AuthStore;
 use Illuminate\Support\Facades\Route;
@@ -106,6 +107,9 @@ Route::post('/addGen', [TestController::class, 'addGen'])->name('addGen');
 //========================= ADMIN =========================//
 
 Route::prefix('admin')->group(function () {
+    Route::get('/loginForm', [AuthAdminController::class, 'loginForm'])->name('adminloginform');
+    Route::post('/login', [AuthAdminController::class, 'login'])->name('adminglogin');
+
     Route::get('', [DashboardController::class, 'Index']);
     Route::get('/dashboard', [DashboardController::class, 'Index'])->name('admindashboard');
 

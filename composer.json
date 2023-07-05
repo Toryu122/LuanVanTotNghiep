@@ -16,7 +16,8 @@
         "doctrine/dbal": "^3.6",
         "league/flysystem-aws-s3-v3": "^1.0",
         "yoeunes/toastr": "^2.3",
-        "arielmejiadev/larapex-charts": "^6.0"
+        "arielmejiadev/larapex-charts": "^6.0",
+        "spatie/laravel-permission": "^5.10"
     },
     "require-dev": {
         "facade/ignition": "^2.5",

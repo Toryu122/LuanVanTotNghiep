@@ -21,10 +21,16 @@ class DatabaseSeeder extends Seeder
         $this->call([
             GenreSeeder::class,
             PublisherSeeder::class,
+            GameSeeder::class,
+            PermissionSeeder::class,
+            RoleSeeder::class,
             UserSeeder::class,
-            GameSeeder::class
+
+
+            OrdersTableSeeder::class,
+            OrderDetailsTableSeeder::class,
+            GenresTableSeeder::class,
+            GameGenreTableSeeder::class
         ]);
-        $this->call(OrdersTableSeeder::class);
-        $this->call(OrderDetailsTableSeeder::class);
     }
 }
