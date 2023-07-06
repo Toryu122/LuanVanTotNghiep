@@ -2,6 +2,7 @@
 
 namespace Database\Seeders;
 
+use App\Models\Permission;
 use App\Models\Role;
 use App\Models\User;
 use Illuminate\Database\Seeder;
@@ -29,7 +30,7 @@ class RoleSeeder extends Seeder
 
         $adminRoleId = DB::table(Role::retrieveTableName())->where('name', '=', 'admin')->get('id');
         // Role admin
-        foreach (Role::ROLES as $key => $value) {
+        foreach (Permission::PERMISSIONS as $key => $value) {
             DB::table($tableNames['role_has_permissions'])
                 ->insert([
                     'permission_id' => ($key + 1),

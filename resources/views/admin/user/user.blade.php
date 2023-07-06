@@ -10,7 +10,9 @@
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
     @include('cdn')
     <link rel="stylesheet" href="{{ asset('css/admin.style.css') }}">
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/toastr.js/2.1.4/toastr.css" integrity="sha512-oe8OpYjBaDWPt2VmSFR+qYOdnTjeV9QPLJUeqZyprDEQvQLJ9C5PCFclxwNuvb/GQgQngdCXzKSFltuHD3eCxA==" crossorigin="anonymous" referrerpolicy="no-referrer" />
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/toastr.js/2.1.4/toastr.css"
+        integrity="sha512-oe8OpYjBaDWPt2VmSFR+qYOdnTjeV9QPLJUeqZyprDEQvQLJ9C5PCFclxwNuvb/GQgQngdCXzKSFltuHD3eCxA=="
+        crossorigin="anonymous" referrerpolicy="no-referrer" />
 </head>
 
 <body>
@@ -61,6 +63,7 @@
                                         <th scope="row">Ngày tạo</th>
                                         <th scope="row">Ngày sửa</th>
                                         <th scope="row" data-sortable="false"></th>
+                                        <th scope="row" data-sortable="false"></th>
                                     </tr>
                                 </thead>
                                 <tfoot>
@@ -71,6 +74,7 @@
                                         <th scope="row">Social ID</th>
                                         <th scope="row">Ngày tạo</th>
                                         <th scope="row">Ngày sửa</th>
+                                        <th scope="row" data-sortable="false"></th>
                                         <th scope="row" data-sortable="false"></th>
                                         {{-- <th data-sortable="false"></th> --}}
                                     </tr>
@@ -89,7 +93,7 @@
                                                     $name = Str::ucfirst($item->name);
                                                     $idTarget = str_replace(' ', '', $name);
                                                 @endphp
-                                                <button type="button" class="btn btn-outline-primary btn-sm"
+                                                <button type="button" class="btn btn-default text-white btn-sm"
                                                     data-bs-toggle="modal"
                                                     data-bs-target="#{{ $idTarget }}_{{ $item->id }}">
                                                     <i class="fas fa-info me-2"></i> Thông tin khác
@@ -147,10 +151,11 @@
                                                                                 class="col-sm-2 col-md-4 col-form-label"
                                                                                 for="last_sent">Lần gửi gần đây</label>
                                                                             <div class="col-sm-10 col-md-8">
-                                                                                <input type="datetime" readonly disabled
+                                                                                <input type="datetime" readonly
+                                                                                    disabled
                                                                                     value="{{ $item->last_sent }}"
-                                                                                    class="form-control" id="last_sent"
-                                                                                    name="last_sent" />
+                                                                                    class="form-control"
+                                                                                    id="last_sent" name="last_sent" />
                                                                             </div>
                                                                         </div>
                                                                         <div class="row pt-2">
@@ -210,6 +215,84 @@
                                                     </div>
                                                 </div>
 
+                                            </td>
+                                            <td>
+                                                <button type="button" class="text-white btn btn-default btn-sm"
+                                                    data-bs-toggle="modal"
+                                                    data-bs-target="#assignRole{{ $idTarget }}_{{ $item->id }}">
+                                                    <i class="fa-solid fa-paperclip"></i> Gán role
+                                                </button>
+
+                                                <div class="modal fade"
+                                                    id="assignRole{{ $idTarget }}_{{ $item->id }}"
+                                                    tabindex="-1" aria-labelledby="userDetailModal"
+                                                    aria-hidden="true">
+                                                    <div class="modal-dialog modal-dialog-centered modal-lg">
+                                                        <div class="modal-content">
+                                                            <div class="modal-header border-bottom-0">
+                                                                <p class="h3 mb-0" style="color: #35558a;">
+                                                                    Gán role cho user
+                                                                </p>
+                                                                <button type="button" class="btn-close"
+                                                                    data-bs-dismiss="modal"
+                                                                    aria-label="Close"></button>
+                                                            </div>
+                                                            <div class="modal-body text-start text-black p-4">
+                                                                <div class="mb-3">
+                                                                    <form method="POST"
+                                                                        action="{{ route('updateuser', ['id' => $item->id]) }}">
+                                                                        @csrf
+                                                                        @method('put')
+                                                                        <div class="row">
+                                                                            <label class="col-sm-2 col-md-3 form-label"
+                                                                                for="name">Tên</label>
+                                                                            <div class="col-sm-10 col-md-9">
+                                                                                <input value="{{ $item->name }}"
+                                                                                    type="text"
+                                                                                    class="form-control"
+                                                                                    id="verified" name="name" />
+                                                                            </div>
+                                                                        </div>
+                                                                        <div class="row pt-2">
+                                                                            <label class="col-sm-4 col-md-3 form-label"
+                                                                                for="permissions">Chọn role</label>
+                                                                            <div class="col-sm-8 col-md-9">
+                                                                                <div class="row">
+                                                                                    @foreach ($roles as $role)
+                                                                                        <div
+                                                                                            class="col-6 col-sm-4 col-md-3">
+                                                                                            <div class="form-check">
+                                                                                                <input type="checkbox"
+                                                                                                    class="form-check-input"
+                                                                                                    id="{{ $role->name }}"
+                                                                                                    name="roles[]"
+                                                                                                    value="{{ $role->name }}"
+                                                                                                    {{ $item->roles->contains('name', $role->name) ? 'checked' : '' }}>
+                                                                                                <label
+                                                                                                    class="form-check-label"
+                                                                                                    for="{{ $role->name }}">{{ $role->name }}</label>
+                                                                                            </div>
+                                                                                        </div>
+                                                                                    @endforeach
+                                                                                </div>
+                                                                            </div>
+                                                                        </div>
+                                                                        <div class="row pt-2">
+                                                                            <div class="col-md-10">
+                                                                            </div>
+                                                                            <div
+                                                                                class="col-md-2 d-flex justify-content-end">
+                                                                                <button type="submit"
+                                                                                    class="btn btn-primary">Cập
+                                                                                    nhật</button>
+                                                                            </div>
+                                                                        </div>
+                                                                    </form>
+                                                                </div>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                </div>
                                             </td>
                                         </tr>
                                     @endforeach

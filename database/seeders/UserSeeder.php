@@ -32,7 +32,7 @@ class UserSeeder extends Seeder
             ->insert([
                 'role_id' => $adminRoleId[0]->id,
                 'model_type' => User::class,
-                'model_id' => $id
+                'user_id' => $id
             ]);
     }
 }

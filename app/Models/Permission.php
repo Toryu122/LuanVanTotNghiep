@@ -4,6 +4,7 @@ namespace App\Models;
 
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Database\Eloquent\Relations\BelongsToMany;
 
 class Permission extends BaseModel
 {
@@ -22,6 +23,14 @@ class Permission extends BaseModel
         'editPublisher',
         'deletePublisher',
 
+        'addRole',
+        'editRole',
+        'deleteRole',
+
+        'addPermission',
+        'editPermission',
+        'deletePermission',
+
         'assignRole',
         'assignPermission',
         
@@ -32,4 +41,12 @@ class Permission extends BaseModel
         'cancelOrder',
         'acceptOrder',
     ];
+
+    /**
+     * @return BelongsToMany
+     */
+    public function roles() : BelongsToMany
+    {
+        return $this->belongsToMany(Role::class);
+    }
 }

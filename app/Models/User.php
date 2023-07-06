@@ -8,6 +8,7 @@ use Illuminate\Notifications\Notifiable;
 use Illuminate\Contracts\Auth\MustVerifyEmail;
 use Illuminate\Database\Eloquent\Relations\HasMany;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
+use Illuminate\Database\Eloquent\Relations\BelongsToMany;
 use Illuminate\Foundation\Auth\User as Authenticatable;
 use Spatie\Permission\Traits\HasPermissions;
 
@@ -16,7 +17,7 @@ class User extends Authenticatable
     use HasApiTokens, HasFactory, Notifiable;
     use HasRoles;
     use HasPermissions;
-    
+
     const SOCIALS = [
         'None',
         'Facebook',
@@ -65,8 +66,16 @@ class User extends Authenticatable
     /**
      * @return HasMany
      */
-    public function orders() : HasMany
+    public function orders(): HasMany
     {
         return $this->hasMany(Order::class);
+    }
+
+    /**
+     * @return BelongsToMany
+     */
+    public function roles(): BelongsToMany
+    {
+        return $this->belongsToMany(Role::class);
     }
 }

@@ -2,8 +2,14 @@
 
 namespace App\Http\Controllers\Admin;
 
-use App\Http\Controllers\Controller;
+use App\Models\Role;
+use App\Models\Permission;
 use Illuminate\Http\Request;
+use Illuminate\Validation\Rule;
+use Illuminate\Support\Facades\DB;
+use App\Http\Controllers\Controller;
+use Carbon\Carbon;
+use Spatie\Permission\Models\Role as ModelRole;
 
 class RoleController extends Controller
 {
@@ -14,7 +20,20 @@ class RoleController extends Controller
      */
     public function index()
     {
-        //
+        $roles = Role::with('permissions')->get();
+        $permissions = Permission::all();
+
+        // foreach ($roles[0]->permissions as $key => $value) {
+        //     echo $value . ", ";
+        // }
+
+        return view(
+            'admin.role.role',
+            [
+                'roles' => $roles,
+                'permissions' => $permissions,
+            ]
+        );
     }
 
     /**
@@ -35,7 +54,34 @@ class RoleController extends Controller
      */
     public function store(Request $request)
     {
-        //
+        $request->validate(
+            [
+                'permissions' => [
+                    'required',
+                    'array',
+                ],
+                'name' => [
+                    'required',
+                    'string',
+                    'max:30'
+                ]
+            ],
+            [
+                'permissions.required' => 'Vui lòng gán permission cho role!',
+                'permissions.array' => 'Permission không hợp lệ, vui lòng thử lại',
+                'permissions.in' => 'Permission không hợp lệ, vui lòng thử lại',
+                'name.required' => 'Thiếu tên!',
+                'name.string' => 'Tên không hợp lệ!',
+                'name.max' => 'Tên không dài quá 30 ký tự'
+            ]
+        );
+
+        $roles = ModelRole::create(['name' => $request->get('name')]);
+
+        $roles->syncPermissions($request->get('permissions'));
+
+        toastr()->success('', 'Tạo thành công');
+        return redirect()->back();
     }
 
     /**
@@ -69,7 +115,48 @@ class RoleController extends Controller
      */
     public function update(Request $request, $id)
     {
-        //
+        $request->validate(
+            [
+                'permissions' => [
+                    'array',
+                ],
+                'name' => [
+                    'string',
+                    'max:30'
+                ]
+            ],
+            [
+                'permissions.array' => 'Permission không hợp lệ, vui lòng thử lại',
+                'permissions.in' => 'Permission không hợp lệ, vui lòng thử lại',
+                'name.string' => 'Tên không hợp lệ!',
+                'name.max' => 'Tên không dài quá 30 ký tự'
+            ]
+        );
+
+        $name = $request->get('name');
+        $permissions = $request->get('permissions');
+        
+        $role = ModelRole::findById($id);
+        // If the $permissions array have more permission than $role permissions
+        // then syncPermissions
+        if (count($role->permissions) <= count($permissions)) {
+            $role->givePermissionTo($permissions);
+        } else {
+            $role->syncPermissions($permissions);
+        }
+
+        if ($name) {
+            DB::table(Role::retrieveTableName())
+                ->where('id', '=', $id)
+                ->update(
+                    [
+                        'name' => $name
+                    ]
+                );
+        }
+
+        toastr()->success('', 'Cập nhật thành công');
+        return redirect()->back();
     }
 
     /**
@@ -78,8 +165,50 @@ class RoleController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function destroy($id)
+    public function delete($id)
     {
-        //
+        $tableNames = config('permission.table_names');
+
+        $isExist = DB::table($tableNames['model_has_roles'])
+            ->where('role_id', '=', $id)
+            ->exists();
+
+        if ($isExist) {
+            toastr()->warning('', 'Thất bại, vẫn còn user thuộc role');
+            return redirect()->back();
+        }
+
+        DB::table(Role::retrieveTableName())
+            ->where('id', '=', $id)
+            ->update(
+                [
+                    'is_active' => false,
+                    'updated_at' => Carbon::now()
+                ]
+            );
+
+        toastr()->success('', 'Vô hiệu hóa thành công');
+        return redirect()->back();
+    }
+
+    /**
+     * Activate the specified role from storage.
+     *
+     * @param  int  $id
+     * @return \Illuminate\Http\Response
+     */
+    public function activate($id)
+    {
+        DB::table(Role::retrieveTableName())
+            ->where('id', '=', $id)
+            ->update(
+                [
+                    'is_active' => 1,
+                    'updated_at' => Carbon::now()
+                ]
+            );
+
+        toastr()->success('', 'Kích hoạt thành công');
+        return redirect()->back();
     }
 }

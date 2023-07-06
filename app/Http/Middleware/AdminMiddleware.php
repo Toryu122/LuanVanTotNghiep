@@ -22,7 +22,7 @@ class AdminMiddleware
         $user = User::find($currentUserId);
 
         if (!auth()->check() || !$user->hasRole(Role::ROLES)) {
-            // User is not authenticated as an admin, redirect to the admin login page
+            // User doesn't have roles, redirect to the admin login page
             auth()->logout();
             toastr()->error('','Bạn không có quyền hạn, vui lòng đăng nhập lại');
             return redirect()->route('adminloginform');

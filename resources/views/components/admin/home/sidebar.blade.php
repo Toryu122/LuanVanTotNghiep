@@ -18,9 +18,9 @@
                 <nav class="sb-sidenav-menu-nested nav">
                     <a class="nav-link"  href="{{ route('adminuser') }}"><i class="fa-solid fa-user-group"></i>&nbsp;
                         Users</a>
-                    <a class="nav-link" href="layout-sidenav-light.html"><i class="fa-solid fa-user-shield"></i>&nbsp;
+                    <a class="nav-link" href="{{ route('adminpermission') }}"><i class="fa-solid fa-user-shield"></i>&nbsp;
                         Permissions</a>
-                    <a class="nav-link" href="layout-sidenav-light.html"><i class="fa-solid fa-tag"></i>&nbsp;
+                    <a class="nav-link" href="{{ route('adminrole') }}"><i class="fa-solid fa-tag"></i>&nbsp;
                         Roles</a>
                 </nav>
             </div>

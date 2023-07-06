@@ -17,8 +17,11 @@ use App\Http\Controllers\Admin\GameController as AdminGameController;
 use App\Http\Controllers\Admin\UserController as AdminUserController;
 use App\Http\Controllers\Admin\GenreController as AdminGenreController;
 use App\Http\Controllers\Admin\OrderController as AdminOrderController;
+use App\Http\Controllers\Admin\PermissionController;
 use App\Http\Controllers\Admin\PublisherController as AdminPublicController;
+use App\Http\Controllers\Admin\RoleController;
 use App\Http\Middleware\AdminMiddleware;
+use App\Models\Permission;
 
 /*
 |--------------------------------------------------------------------------
@@ -149,6 +152,22 @@ Route::prefix('admin')->middleware(['auth', AdminMiddleware::class])->group(func
         Route::put('/update/{id}', [AdminUserController::class, 'update'])->name('updateuser');
         // It should be 'disable user' or something like that, idk
         Route::delete('/delete/{id}', [AdminUserController::class, 'delete'])->name('deleteuser');
+    });
+
+    Route::prefix('role')->group(function () {
+        Route::get('', [RoleController::class, 'index'])->name('adminrole');
+        Route::post('/store', [RoleController::class, 'store'])->name('storerole');
+        Route::put('/update/{id}', [RoleController::class, 'update'])->name('updaterole');
+        Route::delete('/delete/{id}', [RoleController::class, 'delete'])->name('deleterole');
+        Route::put('/activate/{id}', [RoleController::class, 'activate'])->name('activaterole');
+    });
+
+    Route::prefix('permission')->group(function () {
+        Route::get('', [PermissionController::class, 'index'])->name('adminpermission');
+        Route::post('/store', [PermissionController::class, 'store'])->name('storepermission');
+        Route::put('/update/{id}', [PermissionController::class, 'update'])->name('updatepermission');
+        Route::delete('/delete/{id}', [PermissionController::class, 'delete'])->name('deletepermission');
+        Route::put('/activate/{id}', [PermissionController::class, 'activate'])->name('activatepermission');
     });
     
     Route::prefix('order')->group(function () {
