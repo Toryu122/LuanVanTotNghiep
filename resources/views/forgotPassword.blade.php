@@ -29,8 +29,8 @@
                     <button class="btn btn-primary w-100">Gửi</button>
                 </form>
                 <div class="d-flex justify-content-between mt-4">
-                    <a class="" href="#">Đăng nhập</a>
-                    <a class="" href="#">Đăng ký</a>
+                    <a class="" href="{{ route('login') }}">Đăng nhập</a>
+                    <a class="" href="{{ route('signup') }}">Đăng ký</a>
                 </div>
             </div>
         </div>

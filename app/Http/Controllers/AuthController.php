@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Common\Helper;
 use App\Models\User;
 use App\Common\Constant;
+use Carbon\Carbon;
 use DateTime;
 use Illuminate\Support\Str;
 use Illuminate\Http\Request;
@@ -233,7 +234,8 @@ class AuthController extends Controller
             User::where('email', '=', $email)
                 ->update(
                     [
-                        'otp' => $otp
+                        'otp' => $otp,
+                        'last_sent' => Carbon::now()
                     ]
                 );
             $htmlFilePath = base_path() . '\resources/html/resetPassword.html';
