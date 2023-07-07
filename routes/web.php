@@ -95,6 +95,7 @@ Route::middleware(['auth:sanctum', AuthStore::class])->group(function () {
     Route::post('checkout/payVnpay', [OrderController::class, 'payVnpay'])->name('checkoutVnpay');
     Route::get('checkout/successVnpay', [OrderController::class, 'vnpayCheckoutSuccess'])->name('vnpayCheckoutSuccess');
     Route::get('checkout/successMomo', [OrderController::class, 'momoCheckoutSuccess'])->name('momoCheckoutSuccess');
+    Route::get('/cancelOrder', [OrderController::class, 'cancelOrder'])->name('cancelOrder');
 
     /**
      * User

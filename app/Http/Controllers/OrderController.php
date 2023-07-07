@@ -115,15 +115,16 @@ class OrderController extends Controller
             );
 
         // Map every value and insert to the order detail
-        collect($orderInfo)->map(function ($value) use ($orderId) {
+        collect($orderInfo)->map(function ($quantity, $value) use ($orderId) {
+            $game = Game::find($value);
             DB::table('order_details')
                 ->insert(
                     [
                         'order_id' => $orderId,
-                        'game_id' => $value['id'],
-                        'name' => $value['name'],
-                        'price' => $value['price'],
-                        'quantity' => $value['quantity']
+                        'game_id' => $game->id,
+                        'name' => $game->name,
+                        'price' => $game->price,
+                        'quantity' => $quantity
                     ]
                 );
         });
@@ -194,16 +195,23 @@ class OrderController extends Controller
 
     public function payVnpay(Request $request)
     {
-        // dd(session()->get('cart'));
+        $cart = session()->get('cart');
+        $keys = [];
+        $quantity = [];
+
+        foreach ($cart as $key => $value) {
+            $keys[] = $key;
+            $quantity[] = $cart[$key]['quantity'];
+        }
+        $newCart = array_combine($keys, $quantity);
+
         $vnp_Url = env('VNPAY_URL');
         $vnp_Returnurl = "http://localhost:8000/checkout/successVnpay";
         $vnp_TmnCode = env('VNPAY_TERMINAL_CODE'); //Mã website tại VNPAY 
         $vnp_HashSecret = env('VNPAY_SECRET_CODE'); //Chuỗi bí mật
 
         $vnp_TxnRef = Str::upper(Str::random(8)); //Mã đơn hàng. Trong thực tế Merchant cần insert đơn hàng vào DB và gửi mã này sang VNPAY
-        $vnp_OrderInfo = json_encode(
-            session()->get('cart')
-        );
+        $vnp_OrderInfo = json_encode($newCart);
         $vnp_OrderType = 'billpayment';
         $vnp_Amount = $request->get('total') * 100;
         $vnp_Locale = 'vn';
