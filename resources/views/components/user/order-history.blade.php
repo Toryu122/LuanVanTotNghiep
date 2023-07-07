@@ -6,6 +6,11 @@
         </div>
         <div class="card-body text-white">
             <div class="rounded">
+                {{-- <div class="text-center fw-bold text-danger">
+                    <p class="h5">
+                        Đơn hàng chỉ có thể hủy trong vòng 72 giờ kể từ khi thanh toán
+                    </p>
+                </div> --}}
                 <div class="mt-3">
                     <table class="data-table" id="datatablesSimple" style="border: 1px solid #ccc; padding: 8px;">
                         <thead>
@@ -37,17 +42,24 @@
                                     <td>{{ $item->order_status }}</td>
                                     <td>{{ number_format($item->total, 0, ',', '.') }}đ</td>
                                     <td>
-                                        <button type="button" class="btn btn-outline-primary btn-sm" data-bs-toggle="modal"
+                                        <button type="button" class="btn btn-outline-primary btn-sm"
+                                            data-bs-toggle="modal"
                                             data-bs-target="#{{ $item->order_status }}_{{ $item->order_id_ref }}">
                                             <i class="fas fa-info me-2"></i> Chi tiết
                                         </button>
+                                        {{-- <button type="button" class="btn btn-outline-danger btn-sm"
+                                            data-bs-toggle="modal"
+                                            data-bs-target="#cancel{{ $item->order_status }}_{{ $item->order_id_ref }}">
+                                            <i class="fa-solid fa-circle-xmark"></i> Hủy đơn
+                                        </button> --}}
 
-                                        <div class="modal fade text-dark" id="{{ $item->order_status }}_{{ $item->order_id_ref }}"
-                                            tabindex="-1" aria-labelledby="orderDetailModal" aria-hidden="true">
+                                        <div class="modal fade text-dark"
+                                            id="{{ $item->order_status }}_{{ $item->order_id_ref }}" tabindex="-1"
+                                            aria-labelledby="orderDetailModal" aria-hidden="true">
                                             <div class="modal-dialog">
                                                 <div class="modal-content">
                                                     <div class="modal-header border-bottom-0">
-                                                        
+
                                                         <p class="h3 mb-0" style="color: #35558a;">Chi tiết đơn hàng</p>
                                                         <button type="button" class="btn-close" data-bs-dismiss="modal"
                                                             aria-label="Close"></button>
@@ -71,6 +83,30 @@
                                             </div>
                                         </div>
 
+                                        {{-- <div class="modal fade text-dark"
+                                            id="cancel{{ $item->order_status }}_{{ $item->order_id_ref }}"
+                                            tabindex="-1" aria-labelledby="cancelOrder" aria-hidden="true">
+                                            <div class="modal-dialog">
+                                                <div class="modal-content">
+                                                    <form method="post"
+                                                        action="{{ route('cancelOrder', ['order_id' => $item->order_id_ref]) }}">
+                                                        @csrf
+                                                        <div class="modal-header">
+                                                            <h5 class="modal-title">Hủy đơn hàng</h5>
+                                                            <button type="button" class="btn-close"
+                                                                data-bs-dismiss="modal" aria-label="Close"></button>
+                                                        </div>
+                                                        <div class="modal-body">
+                                                            <p>Bạn có chắc muốn hủy đơn hàng?</p>
+
+                                                        </div>
+                                                        <div class="modal-footer">
+                                                            <button class="btn btn-danger">Hủy đơn</button>
+                                                        </div>
+                                                    </form>
+                                                </div>
+                                            </div>
+                                        </div> --}}
                                     </td>
                                 </tr>
                             @endforeach

@@ -6,6 +6,7 @@ use App\Common\GlobalVariable;
 use App\Models\Game;
 use App\Models\Order;
 use App\Common\Helper;
+use Carbon\Carbon;
 use Illuminate\Support\Str;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
@@ -307,5 +308,20 @@ class OrderController extends Controller
         } else {
             echo json_encode($returnData);
         }
+    }
+
+    public function cancelOrder($id)
+    {
+        DB::table(Order::retrieveTableName())
+            ->where('order_id_ref', '=', $id)
+            ->update(
+                [
+                    'order_status' => Order::ORDER_STATUS[2],
+                    'updated_at' => Carbon::now()
+                ]
+            );
+
+        toastr()->success('', 'Hủy thành công');
+        return redirect()->back();
     }
 }
