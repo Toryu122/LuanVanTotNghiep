@@ -116,7 +116,8 @@ class UserController extends Controller
                         'string'
                     ],
                     'roles' => [
-                        'array'
+                        'array',
+                        'sometimes'
                     ]
                 ],
                 [
@@ -135,12 +136,12 @@ class UserController extends Controller
                 'gender' => $request->filled('gender') ? $request->input('gender') : $user->gender,
                 'biography' => $request->filled('biography') ? $request->input('biography') : $user->biography,
                 'address' => $request->filled('address') ? $request->input('address') : $user->address,
-                'verified' => $request->has('verified') ? 1 : 0
+                'verified' => $request->filled('verified') ? 1 : 1
             ];
 
             $roles = $request->get('roles');
 
-            if (count($roles) > 0) {
+            if ($roles && count($roles) > 0) {
                 if (count($user->getRoleNames()) <= count($roles)) {
                     $user->assignRole($roles);
                 } else {

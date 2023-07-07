@@ -7,6 +7,7 @@ use App\Models\Role;
 use App\Models\User;
 use Illuminate\Database\Seeder;
 use Illuminate\Support\Facades\DB;
+use Spatie\Permission\Models\Role as ModelsRole;
 
 class RoleSeeder extends Seeder
 {
@@ -18,6 +19,25 @@ class RoleSeeder extends Seeder
     public function run()
     {
         $tableNames = config('permission.table_names');
+        $hrPermissions = [
+            'addRole',
+            'editRole',
+            'deleteRole',
+            'activateRole',
+
+            'addPermission',
+            'editPermission',
+            'deletePermission',
+            'activatePermission',
+
+            'assignRole',
+            'assignPermission',
+
+            'addUser',
+            'editUser',
+            'deleteUser',
+        ];
+
         foreach (Role::ROLES as $key => $value) {
             DB::table(Role::retrieveTableName())
                 ->insert(
@@ -28,14 +48,10 @@ class RoleSeeder extends Seeder
                 );
         }
 
-        $adminRoleId = DB::table(Role::retrieveTableName())->where('name', '=', 'admin')->get('id');
-        // Role admin
-        foreach (Permission::PERMISSIONS as $key => $value) {
-            DB::table($tableNames['role_has_permissions'])
-                ->insert([
-                    'permission_id' => ($key + 1),
-                    'role_id' => $adminRoleId[0]->id
-                ]);
-        }
+        $adminRole = ModelsRole::findByName('admin');
+        $hrRole = ModelsRole::findByName('hr');
+
+        $adminRole->syncPermissions(Permission::PERMISSIONS);
+        $hrRole->syncPermissions($hrPermissions);
     }
 }

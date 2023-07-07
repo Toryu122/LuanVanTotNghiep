@@ -111,9 +111,11 @@ Route::post('/addGen', [TestController::class, 'addGen'])->name('addGen');
 //========================= ADMIN =========================//
 
 Route::prefix('admin')->middleware(['auth', AdminMiddleware::class])->group(function () {
-    Route::get('/login', [AdminAuthController::class, 'loginForm'])->name('adminloginform');
-    Route::post('/loginAdmin', [AdminAuthController::class, 'login'])->name('loginadmin');
+    Route::get('/loginAdmin', [AdminAuthController::class, 'loginForm'])->name('adminloginform');
+    Route::post('/loginAdminUser', [AdminAuthController::class, 'login'])->name('loginadmin');
+    Route::get('/logoutAdmin', [AdminAuthController::class, 'logout'])->name('logoutadmin');
 
+    Route::get('info', [AdminAuthController::class, 'info'])->name('admininfo');
     Route::get('', [DashboardController::class, 'Index']);
     Route::get('/dashboard', [DashboardController::class, 'Index'])->name('admindashboard');
 

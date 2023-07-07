@@ -98,11 +98,11 @@
             <div class="btn-group dropend">
                 <a type="button" class="nav-link dropdown-toggle" data-bs-toggle="dropdown" aria-expanded="false">
                     <div class="sb-nav-link-icon"><i class="fa-solid fa-user"></i></div>
-                    User
+                    {{ Auth::user()->name }}
                 </a>
                 <ul class="dropdown-menu">
-                    <li><a class="dropdown-item" href="#">Cài đặt tài khoản</a></li>
-                    <li><a class="dropdown-item" href="#">Đăng xuất</a></li>
+                    <li><a class="dropdown-item" href="{{ route('admininfo') }}">Cài đặt tài khoản</a></li>
+                    <li><a class="dropdown-item" href="{{ route('logoutadmin') }}">Đăng xuất</a></li>
                 </ul>
             </div>
         </div>
