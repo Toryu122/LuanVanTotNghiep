@@ -9,6 +9,7 @@ use Illuminate\Validation\Rule;
 use Illuminate\Support\Facades\DB;
 use App\Http\Controllers\Controller;
 use Carbon\Carbon;
+use Illuminate\Support\Facades\Gate;
 use Spatie\Permission\Models\Role as ModelRole;
 
 class RoleController extends Controller
@@ -54,33 +55,38 @@ class RoleController extends Controller
      */
     public function store(Request $request)
     {
-        $request->validate(
-            [
-                'permissions' => [
-                    'required',
-                    'array',
+        if (Gate::allows('addRole')) {
+            $request->validate(
+                [
+                    'permissions' => [
+                        'required',
+                        'array',
+                    ],
+                    'name' => [
+                        'required',
+                        'string',
+                        'max:30'
+                    ]
                 ],
-                'name' => [
-                    'required',
-                    'string',
-                    'max:30'
+                [
+                    'permissions.required' => 'Vui lòng gán permission cho role!',
+                    'permissions.array' => 'Permission không hợp lệ, vui lòng thử lại',
+                    'permissions.in' => 'Permission không hợp lệ, vui lòng thử lại',
+                    'name.required' => 'Thiếu tên!',
+                    'name.string' => 'Tên không hợp lệ!',
+                    'name.max' => 'Tên không dài quá 30 ký tự'
                 ]
-            ],
-            [
-                'permissions.required' => 'Vui lòng gán permission cho role!',
-                'permissions.array' => 'Permission không hợp lệ, vui lòng thử lại',
-                'permissions.in' => 'Permission không hợp lệ, vui lòng thử lại',
-                'name.required' => 'Thiếu tên!',
-                'name.string' => 'Tên không hợp lệ!',
-                'name.max' => 'Tên không dài quá 30 ký tự'
-            ]
-        );
+            );
 
-        $roles = ModelRole::create(['name' => $request->get('name')]);
+            $roles = ModelRole::create(['name' => $request->get('name')]);
 
-        $roles->syncPermissions($request->get('permissions'));
+            $roles->syncPermissions($request->get('permissions'));
 
-        toastr()->success('', 'Tạo thành công');
+            toastr()->success('', 'Tạo thành công');
+            return redirect()->back();
+        }
+        
+        toastr()->error('', 'Bạn không đủ quyền hạn');
         return redirect()->back();
     }
 
@@ -115,47 +121,52 @@ class RoleController extends Controller
      */
     public function update(Request $request, $id)
     {
-        $request->validate(
-            [
-                'permissions' => [
-                    'array',
-                ],
-                'name' => [
-                    'string',
-                    'max:30'
-                ]
-            ],
-            [
-                'permissions.array' => 'Permission không hợp lệ, vui lòng thử lại',
-                'permissions.in' => 'Permission không hợp lệ, vui lòng thử lại',
-                'name.string' => 'Tên không hợp lệ!',
-                'name.max' => 'Tên không dài quá 30 ký tự'
-            ]
-        );
-
-        $name = $request->get('name');
-        $permissions = $request->get('permissions');
-        
-        $role = ModelRole::findById($id);
-        // If the $permissions array have more permission than $role permissions
-        // then syncPermissions
-        if (count($role->permissions) <= count($permissions)) {
-            $role->givePermissionTo($permissions);
-        } else {
-            $role->syncPermissions($permissions);
-        }
-
-        if ($name) {
-            DB::table(Role::retrieveTableName())
-                ->where('id', '=', $id)
-                ->update(
-                    [
-                        'name' => $name
+        if (Gate::allows('editRole')) {
+            $request->validate(
+                [
+                    'permissions' => [
+                        'array',
+                    ],
+                    'name' => [
+                        'string',
+                        'max:30'
                     ]
-                );
+                ],
+                [
+                    'permissions.array' => 'Permission không hợp lệ, vui lòng thử lại',
+                    'permissions.in' => 'Permission không hợp lệ, vui lòng thử lại',
+                    'name.string' => 'Tên không hợp lệ!',
+                    'name.max' => 'Tên không dài quá 30 ký tự'
+                ]
+            );
+
+            $name = $request->get('name');
+            $permissions = $request->get('permissions');
+
+            $role = ModelRole::findById($id);
+            // If the $permissions array have more permission than $role permissions
+            // then syncPermissions
+            if (count($role->permissions) <= count($permissions)) {
+                $role->givePermissionTo($permissions);
+            } else {
+                $role->syncPermissions($permissions);
+            }
+
+            if ($name) {
+                DB::table(Role::retrieveTableName())
+                    ->where('id', '=', $id)
+                    ->update(
+                        [
+                            'name' => $name
+                        ]
+                    );
+            }
+
+            toastr()->success('', 'Cập nhật thành công');
+            return redirect()->back();
         }
 
-        toastr()->success('', 'Cập nhật thành công');
+        toastr()->error('', 'Bạn không đủ quyền hạn');
         return redirect()->back();
     }
 
@@ -167,27 +178,33 @@ class RoleController extends Controller
      */
     public function delete($id)
     {
-        $tableNames = config('permission.table_names');
+        if (Gate::allows('deleteRole')) {
+            $tableNames = config('permission.table_names');
 
-        $isExist = DB::table($tableNames['model_has_roles'])
-            ->where('role_id', '=', $id)
-            ->exists();
+            $isExist = DB::table($tableNames['model_has_roles'])
+                ->where('role_id', '=', $id)
+                ->exists();
 
-        if ($isExist) {
-            toastr()->warning('', 'Thất bại, vẫn còn user thuộc role');
+            if ($isExist) {
+                toastr()->warning('', 'Thất bại, vẫn còn user thuộc role');
+                return redirect()->back();
+            }
+
+            DB::table(Role::retrieveTableName())
+                ->where('id', '=', $id)
+                ->update(
+                    [
+                        'is_active' => false,
+                        'updated_at' => Carbon::now()
+                    ]
+                );
+
+            toastr()->success('', 'Vô hiệu hóa thành công');
             return redirect()->back();
         }
 
-        DB::table(Role::retrieveTableName())
-            ->where('id', '=', $id)
-            ->update(
-                [
-                    'is_active' => false,
-                    'updated_at' => Carbon::now()
-                ]
-            );
 
-        toastr()->success('', 'Vô hiệu hóa thành công');
+        toastr()->error('', 'Bạn không đủ quyền hạn');
         return redirect()->back();
     }
 
@@ -199,16 +216,21 @@ class RoleController extends Controller
      */
     public function activate($id)
     {
-        DB::table(Role::retrieveTableName())
-            ->where('id', '=', $id)
-            ->update(
-                [
-                    'is_active' => 1,
-                    'updated_at' => Carbon::now()
-                ]
-            );
+        if (Gate::allows('activateRole')) {
+            DB::table(Role::retrieveTableName())
+                ->where('id', '=', $id)
+                ->update(
+                    [
+                        'is_active' => 1,
+                        'updated_at' => Carbon::now()
+                    ]
+                );
 
-        toastr()->success('', 'Kích hoạt thành công');
+            toastr()->success('', 'Kích hoạt thành công');
+            return redirect()->back();
+        }
+
+        toastr()->error('', 'Bạn không đủ quyền hạn');
         return redirect()->back();
     }
 }

@@ -26,10 +26,12 @@ class Permission extends BaseModel
         'addRole',
         'editRole',
         'deleteRole',
+        'activateRole',
 
         'addPermission',
         'editPermission',
         'deletePermission',
+        'activatePermission',
 
         'assignRole',
         'assignPermission',

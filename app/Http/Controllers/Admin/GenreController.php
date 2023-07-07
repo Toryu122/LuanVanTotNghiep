@@ -9,6 +9,7 @@ use Illuminate\Http\Request;
 use Illuminate\Validation\Rule;
 use Illuminate\Support\Facades\DB;
 use App\Http\Controllers\Controller;
+use Illuminate\Support\Facades\Gate;
 
 class GenreController extends Controller
 {
@@ -36,30 +37,35 @@ class GenreController extends Controller
 
     public function store(Request $request)
     {
-        $request->validate(
-            [
-                'name' => [
-                    Rule::unique(Genre::retrieveTableName()),
-                    'required',
-                    'string'
-                ]
-            ],
-            [
-                'name.required' => "Không thể thiếu tên!",
-                'name.unique' => "Trùng tên!"
-            ]
-        );
-
-        $name = $request->get('name');
-
-        DB::table(Genre::retrieveTableName())
-            ->insert(
+        if (Gate::allows('addGenre')) {
+            $request->validate(
                 [
-                    'name' => $name
+                    'name' => [
+                        Rule::unique(Genre::retrieveTableName()),
+                        'required',
+                        'string'
+                    ]
+                ],
+                [
+                    'name.required' => "Không thể thiếu tên!",
+                    'name.unique' => "Trùng tên!"
                 ]
             );
 
-        return redirect()->route('admingenre');
+            $name = $request->get('name');
+
+            DB::table(Genre::retrieveTableName())
+                ->insert(
+                    [
+                        'name' => $name
+                    ]
+                );
+
+            return redirect()->route('admingenre');
+        }
+
+        toastr()->error('', 'Bạn không đủ quyền hạn');
+        return redirect()->back();
     }
 
     public function edit($id)
@@ -73,46 +79,56 @@ class GenreController extends Controller
 
     public function update(Request $request, $id)
     {
-        $request->validate(
-            [
-                'name' => [
-                    Rule::unique(Genre::retrieveTableName())->ignore($id),
-                    'required',
-                    'string'
-                ]
-            ],
-            [
-                'name.required' => "Không thể thiếu tên!",
-                'name.unique' => "Trùng tên!"
-            ]
-        );
-
-        $name = $request->get('name');
-
-        DB::table(Genre::retrieveTableName())
-            ->where('id', '=', $id)
-            ->update(
+        if (Gate::allows('editGenre')) {
+            $request->validate(
                 [
-                    'name' => $name,
-                    'updated_at' => Carbon::now()
+                    'name' => [
+                        Rule::unique(Genre::retrieveTableName())->ignore($id),
+                        'required',
+                        'string'
+                    ]
+                ],
+                [
+                    'name.required' => "Không thể thiếu tên!",
+                    'name.unique' => "Trùng tên!"
                 ]
             );
 
-        return redirect()->route("admingenre");
+            $name = $request->get('name');
+
+            DB::table(Genre::retrieveTableName())
+                ->where('id', '=', $id)
+                ->update(
+                    [
+                        'name' => $name,
+                        'updated_at' => Carbon::now()
+                    ]
+                );
+
+            return redirect()->route("admingenre");
+        }
+
+        toastr()->error('', 'Bạn không đủ quyền hạn');
+        return redirect()->back();
     }
 
     public function delete($id)
     {
-        $isExist = DB::table(Genre::INTERMEDIATE_TABLE[0])
-            ->where('id', '=', $id)
-            ->exists();
+        if (Gate::allows('deleteGenre')) {
+            $isExist = DB::table(Genre::INTERMEDIATE_TABLE[0])
+                ->where('id', '=', $id)
+                ->exists();
 
-        if ($isExist) {
-            return redirect()->back()->with('game_existed', "Xóa thất bại, vẫn còn game thuộc thể loại này");
+            if ($isExist) {
+                return redirect()->back()->with('game_existed', "Xóa thất bại, vẫn còn game thuộc thể loại này");
+            }
+
+            Genre::destroy($id);
+
+            return redirect()->route('admingenre')->with('delete_success', "Xóa thành công");
         }
-
-        Genre::destroy($id);
-
-        return redirect()->route('admingenre')->with('delete_success', "Xóa thành công");
+                                
+        toastr()->error('', 'Bạn không đủ quyền hạn');
+        return redirect()->back();
     }
 }

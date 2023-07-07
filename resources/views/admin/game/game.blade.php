@@ -11,6 +11,9 @@
 
     @include('cdn')
     <link rel="stylesheet" href="{{ asset('css/admin.style.css') }}">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/toastr.js/2.1.4/toastr.css"
+        integrity="sha512-oe8OpYjBaDWPt2VmSFR+qYOdnTjeV9QPLJUeqZyprDEQvQLJ9C5PCFclxwNuvb/GQgQngdCXzKSFltuHD3eCxA=="
+        crossorigin="anonymous" referrerpolicy="no-referrer" />
 </head>
 
 <body>
@@ -67,7 +70,8 @@
                                             <td>{{ date('d-m-Y', strtotime($item->created_at)) }}</td>
                                             <td>{{ date('d-m-Y', strtotime($item->updated_at)) }}</td>
                                             <td>
-                                                <form method="GET" action="{{ route('editgame', ['id' => $item->id]) }}">
+                                                <form method="GET"
+                                                    action="{{ route('editgame', ['id' => $item->id]) }}">
                                                     @csrf
                                                     <button class="btn btn-warning">Sửa</button>
                                                 </form>

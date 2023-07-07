@@ -53,11 +53,18 @@
                             Users
                         </div>
                         <div class="card-body">
+                            <div class="pb-3">
+                                <button type="button" class="text-white btn btn-default btn-sm" data-bs-toggle="modal"
+                                    data-bs-target="#addUserModal">
+                                    <i class="fa-solid fa-plus"></i> Thêm user
+                                </button>
+                            </div>
                             <table id="datatablesSimple">
                                 <thead>
                                     <tr>
                                         <th scope="row">ID</th>
                                         <th scope="row">Tên</th>
+                                        <th scope="row">Email</th>
                                         <th scope="row">Loại Social</th>
                                         <th scope="row">Social ID</th>
                                         <th scope="row">Ngày tạo</th>
@@ -70,6 +77,7 @@
                                     <tr>
                                         <th scope="row">ID</th>
                                         <th scope="row">Tên</th>
+                                        <th scope="row">Email</th>
                                         <th scope="row">Loại tài khoản</th>
                                         <th scope="row">Social ID</th>
                                         <th scope="row">Ngày tạo</th>
@@ -84,6 +92,7 @@
                                         <tr>
                                             <td>{{ $item->id }}</td>
                                             <td>{{ $item->name }}</td>
+                                            <td>{{ $item->email }}</td>
                                             <td>{{ $item->social }}</td>
                                             <td>{{ $item->social_id }}</td>
                                             <td>{{ date('d-m-Y', strtotime($item->created_at)) }}</td>
@@ -142,8 +151,8 @@
                                                                             <div class="col-sm-10 col-md-8">
                                                                                 <input type="text" readonly disabled
                                                                                     value="{{ $item->otp }}"
-                                                                                    class="form-control" id="otp"
-                                                                                    name="otp" />
+                                                                                    class="form-control"
+                                                                                    id="otp" name="otp" />
                                                                             </div>
                                                                         </div>
                                                                         <div class="row pt-2">
@@ -302,6 +311,78 @@
                     </div>
                 </div>
             </main>
+
+            <div class="modal fade" id="addUserModal" tabindex="-1" aria-labelledby="addRoleModal"
+                aria-hidden="true">
+                <div class="modal-dialog modal-dialog-centered modal-lg">
+                    <div class="modal-content">
+                        <div class="modal-header border-bottom-0">
+                            <p class="h3 mb-0" style="color: #35558a;">
+                                Thêm user
+                            </p>
+                            <button type="button" class="btn-close" data-bs-dismiss="modal"
+                                aria-label="Close"></button>
+                        </div>
+                        <div class="modal-body text-start text-black p-4">
+                            <div class="mb-3">
+                                <form method="POST" action="{{ route('storeuser') }}">
+                                    @csrf
+                                    <div class="row">
+                                        <label class="col-sm-2 col-md-3 form-label" for="name">Tên</label>
+                                        <div class="col-sm-10 col-md-9">
+                                            <input value="" type="text" class="form-control" id="name"
+                                                name="name" />
+                                        </div>
+                                    </div>
+                                    <div class="row pt-2">
+                                        <label class="col-sm-2 col-md-3 form-label" for="name">Email</label>
+                                        <div class="col-sm-10 col-md-9">
+                                            <input value="" type="text" class="form-control" id="email"
+                                                name="email" />
+                                        </div>
+                                    </div>
+                                    <div class="row pt-2">
+                                        <label class="col-sm-2 col-md-3 form-label" for="name">Password</label>
+                                        <div class="col-sm-10 col-md-9">
+                                            <input value="" type="password" class="form-control"
+                                                id="password" name="password" />
+                                        </div>
+                                    </div>
+                                    <div class="row pt-2">
+                                        <label class="col-sm-4 col-md-3 form-label" for="permissions">Chọn
+                                            role</label>
+                                        <div class="col-sm-8 col-md-9">
+                                            <div class="row">
+                                                @foreach ($roles as $role)
+                                                    <div class="col-6 col-sm-4 col-md-3">
+                                                        <div class="form-check">
+                                                            <input type="checkbox" class="form-check-input"
+                                                                id="{{ $role->name }}" name="roles[]"
+                                                                value="{{ $role->name }}">
+                                                            <label class="form-check-label"
+                                                                for="{{ $role->name }}">{{ $role->name }}</label>
+                                                        </div>
+                                                    </div>
+                                                @endforeach
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="row pt-2">
+                                        <div class="col-md-10">
+                                        </div>
+                                        <div class="col-md-2 d-flex justify-content-end">
+                                            <button type="submit" class="btn btn-primary">
+                                                Thêm
+                                            </button>
+                                        </div>
+                                    </div>
+                                </form>
+                            </div>
+
+                        </div>
+                    </div>
+                </div>
+            </div>
         </div>
 
         <script>

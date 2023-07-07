@@ -8,6 +8,7 @@ use App\Models\Publisher;
 use Carbon\Carbon;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
+use Illuminate\Support\Facades\Gate;
 use Illuminate\Validation\Rule;
 
 class PublisherController extends Controller
@@ -36,31 +37,36 @@ class PublisherController extends Controller
 
     public function store(Request $request)
     {
-        $request->validate(
-            [
-                'name' => [
-                    Rule::unique(Publisher::retrieveTableName()),
-                    'required',
-                    'string'
-                ]
-            ],
-            [
-                'name.required' => "Không thể thiếu tên!",
-                'name.unique' => "Trùng tên!"
-            ]
-        );
-
-
-        $name = $request->get('name');
-
-        DB::table(Publisher::retrieveTableName())
-            ->insert(
+        if (Gate::allows('addPublisher')) {
+            $request->validate(
                 [
-                    'name' => $name
+                    'name' => [
+                        Rule::unique(Publisher::retrieveTableName()),
+                        'required',
+                        'string'
+                    ]
+                ],
+                [
+                    'name.required' => "Không thể thiếu tên!",
+                    'name.unique' => "Trùng tên!"
                 ]
             );
 
-        return redirect()->route("adminpublisher");
+
+            $name = $request->get('name');
+
+            DB::table(Publisher::retrieveTableName())
+                ->insert(
+                    [
+                        'name' => $name
+                    ]
+                );
+
+            return redirect()->route("adminpublisher");
+        }
+
+        toastr()->error('', 'Bạn không đủ quyền hạn');
+        return redirect()->back();
     }
 
     public function edit($id)
@@ -74,46 +80,53 @@ class PublisherController extends Controller
 
     public function update(Request $request, $id)
     {
-        $request->validate(
-            [
-                'name' => [
-                    Rule::unique(Publisher::retrieveTableName())->ignore($id),
-                    'required',
-                    'string'
-                ]
-            ],
-            [
-                'name.required' => "Không thể thiếu tên!",
-                'name.unique' => "Trùng tên!"
-            ]
-        );
-
-        $name = $request->get('name');
-
-        DB::table(Publisher::retrieveTableName())
-            ->where('id', '=', $id)
-            ->update(
+        if (Gate::allows('editPublisher')) {
+            $request->validate(
                 [
-                    'name' => $name,
-                    'updated_at' => Carbon::now()
+                    'name' => [
+                        Rule::unique(Publisher::retrieveTableName())->ignore($id),
+                        'required',
+                        'string'
+                    ]
+                ],
+                [
+                    'name.required' => "Không thể thiếu tên!",
+                    'name.unique' => "Trùng tên!"
                 ]
             );
 
-        return redirect()->route('adminpublisher');
+            $name = $request->get('name');
+
+            DB::table(Publisher::retrieveTableName())
+                ->where('id', '=', $id)
+                ->update(
+                    [
+                        'name' => $name,
+                        'updated_at' => Carbon::now()
+                    ]
+                );
+
+            return redirect()->route('adminpublisher');
+        }
+
+        toastr()->error('', 'Bạn không đủ quyền hạn');
+        return redirect()->back();
     }
 
     public function delete($id)
     {
-        $isExist = DB::table(Game::retrieveTableName())
-            ->where('publisher_id', '=', $id)
-            ->exists();
+        if (Gate::allows('deletePublisher')) {
+            $isExist = DB::table(Game::retrieveTableName())
+                ->where('publisher_id', '=', $id)
+                ->exists();
 
-        if ($isExist) {
-            return redirect()->back()->with('game_existed', "Xóa thất bại, vẫn còn game thuộc nhà phát hành này");
+            if ($isExist) {
+                return redirect()->back()->with('game_existed', "Xóa thất bại, vẫn còn game thuộc nhà phát hành này");
+            }
+
+            Publisher::destroy($id);
+
+            return redirect()->route('adminpublisher')->with('delete_success', "Xóa thành công");
         }
-    
-        Publisher::destroy($id);
-
-        return redirect()->route('adminpublisher')->with('delete_success', "Xóa thành công");
     }
 }
