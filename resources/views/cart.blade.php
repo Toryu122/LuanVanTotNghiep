@@ -29,7 +29,9 @@
                         <div class="text-center">
                             @if (Session::has('order_success'))
                                 <div class="alert alert-success alert-dismissible fade show" role="alert">
-                                    <strong>{{ Session::get('order_success') }}</strong>
+                                    @foreach (Session::get('order_success') as $item)
+                                        <strong>{{ $item }}<br></strong>
+                                    @endforeach
                                     <button type="button" class="btn-close" data-bs-dismiss="alert"
                                         aria-label="Close"></button>
                                 </div>

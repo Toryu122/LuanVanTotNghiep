@@ -3,6 +3,7 @@
 use App\Common\Constant;
 use App\Models\Game;
 use App\Models\Genre;
+use App\Models\Key;
 use App\Models\Order;
 use App\Models\OrderDetails;
 use App\Models\Publisher;
@@ -45,6 +46,7 @@ class CreateBase extends Migration
             $table->unsignedInteger('publisher_id')->nullable(false);
             $table->foreign('publisher_id')->references('id')->on(Publisher::retrieveTableName());
             $table->integer('like')->default(0);
+            $table->enum('status', Game::STATUS)->default(Game::STATUS[0]);
 
             $table->timestamp('created_at')->useCurrent();
             $table->timestamp('updated_at')->useCurrent();
@@ -75,7 +77,7 @@ class CreateBase extends Migration
             $table->foreign('game_id')->references('id')->on(Game::retrieveTableName());
             $table->foreign('genre_id')->references('id')->on(Genre::retrieveTableName());
             $table->unique(['game_id', 'genre_id']);
-            
+
             $table->timestamp('created_at')->useCurrent();
             $table->timestamp('updated_at')->useCurrent();
         });
@@ -107,6 +109,19 @@ class CreateBase extends Migration
             $table->timestamp('created_at')->useCurrent();
             $table->timestamp('updated_at')->useCurrent();
         });
+
+        Schema::create(Key::retrieveTableName(), function (Blueprint $table) {
+            $table->id();
+            $table->string('cd_key')->nullable()->default(null);
+            $table->unsignedInteger('game_id')->nullable(false);
+            $table->boolean('is_redeemed')->default(0);
+            $table->boolean('is_expired')->default(0);
+            $table->dateTime('expire_date')->nullable(true);
+            $table->foreign('game_id')->references('id')->on(Game::retrieveTableName());
+
+            $table->timestamp('created_at')->useCurrent();
+            $table->timestamp('updated_at')->useCurrent();
+        });
     }
 
     /**
@@ -123,5 +138,6 @@ class CreateBase extends Migration
         Schema::dropIfExists(Genre::INTERMEDIATE_TABLE[0]);
         Schema::dropIfExists(Order::retrieveTableName());
         Schema::dropIfExists(OrderDetails::retrieveTableName());
+        Schema::dropIfExists(Key::retrieveTableName());
     }
 }

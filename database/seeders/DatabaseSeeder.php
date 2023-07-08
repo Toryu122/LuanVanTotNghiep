@@ -22,6 +22,7 @@ class DatabaseSeeder extends Seeder
             GenreSeeder::class,
             PublisherSeeder::class,
             GameSeeder::class,
+            KeySeeder::class,
             PermissionSeeder::class,
             RoleSeeder::class,
             UserSeeder::class,

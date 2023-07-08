@@ -559,6 +559,90 @@ class OrdersTableSeeder extends Seeder
                 'created_at' => '2023-06-29 23:24:28',
                 'updated_at' => '2023-06-02 23:24:28',
             ),
+            45 => 
+            array (
+                'id' => 47,
+                'user_id' => 3,
+                'email' => 'kiratoryu122@gmail.com',
+                'total' => 1622000.0,
+                'order_status' => 'Pending',
+                'pay_type' => 'VNPAY',
+                'order_id_ref' => 'TE6IBAOS',
+                'created_at' => '2023-07-08 13:47:58',
+                'updated_at' => '2023-07-08 13:47:58',
+            ),
+            46 => 
+            array (
+                'id' => 48,
+                'user_id' => 3,
+                'email' => 'kiratoryu122@gmail.com',
+                'total' => 472000.0,
+                'order_status' => 'Pending',
+                'pay_type' => 'VNPAY',
+                'order_id_ref' => 'XZ25FJCI',
+                'created_at' => '2023-07-08 13:49:09',
+                'updated_at' => '2023-07-08 13:49:09',
+            ),
+            47 => 
+            array (
+                'id' => 49,
+                'user_id' => 5,
+                'email' => 'kasenibara122@gmail.com',
+                'total' => 900000.0,
+                'order_status' => 'Pending',
+                'pay_type' => 'VNPAY',
+                'order_id_ref' => 'HJZQFFMZ',
+                'created_at' => '2023-07-08 13:50:31',
+                'updated_at' => '2023-07-08 13:50:31',
+            ),
+            48 => 
+            array (
+                'id' => 50,
+                'user_id' => 5,
+                'email' => 'kasenibara122@gmail.com',
+                'total' => 550000.0,
+                'order_status' => 'Pending',
+                'pay_type' => 'VNPAY',
+                'order_id_ref' => 'VXQP8S7T',
+                'created_at' => '2023-07-08 13:53:30',
+                'updated_at' => '2023-07-08 13:53:30',
+            ),
+            49 => 
+            array (
+                'id' => 51,
+                'user_id' => 5,
+                'email' => 'kasenibara122@gmail.com',
+                'total' => 1343000.0,
+                'order_status' => 'Pending',
+                'pay_type' => 'VNPAY',
+                'order_id_ref' => 'HTU8OOIZ',
+                'created_at' => '2023-07-08 13:55:20',
+                'updated_at' => '2023-07-08 13:55:20',
+            ),
+            50 => 
+            array (
+                'id' => 52,
+                'user_id' => 5,
+                'email' => 'kasenibara122@gmail.com',
+                'total' => 1058000.0,
+                'order_status' => 'Pending',
+                'pay_type' => 'VNPAY',
+                'order_id_ref' => 'K7UIGV2T',
+                'created_at' => '2023-07-08 13:56:56',
+                'updated_at' => '2023-07-08 13:56:56',
+            ),
+            51 => 
+            array (
+                'id' => 53,
+                'user_id' => 5,
+                'email' => 'kasenibara122@gmail.com',
+                'total' => 963000.0,
+                'order_status' => 'Pending',
+                'pay_type' => 'VNPAY',
+                'order_id_ref' => 'IQUKUMCO',
+                'created_at' => '2023-07-08 13:57:38',
+                'updated_at' => '2023-07-08 13:57:38',
+            ),
         ));
         
         

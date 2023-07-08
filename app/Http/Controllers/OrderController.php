@@ -132,7 +132,15 @@ class OrderController extends Controller
 
         // Clear the cart
         session()->put('cart', null);
-        return redirect()->route('cart')->with('order_success', "Thanh toán thành công! Cảm ơn bạn đã sử dụng dịch vụ của chúng tôi");
+        return redirect()->route('cart')
+            ->with(
+                'order_success',
+                [
+                    "Thanh toán thành công! Cảm ơn bạn đã sử dụng dịch vụ của chúng tôi \n",
+                    "Chúng tôi sẽ gửi cho bạn 1 email chứa key của game bạn đã mua \n",
+                    "Email có thể đến chậm!"
+                ]
+            );
     }
 
     public function momoCheckoutSuccess(Request $request)
@@ -323,5 +331,10 @@ class OrderController extends Controller
 
         toastr()->success('', 'Hủy thành công');
         return redirect()->back();
+    }
+
+    public function sendKeyEmail()
+    {
+        
     }
 }

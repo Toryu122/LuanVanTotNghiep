@@ -11,6 +11,11 @@
                         Đơn hàng chỉ có thể hủy trong vòng 72 giờ kể từ khi thanh toán
                     </p>
                 </div> --}}
+                {{-- <div class="text-center fw-bold text-danger">
+                    <p class="h5">
+                        Đơn hàng chỉ có thể hủy trong vòng 72 giờ kể từ khi thanh toán
+                    </p>
+                </div> --}}
                 <div class="mt-3">
                     <table class="data-table" id="datatablesSimple" style="border: 1px solid #ccc; padding: 8px;">
                         <thead>
