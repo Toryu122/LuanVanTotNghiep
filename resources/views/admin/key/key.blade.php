@@ -166,6 +166,9 @@
                 </div>
             </main>
 
+
+
+
             <div class="modal fade" id="addKey" tabindex="-1" aria-labelledby="addRoleModal" aria-hidden="true">
                 <div class="modal-dialog modal-dialog-centered modal-lg">
                     <div class="modal-content">
@@ -178,52 +181,93 @@
                         </div>
                         <div class="modal-body text-start text-black p-4">
                             <div class="mb-3">
-                                <form method="POST" action="{{ route('storekey') }}">
-                                    @csrf
-                                    <div class="row">
-                                        <label class="col-sm-2 col-md-3 form-label" for="cd_key">Key</label>
-                                        <div class="col-sm-10 col-md-9">
-                                            <input value="" type="text" class="form-control" id="cd_key"
-                                                name="cd_key" />
-                                        </div>
-                                    </div>
-                                    <div class="row pt-2">
-                                        <label class="col-sm-2 col-md-3 form-label" for="game_id">Game</label>
-                                        <div class="col-sm-10 col-md-9">
-                                            <select class="form-select" id="pub_id" name="game_id"
-                                                aria-label="Default select example">
-                                                @foreach ($games as $item)
-                                                    <option class="form-contorl" value="{{ $item->id }}">
-                                                        {{ $item->name }}
-                                                    </option>
-                                                @endforeach
-                                            </select>
-                                        </div>
-                                    </div>
-                                    <div class="row pt-2">
-                                        <label class="col-sm-2 col-md-3 form-label" for="expiredate">Ngày hết
-                                            hạn</label>
-                                        <div class="col-sm-10 col-md-9">
-                                            <div id="datepicker" class="input-group date"
-                                                data-date-format="dd-mm-yyyy">
-                                                <input class="form-control" name="expiredate" id="expiredate"
-                                                    type="text">
-                                                <span class="input-group-addon">
-                                                    <i class="glyphicon glyphicon-calendar"></i>
-                                                </span>
+                                <!-- Tabs navs -->
+                                <ul class="nav nav-tabs nav-justified mb-3" id="ex1" role="tablist">
+                                    <li class="nav-item" role="presentation">
+                                        <a class="nav-link active" id="ex3-tab-1" data-bs-toggle="tab"
+                                            href="#ex3-tabs-1" role="tab" aria-controls="ex3-tabs-1"
+                                            aria-selected="true">Thêm 1 key</a>
+                                    </li>
+                                    <li class="nav-item" role="presentation">
+                                        <a class="nav-link" id="ex3-tab-2" data-bs-toggle="tab" href="#ex3-tabs-2"
+                                            role="tab" aria-controls="ex3-tabs-2" aria-selected="false">Thêm bằng
+                                            file (.CSV)</a>
+                                    </li>
+                                </ul>
+                                <!-- Tabs navs -->
+
+
+                                <!-- Tabs content -->
+                                <div class="tab-content" id="ex2-content">
+                                    <div class="tab-pane fade show active" id="ex3-tabs-1" role="tabpanel"
+                                        aria-labelledby="ex3-tab-1">
+                                        <form method="POST" action="{{ route('storekey') }}">
+                                            @csrf
+                                            <div class="row">
+                                                <label class="col-sm-2 col-md-3 form-label" for="cd_key">Key</label>
+                                                <div class="col-sm-10 col-md-9">
+                                                    <input value="" type="text" class="form-control"
+                                                        id="cd_key" name="cd_key" />
+                                                </div>
                                             </div>
-                                        </div>
+                                            <div class="row pt-2">
+                                                <label class="col-sm-2 col-md-3 form-label"
+                                                    for="game_id">Game</label>
+                                                <div class="col-sm-10 col-md-9">
+                                                    <select class="form-select" id="pub_id" name="game_id"
+                                                        aria-label="Default select example">
+                                                        @foreach ($games as $item)
+                                                            <option class="form-contorl" value="{{ $item->id }}">
+                                                                {{ $item->name }}
+                                                            </option>
+                                                        @endforeach
+                                                    </select>
+                                                </div>
+                                            </div>
+                                            <div class="row pt-2">
+                                                <label class="col-sm-2 col-md-3 form-label" for="expiredate">Ngày hết
+                                                    hạn</label>
+                                                <div class="col-sm-10 col-md-9">
+                                                    <input class="date form-control" name="expiredate"
+                                                        type="text">
+                                                </div>
+                                            </div>
+                                            <div class="row pt-2">
+                                                <div class="col-md-10">
+                                                </div>
+                                                <div class="col-md-2 d-flex justify-content-end">
+                                                    <button type="submit" class="btn btn-primary">
+                                                        Thêm
+                                                    </button>
+                                                </div>
+                                            </div>
+                                        </form>
                                     </div>
-                                    <div class="row pt-2">
-                                        <div class="col-md-10">
-                                        </div>
-                                        <div class="col-md-2 d-flex justify-content-end">
-                                            <button type="submit" class="btn btn-primary">
-                                                Thêm
-                                            </button>
-                                        </div>
+                                    <div class="tab-pane fade" id="ex3-tabs-2" role="tabpanel"
+                                        aria-labelledby="ex3-tab-2">
+
+                                        <form method="POST" action="{{ route('storekey') }}"
+                                            enctype="multipart/form-data">
+                                            @csrf
+                                            <div class="row">
+                                                <label class="col-sm-2 col-md-3 form-label" for="cd_key">Key
+                                                    File</label>
+                                                <input type="file" class="form-control" id="csv_file"
+                                                    name="csv_file">
+                                            </div>
+                                            <div class="row pt-2">
+                                                <div class="col-md-10">
+                                                </div>
+                                                <div class="col-md-2 d-flex justify-content-end">
+                                                    <button type="submit" class="btn btn-primary">
+                                                        Thêm
+                                                    </button>
+                                                </div>
+                                            </div>
+                                        </form>
                                     </div>
-                                </form>
+                                </div>
+                                <!-- Tabs content -->
                             </div>
 
                         </div>
@@ -262,11 +306,8 @@
                 }
             });
 
-            $(function() {
-                $("#datepicker").datepicker({
-                    autoclose: true,
-                    todayHighlight: true
-                }).datepicker('update', new Date());
+            $('.date').datepicker({
+                format: 'mm-dd-yyyy'
             });
         </script>
 </body>

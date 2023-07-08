@@ -27,7 +27,7 @@ class KeySeeder extends Seeder
         $games = Game::pluck('id')->all();
 
         collect($games)->map(function ($id) {
-            $amount = rand(5, 15);
+            $amount = rand(5, 8);
             $keyType = $this->key_type[array_rand($this->key_type)];
             for ($i = 1; $i <= $amount; $i++) {
                 $key = $this->keyGenerate($keyType);
