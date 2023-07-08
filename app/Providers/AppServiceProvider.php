@@ -3,6 +3,7 @@
 namespace App\Providers;
 
 use App\Common\GlobalVariable;
+use App\View\Components\Admin\BlueCard;
 use Illuminate\Pagination\Paginator;
 use Illuminate\Support\Facades\Schema;
 use Illuminate\Support\ServiceProvider;

@@ -11,7 +11,6 @@
 </head>
 
 <body class="d-flex flex-column vh-100">
-
     <!-- Carousel -->
     <div class="container-fluid pt-3">
         <main>

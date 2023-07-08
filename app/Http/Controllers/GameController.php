@@ -8,6 +8,7 @@ use App\Models\Publisher;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 use App\Http\Controllers\ApiController;
+use App\Models\Role;
 use Carbon\Carbon;
 use Illuminate\Database\Eloquent\Collection;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
@@ -63,7 +64,7 @@ class GameController extends Controller
             $this->bestSellers->push($gameObj);
         }
 
-        // Get randomly 5 game, and store it as a cache that last 1 week
+        // Get randomly 5 game, and store it as a cache that can last 1 week
         $this->recommendThisWeek = Cache::remember('recommend_this_week', now()->addWeek(), function () {
             return DB::table(Game::retrieveTableName())->inRandomOrder()->limit(5)->get();
         });

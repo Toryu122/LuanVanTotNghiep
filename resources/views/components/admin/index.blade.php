@@ -23,7 +23,9 @@
                         <li class="breadcrumb-item active">Dashboard</li>
                     </ol>
                     <!--  -->
-                    <x-admin.home.content.generals />
+                    <div class="row">
+                        
+                    </div>
                     <!--  -->
                     <div class="row">
                         <div class="col-xl-6">

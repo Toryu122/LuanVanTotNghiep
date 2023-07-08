@@ -126,6 +126,7 @@ class AuthController extends Controller
 
     public function loginGoogle()
     {
+        config(['https.verify' => false]);
         return Socialite::driver('google')->redirect();
     }
 
@@ -161,6 +162,7 @@ class AuthController extends Controller
 
     public function loginFacebook()
     {
+        config(['https.verify' => false]);
         return Socialite::driver('facebook')->redirect();
     }
 

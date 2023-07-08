@@ -1,22 +1,24 @@
 <?php
 
-namespace App\View\Components;
+namespace App\View\Components\Admin\Home;
 
-use App\Models\Role;
 use Illuminate\View\Component;
 
-class Header extends Component
+class AdminCard extends Component
 {
+    public $data;
+    public $title;
+    public $optionalData;
     /**
      * Create a new component instance.
      *
      * @return void
      */
-
-    public $title;
-    public function __construct($title)
+    public function __construct($data, $title, $optionalData = null)
     {
+        $this->data = $data;
         $this->title = $title;
+        $this->optionalData = $optionalData;
     }
 
     /**
@@ -26,6 +28,6 @@ class Header extends Component
      */
     public function render()
     {
-        return view('components.home.header', ['roles' => Role::ROLES]);
+        return view('components.admin.home.admin-card');
     }
 }
