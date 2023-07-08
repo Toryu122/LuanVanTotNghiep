@@ -118,6 +118,7 @@ class CreateBase extends Migration
             $table->boolean('is_expired')->default(0);
             $table->dateTime('expire_date')->nullable(true);
             $table->foreign('game_id')->references('id')->on(Game::retrieveTableName());
+            $table->unique(['cd_key', 'game_id']);
 
             $table->timestamp('created_at')->useCurrent();
             $table->timestamp('updated_at')->useCurrent();

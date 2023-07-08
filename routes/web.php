@@ -16,6 +16,7 @@ use App\Http\Controllers\Admin\DashboardController;
 use App\Http\Controllers\Admin\GameController as AdminGameController;
 use App\Http\Controllers\Admin\UserController as AdminUserController;
 use App\Http\Controllers\Admin\GenreController as AdminGenreController;
+use App\Http\Controllers\Admin\KeyController;
 use App\Http\Controllers\Admin\OrderController as AdminOrderController;
 use App\Http\Controllers\Admin\PermissionController;
 use App\Http\Controllers\Admin\PublisherController as AdminPublicController;
@@ -171,6 +172,13 @@ Route::prefix('admin')->middleware(['auth', AdminMiddleware::class])->group(func
         Route::put('/update/{id}', [PermissionController::class, 'update'])->name('updatepermission');
         Route::delete('/delete/{id}', [PermissionController::class, 'delete'])->name('deletepermission');
         Route::put('/activate/{id}', [PermissionController::class, 'activate'])->name('activatepermission');
+    });
+
+    Route::prefix('key')->group(function () {
+        Route::get('', [KeyController::class, 'index'])->name('adminkey');
+        Route::post('/store', [KeyController::class, 'store'])->name('storekey');
+        Route::put('/update/{id}', [KeyController::class, 'update'])->name('updatekey');
+        Route::delete('/delete/{id}', [KeyController::class, 'delete'])->name('deletekey');
     });
     
     Route::prefix('order')->group(function () {

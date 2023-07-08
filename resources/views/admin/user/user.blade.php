@@ -62,7 +62,6 @@
                             <table id="datatablesSimple">
                                 <thead>
                                     <tr>
-                                        <th scope="row">ID</th>
                                         <th scope="row">Tên</th>
                                         <th scope="row">Email</th>
                                         <th scope="row">Loại Social</th>
@@ -75,7 +74,6 @@
                                 </thead>
                                 <tfoot>
                                     <tr>
-                                        <th scope="row">ID</th>
                                         <th scope="row">Tên</th>
                                         <th scope="row">Email</th>
                                         <th scope="row">Loại tài khoản</th>
@@ -90,7 +88,6 @@
                                 <tbody class="table-border-bottom-0">
                                     @foreach ($users as $item)
                                         <tr>
-                                            <td>{{ $item->id }}</td>
                                             <td>{{ $item->name }}</td>
                                             <td>{{ $item->email }}</td>
                                             <td>{{ $item->social }}</td>

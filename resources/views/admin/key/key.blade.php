@@ -13,11 +13,12 @@
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/toastr.js/2.1.4/toastr.css"
         integrity="sha512-oe8OpYjBaDWPt2VmSFR+qYOdnTjeV9QPLJUeqZyprDEQvQLJ9C5PCFclxwNuvb/GQgQngdCXzKSFltuHD3eCxA=="
         crossorigin="anonymous" referrerpolicy="no-referrer" />
+
 </head>
 
 <body>
 
-    <x-admin.home.header title="Permission" />
+    <x-admin.home.header title="Key" />
 
     <div id="layoutSidenav">
         <div id="layoutSidenav_nav">
@@ -50,60 +51,57 @@
                     <div class="card mb-4">
                         <div class="card-header">
                             <i class="fas fa-table me-1"></i>
-                            Permissions
+                            Keys
                         </div>
                         <div class="card-body">
 
                             <div class="pb-3">
                                 <button type="button" class="text-white btn btn-default btn-sm" data-bs-toggle="modal"
-                                    data-bs-target="#addPermissionModal">
-                                    <i class="fa-solid fa-plus"></i> Thêm permission
+                                    data-bs-target="#addKey">
+                                    <i class="fa-solid fa-plus"></i> Thêm key
                                 </button>
                             </div>
 
                             <table id="datatablesSimple">
                                 <thead>
                                     <tr>
-                                        <th scope="row">Tên</th>
+                                        <th scope="row">Key</th>
+                                        <th scope="row">Game</th>
                                         <th scope="row">Ngày tạo</th>
                                         <th scope="row">Ngày sửa</th>
-                                        <th scope="row" data-sortable="false"></th>
                                         <th scope="row" data-sortable="false"></th>
                                     </tr>
                                 </thead>
                                 <tfoot>
                                     <tr>
-                                        <th scope="row">Tên</th>
+                                        <th scope="row">Key</th>
+                                        <th scope="row">Game</th>
                                         <th scope="row">Ngày tạo</th>
                                         <th scope="row">Ngày sửa</th>
                                         <th scope="row" data-sortable="false"></th>
-                                        <th scope="row" data-sortable="false"></th>
+                                        {{-- <th data-sortable="false"></th> --}}
                                     </tr>
                                 </tfoot>
                                 <tbody class="table-border-bottom-0">
-                                    @foreach ($permissions as $item)
+                                    @foreach ($keys as $item)
                                         <tr>
-                                            <td>{{ $item->name }}</td>
+                                            <td>{{ $item->cd_key }}</td>
+                                            <td>{{ $item->game->name }}</td>
                                             <td>{{ date('d-m-Y', strtotime($item->created_at)) }}</td>
                                             <td>{{ date('d-m-Y', strtotime($item->updated_at)) }}</td>
                                             <td>
-                                                @php
-                                                    $name = Str::ucfirst($item->name);
-                                                    $idTarget = str_replace(' ', '', $name);
-                                                @endphp
                                                 <button type="button" class="text-white btn btn-default btn-sm"
-                                                    data-bs-toggle="modal"
-                                                    data-bs-target="#{{ $idTarget }}_{{ $item->id }}">
+                                                    data-bs-toggle="modal" data-bs-target="#key_{{ $item->id }}">
                                                     <i class="fas fa-info me-2"></i> Sửa
                                                 </button>
 
-                                                <div class="modal fade" id="{{ $idTarget }}_{{ $item->id }}"
-                                                    tabindex="-1" aria-labelledby="userDetailModal" aria-hidden="true">
-                                                    <div class="modal-dialog">
+                                                <div class="modal fade" id="key_{{ $item->id }}" tabindex="-1"
+                                                    aria-labelledby="userDetailModal" aria-hidden="true">
+                                                    <div class="modal-dialog modal-dialog-centered modal-lg">
                                                         <div class="modal-content">
                                                             <div class="modal-header border-bottom-0">
                                                                 <p class="h3 mb-0" style="color: #35558a;">
-                                                                    Chi tiết permission
+                                                                    Sửa key
                                                                 </p>
                                                                 <button type="button" class="btn-close"
                                                                     data-bs-dismiss="modal" aria-label="Close"></button>
@@ -111,23 +109,41 @@
                                                             <div class="modal-body text-start text-black p-4">
                                                                 <div class="mb-3">
                                                                     <form method="POST"
-                                                                        action="{{ route('updatepermission', ['id' => $item->id]) }}">
+                                                                        action="{{ route('updatekey', ['id' => $item->id]) }}">
                                                                         @csrf
                                                                         @method('put')
                                                                         <div class="row">
-                                                                            <label class="col-sm-2 col-md-2 form-label"
-                                                                                for="name">Tên</label>
-                                                                            <div class="col-sm-10 col-md-10">
-                                                                                <input value="{{ $item->name }}"
+                                                                            <label class="col-sm-2 col-md-3 form-label"
+                                                                                for="cd_key">Key</label>
+                                                                            <div class="col-sm-10 col-md-9">
+                                                                                <input value="{{ $item->cd_key }}"
                                                                                     type="text" class="form-control"
-                                                                                    id="verified" name="name" />
+                                                                                    id="cd_key" name="cd_key" />
                                                                             </div>
                                                                         </div>
                                                                         <div class="row pt-2">
-                                                                            <div
-                                                                                class="col-md-9 d-flex justify-content-end">
+                                                                            <label class="col-sm-2 col-md-3 form-label"
+                                                                                for="expiredate">Ngày hết
+                                                                                hạn</label>
+                                                                            <div class="col-sm-10 col-md-9">
+                                                                                <div id="datepicker"
+                                                                                    class="input-group date"
+                                                                                    data-date-format="dd-mm-yyyy">
+                                                                                    <input class="form-control"
+                                                                                        name="expiredate"
+                                                                                        id="expiredate" type="text">
+                                                                                    <span class="input-group-addon">
+                                                                                        <i
+                                                                                            class="glyphicon glyphicon-calendar"></i>
+                                                                                    </span>
+                                                                                </div>
                                                                             </div>
-                                                                            <div class="col-md-3">
+                                                                        </div>
+                                                                        <div class="row pt-2">
+                                                                            <div class="col-md-10">
+                                                                            </div>
+                                                                            <div
+                                                                                class="col-md-2 d-flex justify-content-end">
                                                                                 <button type="submit"
                                                                                     class="btn btn-primary">Cập
                                                                                     nhật</button>
@@ -140,79 +156,6 @@
                                                         </div>
                                                     </div>
                                                 </div>
-
-                                            </td>
-                                            <td>
-                                                @if ($item->is_active === 1)
-                                                    <button type="button" class="text-white btn btn-danger btn-sm"
-                                                        data-bs-toggle="modal"
-                                                        data-bs-target="#delete{{ $idTarget }}_{{ $item->id }}">
-                                                        <i class="fa-solid fa-toggle-off"></i> Vô hiệu hóa
-                                                    </button>
-
-                                                    <div class="modal"
-                                                        id="delete{{ $idTarget }}_{{ $item->id }}"
-                                                        tabindex="-1">
-                                                        <div class="modal-dialog">
-                                                            <div class="modal-content">
-                                                                <form method="POST"
-                                                                    action="{{ route('deletepermission', ['id' => $item->id]) }}">
-                                                                    @csrf
-                                                                    @method('delete')
-                                                                    <div class="modal-header">
-                                                                        <h5 class="modal-title">Vô hiệu hóa permission
-                                                                        </h5>
-                                                                        <button type="button" class="btn-close"
-                                                                            data-bs-dismiss="modal"
-                                                                            aria-label="Close"></button>
-                                                                    </div>
-                                                                    <div class="modal-body">
-                                                                        <p>Bạn có chắc muốn vô hiệu permission này?</p>
-                                                                    </div>
-                                                                    <div class="modal-footer">
-                                                                        <button class="btn btn-danger">Vô
-                                                                            hiệu
-                                                                            hóa </button>
-                                                                    </div>
-                                                                </form>
-                                                            </div>
-                                                        </div>
-                                                    </div>
-                                                @else
-                                                    <button type="button" class="text-white btn btn-success btn-sm"
-                                                        data-bs-toggle="modal"
-                                                        data-bs-target="#activate{{ $idTarget }}_{{ $item->id }}">
-                                                        <i class="fa-solid fa-toggle-on"></i> Kích hoạt
-                                                    </button>
-
-                                                    <div class="modal"
-                                                        id="activate{{ $idTarget }}_{{ $item->id }}"
-                                                        tabindex="-1">
-                                                        <div class="modal-dialog">
-                                                            <div class="modal-content">
-                                                                <form method="POST"
-                                                                    action="{{ route('activatepermission', ['id' => $item->id]) }}">
-                                                                    @csrf
-                                                                    @method('put')
-                                                                    <div class="modal-header">
-                                                                        <h5 class="modal-title">Kích hoạt permission
-                                                                        </h5>
-                                                                        <button type="button" class="btn-close"
-                                                                            data-bs-dismiss="modal"
-                                                                            aria-label="Close"></button>
-                                                                    </div>
-                                                                    <div class="modal-body">
-                                                                        <p>Bạn có chắc muốn kích hoạt permission này?
-                                                                        </p>
-                                                                    </div>
-                                                                    <div class="modal-footer">
-                                                                        <button class="btn btn-info">Kích hoạt</button>
-                                                                    </div>
-                                                                </form>
-                                                            </div>
-                                                        </div>
-                                                    </div>
-                                                @endif
                                             </td>
                                         </tr>
                                     @endforeach
@@ -223,26 +166,52 @@
                 </div>
             </main>
 
-            <div class="modal fade" id="addPermissionModal" tabindex="-1" aria-labelledby="addRoleModal"
-                aria-hidden="true">
-                <div class="modal-dialog modal-dialog-centered">
+            <div class="modal fade" id="addKey" tabindex="-1" aria-labelledby="addRoleModal" aria-hidden="true">
+                <div class="modal-dialog modal-dialog-centered modal-lg">
                     <div class="modal-content">
                         <div class="modal-header border-bottom-0">
                             <p class="h3 mb-0" style="color: #35558a;">
-                                Thêm permission
+                                Thêm key
                             </p>
                             <button type="button" class="btn-close" data-bs-dismiss="modal"
                                 aria-label="Close"></button>
                         </div>
                         <div class="modal-body text-start text-black p-4">
                             <div class="mb-3">
-                                <form method="POST" action="{{ route('storepermission') }}">
+                                <form method="POST" action="{{ route('storekey') }}">
                                     @csrf
                                     <div class="row">
-                                        <label class="col-sm-2 col-md-2 form-label" for="name">Tên</label>
-                                        <div class="col-sm-10 col-md-10">
-                                            <input value="" type="text" class="form-control" id="verified"
-                                                name="name" />
+                                        <label class="col-sm-2 col-md-3 form-label" for="cd_key">Key</label>
+                                        <div class="col-sm-10 col-md-9">
+                                            <input value="" type="text" class="form-control" id="cd_key"
+                                                name="cd_key" />
+                                        </div>
+                                    </div>
+                                    <div class="row pt-2">
+                                        <label class="col-sm-2 col-md-3 form-label" for="game_id">Game</label>
+                                        <div class="col-sm-10 col-md-9">
+                                            <select class="form-select" id="pub_id" name="game_id"
+                                                aria-label="Default select example">
+                                                @foreach ($games as $item)
+                                                    <option class="form-contorl" value="{{ $item->id }}">
+                                                        {{ $item->name }}
+                                                    </option>
+                                                @endforeach
+                                            </select>
+                                        </div>
+                                    </div>
+                                    <div class="row pt-2">
+                                        <label class="col-sm-2 col-md-3 form-label" for="expiredate">Ngày hết
+                                            hạn</label>
+                                        <div class="col-sm-10 col-md-9">
+                                            <div id="datepicker" class="input-group date"
+                                                data-date-format="dd-mm-yyyy">
+                                                <input class="form-control" name="expiredate" id="expiredate"
+                                                    type="text">
+                                                <span class="input-group-addon">
+                                                    <i class="glyphicon glyphicon-calendar"></i>
+                                                </span>
+                                            </div>
                                         </div>
                                     </div>
                                     <div class="row pt-2">
@@ -291,6 +260,13 @@
                 if (datatablesSimple) {
                     new simpleDatatables.DataTable(datatablesSimple);
                 }
+            });
+
+            $(function() {
+                $("#datepicker").datepicker({
+                    autoclose: true,
+                    todayHighlight: true
+                }).datepicker('update', new Date());
             });
         </script>
 </body>

@@ -33,6 +33,10 @@ class Permission extends BaseModel
         'deletePermission',
         'activatePermission',
 
+        'addKey',
+        'editKey',
+        'deleteKey',
+
         'assignRole',
         'assignPermission',
         

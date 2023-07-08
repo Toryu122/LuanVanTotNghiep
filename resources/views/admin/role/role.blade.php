@@ -50,7 +50,7 @@
                     <div class="card mb-4">
                         <div class="card-header">
                             <i class="fas fa-table me-1"></i>
-                            Users
+                            Roles
                         </div>
                         <div class="card-body">
 
@@ -64,7 +64,6 @@
                             <table id="datatablesSimple">
                                 <thead>
                                     <tr>
-                                        <th scope="row">ID</th>
                                         <th scope="row">Tên</th>
                                         <th scope="row">Ngày tạo</th>
                                         <th scope="row">Ngày sửa</th>
@@ -74,7 +73,6 @@
                                 </thead>
                                 <tfoot>
                                     <tr>
-                                        <th scope="row">ID</th>
                                         <th scope="row">Tên</th>
                                         <th scope="row">Ngày tạo</th>
                                         <th scope="row">Ngày sửa</th>
@@ -86,7 +84,6 @@
                                 <tbody class="table-border-bottom-0">
                                     @foreach ($roles as $item)
                                         <tr>
-                                            <td>{{ $item->id }}</td>
                                             <td>{{ $item->name }}</td>
                                             <td>{{ date('d-m-Y', strtotime($item->created_at)) }}</td>
                                             <td>{{ date('d-m-Y', strtotime($item->updated_at)) }}</td>

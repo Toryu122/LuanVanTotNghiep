@@ -16,9 +16,10 @@
             <div class="collapse show" id="collapseLayouts" aria-labelledby="headingOne"
                 data-bs-parent="#sidenavAccordion">
                 <nav class="sb-sidenav-menu-nested nav">
-                    <a class="nav-link"  href="{{ route('adminuser') }}"><i class="fa-solid fa-user-group"></i>&nbsp;
+                    <a class="nav-link" href="{{ route('adminuser') }}"><i class="fa-solid fa-user-group"></i>&nbsp;
                         Users</a>
-                    <a class="nav-link" href="{{ route('adminpermission') }}"><i class="fa-solid fa-user-shield"></i>&nbsp;
+                    <a class="nav-link" href="{{ route('adminpermission') }}"><i
+                            class="fa-solid fa-user-shield"></i>&nbsp;
                         Permissions</a>
                     <a class="nav-link" href="{{ route('adminrole') }}"><i class="fa-solid fa-tag"></i>&nbsp;
                         Roles</a>
@@ -54,13 +55,16 @@
                     </table>
                     <table>
                         <td>
-                            <a class="nav-link" href="{{ route('adminpublisher') }}"><i class="fa-solid fa-user-tie"></i>&nbsp;
+                            <a class="nav-link" href="{{ route('adminpublisher') }}"><i
+                                    class="fa-solid fa-user-tie"></i>&nbsp;
                                 Publishers</a>
                         </td>
                         <th>
                             <a href="{{ route('addpublisher') }}"type="submit" class="nav-link"> + </a>
                         </th>
                     </table>
+                    <a class="nav-link" href="{{ route('adminkey') }}"><i class="fa-solid fa-key"></i>&nbsp;
+                        Keys</a>
                     <!-- <a class="nav-link collapsed" href="#" data-bs-toggle="collapse" data-bs-target="#pagesCollapseAuth" aria-expanded="false" aria-controls="pagesCollapseAuth">
                                     Authentication
                                     <div class="sb-sidenav-collapse-arrow"><i class="fas fa-angle-down"></i></div>
