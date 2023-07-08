@@ -104,6 +104,15 @@ class AuthController extends Controller
             ]
         );
 
+        $checkVerify = DB::table('users')
+            ->where('email', '=', $request->get('email'))
+            ->first();
+
+        if ($checkVerify->verified !== 1) {
+            toastr()->warning('', 'Bạn chưa xác thực tài khoản!');
+            return redirect()->back();
+        }
+
         if (Auth::attempt($credentials)) {
             $request->session()->regenerate();
 

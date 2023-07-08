@@ -14,7 +14,7 @@
         <x-header title="Đăng Nhập" />
     </div>
     <section class="container backgroundBody pb-5">
-        <div class="container-fluid col-md-4 col-sm-12 mt-4 text-white ">
+        <div class="container-fluid col-md-5 col-sm-12 mt-4 text-white ">
             <div class="loginForm col-sm-12 py-4 px-4">
                 <h1 class="text-center">
                     <stroke class="mb-2">Đăng Nhập</stroke>
