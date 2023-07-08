@@ -14,7 +14,7 @@
 
     <div class="container col-4 pt-3">
         <div class="card text-center">
-            <div class="card-header h5 text-white bg-primary">Đổi Mật Khẩu</div>
+            <div class="card-header h5 text-white bg-navbar-dark">Đổi Mật Khẩu</div>
             <div class="card-body px-5">
 
                 <form action="{{ route('resetPassword') }}" method="post">
@@ -44,7 +44,7 @@
                             </div>
                         @enderror
                     </div>
-                    <button class="btn btn-primary w-100">Đổi Mật Khẩu</button>
+                    <button class="btn btn-dark w-100">Đổi Mật Khẩu</button>
                 </form>
             </div>
         </div>

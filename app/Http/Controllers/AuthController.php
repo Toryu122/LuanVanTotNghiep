@@ -237,7 +237,7 @@ class AuthController extends Controller
         $otp = Str::random(Constant::OTP_LENGTH);
         $user = User::where('email', '=', $email)->first();
 
-        if ($user->social !== User::SOCIALS[0]) {
+        if ($user->social && $user->social !== User::SOCIALS[0]) {
             // Check if the user is from social login
             toastr()->error("", "Email không hợp lệ, vui lòng kiểm tra lại");
             return redirect()->back();
@@ -256,7 +256,7 @@ class AuthController extends Controller
 
             $htmlContent = str_replace('{{linkResetPassword}}', $link, $htmlContent);
             try {
-                Helper::sendMail($email, 'Verify Account', $htmlContent);
+                Helper::sendMail($email, 'Reset Password', $htmlContent);
                 toastr()->success('', "Gửi thành công, hãy kiểm tra email của bạn");
                 return redirect()->back();
             } catch (\Exception $ex) {

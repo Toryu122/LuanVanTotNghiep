@@ -14,7 +14,7 @@
 
     <div class="container col-4 pt-3">
         <div class="card text-center">
-            <div class="card-header h5 text-white bg-primary">Quên Mật Khẩu</div>
+            <div class="card-header h5 text-white bg-navbar-dark">Quên Mật Khẩu</div>
             <div class="card-body px-5">
                 <p class="card-text py-2">
                     Nhập email của bạn <br>
@@ -26,7 +26,7 @@
                     <div class="form-outline">
                         <input name="email" type="email" class="form-control my-3" />
                     </div>
-                    <button class="btn btn-primary w-100">Gửi</button>
+                    <button class="btn btn-dark w-100">Gửi</button>
                 </form>
                 <div class="d-flex justify-content-between mt-4">
                     <a class="" href="{{ route('login') }}">Đăng nhập</a>
