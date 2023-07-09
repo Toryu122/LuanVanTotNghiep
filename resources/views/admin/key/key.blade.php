@@ -67,8 +67,8 @@
                                     <tr>
                                         <th scope="row">Key</th>
                                         <th scope="row">Game</th>
-                                        <th scope="row">Ngày tạo</th>
-                                        <th scope="row">Ngày sửa</th>
+                                        <th scope="row">Status</th>
+                                        <th scope="row">Expire Date</th>
                                         <th scope="row" data-sortable="false"></th>
                                     </tr>
                                 </thead>
@@ -76,8 +76,8 @@
                                     <tr>
                                         <th scope="row">Key</th>
                                         <th scope="row">Game</th>
-                                        <th scope="row">Ngày tạo</th>
-                                        <th scope="row">Ngày sửa</th>
+                                        <th scope="row">Status</th>
+                                        <th scope="row">Expire Date</th>
                                         <th scope="row" data-sortable="false"></th>
                                         {{-- <th data-sortable="false"></th> --}}
                                     </tr>
@@ -87,8 +87,16 @@
                                         <tr>
                                             <td>{{ $item->cd_key }}</td>
                                             <td>{{ $item->game->name }}</td>
-                                            <td>{{ date('d-m-Y', strtotime($item->created_at)) }}</td>
-                                            <td>{{ date('d-m-Y', strtotime($item->updated_at)) }}</td>
+                                            @if ($item->is_redeemed === 0)
+                                                <td>Chưa bán</td>
+                                            @else
+                                                <td>Đã bán</td>
+                                            @endif
+                                            @if ($item->expire_date === null)
+                                                <td>Không có</td>
+                                            @else
+                                                <td>{{ date('d-m-Y', strtotime($item->expire_date)) }}</td>
+                                            @endif
                                             <td>
                                                 <button type="button" class="text-white btn btn-default btn-sm"
                                                     data-bs-toggle="modal" data-bs-target="#key_{{ $item->id }}">
@@ -126,17 +134,8 @@
                                                                                 for="expiredate">Ngày hết
                                                                                 hạn</label>
                                                                             <div class="col-sm-10 col-md-9">
-                                                                                <div id="datepicker"
-                                                                                    class="input-group date"
-                                                                                    data-date-format="dd-mm-yyyy">
-                                                                                    <input class="form-control"
-                                                                                        name="expiredate"
-                                                                                        id="expiredate" type="text">
-                                                                                    <span class="input-group-addon">
-                                                                                        <i
-                                                                                            class="glyphicon glyphicon-calendar"></i>
-                                                                                    </span>
-                                                                                </div>
+                                                                                <input class="date form-control"
+                                                                                    name="expiredate" type="text">
                                                                             </div>
                                                                         </div>
                                                                         <div class="row pt-2">

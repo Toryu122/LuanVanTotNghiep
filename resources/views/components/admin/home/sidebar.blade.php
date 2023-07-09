@@ -34,35 +34,12 @@
             <div class="collapse show" id="collapsePages" aria-labelledby="headingTwo"
                 data-bs-parent="#sidenavAccordion">
                 <nav class="sb-sidenav-menu-nested nav accordion" id="sidenavAccordionPages">
-                    <table>
-                        <td>
-                            <a class="nav-link" href="{{ route('admingame') }}"><i
-                                    class="fa-solid fa-gamepad"></i>&nbsp;
-                                Games </a>
-                        </td>
-                        <td>
-                            <a href="{{ route('addgame') }}"type="submit" class="nav-link"> + </a>
-                        </td>
-                    </table>
-                    <table>
-                        <td>
-                            <a class="nav-link" href="{{ route('admingenre') }}"><i class="fa-solid fa-tags"></i>&nbsp;
-                                Genres</a>
-                        </td>
-                        <th>
-                            <a href="{{ route('addgenre') }}"type="submit" class="nav-link"> + </a>
-                        </th>
-                    </table>
-                    <table>
-                        <td>
-                            <a class="nav-link" href="{{ route('adminpublisher') }}"><i
-                                    class="fa-solid fa-user-tie"></i>&nbsp;
-                                Publishers</a>
-                        </td>
-                        <th>
-                            <a href="{{ route('addpublisher') }}"type="submit" class="nav-link"> + </a>
-                        </th>
-                    </table>
+                    <a class="nav-link" href="{{ route('admingame') }}"><i class="fa-solid fa-gamepad"></i>&nbsp;
+                        Games </a>
+                    <a class="nav-link" href="{{ route('admingenre') }}"><i class="fa-solid fa-tags"></i>&nbsp;
+                        Genres</a>
+                    <a class="nav-link" href="{{ route('adminpublisher') }}"><i class="fa-solid fa-user-tie"></i>&nbsp;
+                        Publishers</a>
                     <a class="nav-link" href="{{ route('adminkey') }}"><i class="fa-solid fa-key"></i>&nbsp;
                         Keys</a>
                     <!-- <a class="nav-link collapsed" href="#" data-bs-toggle="collapse" data-bs-target="#pagesCollapseAuth" aria-expanded="false" aria-controls="pagesCollapseAuth">

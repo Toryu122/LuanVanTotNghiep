@@ -123,7 +123,7 @@ Route::prefix('admin')->middleware(['auth', AdminMiddleware::class])->group(func
 
     Route::prefix('game')->group(function () {
         Route::get('', [AdminGameController::class, 'index'])->name('admingame');
-        Route::get('/add', [AdminGameController::class, 'add'])->name('addgame');
+        // Route::get('/add', [AdminGameController::class, 'add'])->name('addgame');
         Route::post('/store', [AdminGameController::class, 'store'])->name('storegame');
         Route::get('/edit/{id}', [AdminGameController::class, 'edit'])->name('editgame');
         // "Post" method because Laravel can't handle update image with "Put" method
@@ -133,18 +133,18 @@ Route::prefix('admin')->middleware(['auth', AdminMiddleware::class])->group(func
 
     Route::prefix('genre')->group(function () {
         Route::get('', [AdminGenreController::class, 'index'])->name('admingenre');
-        Route::get('/add', [AdminGenreController::class, 'create'])->name('addgenre');
+        // Route::get('/add', [AdminGenreController::class, 'create'])->name('addgenre');
         Route::post('/store', [AdminGenreController::class, 'store'])->name('storegenre');
-        Route::get('/edit/{id}', [AdminGenreController::class, 'edit'])->name('editgenre');
+        // Route::get('/edit/{id}', [AdminGenreController::class, 'edit'])->name('editgenre');
         Route::put('/update/{id}', [AdminGenreController::class, 'update'])->name('updategenre');
         Route::delete('/delete/{id}', [AdminGenreController::class, 'delete'])->name('deletegenre');
     });
 
     Route::prefix('publisher')->group(function () {
         Route::get('', [AdminPublicController::class, 'index'])->name('adminpublisher');
-        Route::get('/add', [AdminPublicController::class, 'create'])->name('addpublisher');
+        // Route::get('/add', [AdminPublicController::class, 'create'])->name('addpublisher');
         Route::post('/store', [AdminPublicController::class, 'store'])->name('storepublisher');
-        Route::get('/edit/{id}', [AdminPublicController::class, 'edit'])->name('editpublisher');
+        // Route::get('/edit/{id}', [AdminPublicController::class, 'edit'])->name('editpublisher');
         Route::put('/update/{id}', [AdminPublicController::class, 'update'])->name('updatepublisher');
         Route::delete('/delete/{id}', [AdminPublicController::class, 'delete'])->name('deletepublisher');
     });

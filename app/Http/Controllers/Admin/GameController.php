@@ -3,12 +3,17 @@
 namespace App\Http\Controllers\Admin;
 
 use Carbon\Carbon;
+use Tinify\Tinify;
 use App\Models\Game;
 use App\Models\Genre;
+use Illuminate\Support\Str;
 use Illuminate\Http\Request;
+use WebPConvert\WebPConvert;
 use Illuminate\Support\Facades\DB;
 use App\Http\Controllers\Controller;
 use Illuminate\Support\Facades\Gate;
+use Intervention\Image\ImageManager;
+use Spatie\LaravelImageOptimizer\Facades\ImageOptimizer;
 
 class GameController extends Controller
 {
@@ -16,9 +21,17 @@ class GameController extends Controller
     {
         $games = DB::table('games')
             ->get();
+        $pubs = DB::table('publishers')
+            ->get();
+        $genres = DB::table('genres')
+            ->get();
         return view(
             "admin.game.game",
-            ['games' => $games]
+            [
+                'games' => $games,
+                'pubs' => $pubs,
+                'genres' => $genres
+            ]
         );
     }
 
@@ -42,21 +55,28 @@ class GameController extends Controller
                 'img' => 'required|image|mimes:jpg,png,jpeg|max:5048',
             ]);
             $img = $request->file('img');
-            $ten_hinh = hexdec(uniqid()) . '.' . $img->getClientOriginalExtension();
-            $request->img->move(public_path('images'), $ten_hinh);
-            $img_url = $ten_hinh;
+            /* Uncomment this to do normal image upload without optimizing */
+            // $ten_hinh = hexdec(uniqid()) . '.' . $img->getClientOriginalExtension();
+            // $request->img->move(public_path('images'), $ten_hinh);
+            // $img_url = $ten_hinh;
+
+            /* Comment this to disabled optimize image upload */
+            $savePath = public_path('images/games/');
+            $image_name = $this->optimize($img, $savePath, $request->get('game_name'));
+
 
             $flag = Game::insert([
                 'name' => $request->game_name,
                 'price' => $request->price,
                 'description' => $request->description,
                 'publisher_id' => $request->pub_id,
-                'image' => $img_url,
+                'image' => $image_name, //$img_url
                 'updated_at' => Carbon::now(),
             ]);
             if ($flag == false)
                 return redirect('admin/game/add')->with('message', 'Thêm sản phẩm thất bại!');
-            return redirect('admin/game')->with('message', 'Thêm sản phẩm thành công!');
+            toastr()->success('', 'Thêm sản phẩm thành công!');
+            return redirect()->back();
         }
 
         toastr()->error('', 'Bạn không đủ quyền hạn');
@@ -168,5 +188,62 @@ class GameController extends Controller
 
         toastr()->error('', 'Bạn không đủ quyền hạn');
         return redirect()->back();
+    }
+
+    public function optimize(
+        $file,
+        $savePath,
+        $game_name,
+        $width = null,
+        $height = null,
+    ) {
+        // Set up the necessary dependencies and keys
+        Tinify::setKey(env('TINIFY_API_KEY'));
+        $manager = new ImageManager(['driver' => 'imagick']);
+
+        // Get the original file name and extension
+        $originalName = $file->getClientOriginalName();
+        $extension = $file->getClientOriginalExtension();
+
+        // Save the uploaded file
+        $file->move($savePath, $originalName);
+
+        // Optimize the uploaded image
+        $optimizedPath = $savePath . $originalName;
+        ImageOptimizer::optimize($optimizedPath);
+
+        // Convert the optimized image to WebP format
+        $name = Str::slug($game_name);
+        $destination = $savePath . $name . '.webp';
+        WebPConvert::convert($optimizedPath, $destination);
+
+        // Delete the optimized image (not the original)
+        unlink($optimizedPath);
+
+        // Compress the converted WebP image using Tinify
+        $source = \Tinify\fromFile($destination);
+        $source->toFile($destination);
+
+        if (isset($width) && isset($height)) {
+            // Resize the image if width and height are provided
+            $image = $manager->make($destination)->resize($width, $height);
+            $image->save($destination);
+        }
+
+        return $name . '.webp';
+    }
+
+    public function testOptimze(Request $request)
+    {
+        $request->validate([
+            'img' => 'required|image|mimes:jpg,png,jpeg|max:5048',
+        ]);
+
+        $file = $request->file('img');
+        $savePath = public_path('/images/optimized/');
+
+        $this->optimize($file, $savePath, 'some name here');
+
+        return redirect()->back()->with('success', 'Image uploaded and optimized successfully');
     }
 }

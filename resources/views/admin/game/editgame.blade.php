@@ -54,7 +54,7 @@
                                             <table>
                                                 <td>
                                                     <img value="{{ $game->image }}"
-                                                        src="{{ asset('images/' . $game->image) }}"width="150"
+                                                        src="{{ asset('images/games/' . $game->image) }}"width="150"
                                                         height="100" />
                                                 </td>
                                                 <td>
@@ -91,7 +91,7 @@
                                             <input id='genres' type='hidden' name='genres[]' />
                                             <div class='controls'>
                                                 @foreach ($genres as $gen)
-                                                <!-- xuat 1 lan cho moi the loai, game co the loai thi checked-->
+                                                    <!-- xuat 1 lan cho moi the loai, game co the loai thi checked-->
                                                     @php
                                                         $flag = 0;
                                                     @endphp
@@ -100,18 +100,24 @@
                                                             @php
                                                                 $flag = 1;
                                                             @endphp
-                                                            <div>
-                                                                <label class="checkbox">
-                                                                    <input checked type="checkbox" name="genres[]"
-                                                                        value="{{ $gen->id }}">{{ $gen->name }}</label>
+                                                            <div class="col-6 col-sm-4 col-md-3">
+                                                                <div class="form-check">
+                                                                    <label class="form-check-label">
+                                                                        <input checked type="checkbox"
+                                                                            class="form-check-input" name="genres[]"
+                                                                            value="{{ $gen->id }}">{{ $gen->name }}</label>
+                                                                </div>
                                                             </div>
                                                         @endif
                                                     @endforeach
                                                     @if ($flag == 0)
-                                                        <div>
-                                                            <label class="checkbox">
-                                                                <input type="checkbox" name="genres[]"
-                                                                    value="{{ $gen->id }}">{{ $gen->name }}</label>
+                                                        <div class="col-6 col-sm-4 col-md-3">
+                                                            <div class="form-check">
+                                                                <label class="form-check-label">
+                                                                    <input type="checkbox"
+                                                                        class="form-check-input" name="genres[]"
+                                                                        value="{{ $gen->id }}">{{ $gen->name }}</label>
+                                                            </div>
                                                         </div>
                                                     @endif
                                                 @endforeach
