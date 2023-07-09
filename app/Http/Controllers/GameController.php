@@ -83,14 +83,14 @@ class GameController extends Controller
 
     public function detail_game($id)
     {
-        $game = DB::table(Game::retrieveTableName())
-            ->where('id', '=', $id)
-            ->first();
+        $game = Game::with(['keys' => function ($query) {
+            $query->where('is_redeemed', 0);
+        }])->find($id);
         $related = DB::table(Game::retrieveTableName())
             ->whereNotIn('id', [$id])
             ->where('publisher_id', '=', $game->publisher_id)
             ->get();
-            
+
         $name = basename($game->image, '.webp');
 
         $response = Http::get($this->apiUrl . "/$name?key=" . env('RAWG.IO_API_KEY'));

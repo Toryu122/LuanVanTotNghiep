@@ -236,24 +236,11 @@
                 dataType: 'json',
                 success: function(data) {
                     if (data.success) {
-                        // let sessionData = $.parseJSON('{!! json_encode(session()->all()) !!}');
-                        // let priceArr = extractValues(sessionData.cart);
-                        // let total = priceArr.reduce((sum, value) => sum + value, 0);
-                        // console.log(total);
-
-                        // formData.forEach((value, key) => {
-                        //     if (key == "price") {
-                        //         if (action == "decrease") {
-                        //             total = total - parseInt(value);
-                        //         } else if (action == "increase") {
-                        //             total = total + parseInt(value);
-                        //         }
-                        //     }
-                        // });
                         location.reload();
                         toastr.success('', 'Cập nhật thành công');
                     } else {
-                        toastr.error('', 'Something went wrong');
+                        location.reload();
+                        toastr.error('', 'Đã hết key!');
                     }
                 },
                 error: function() {

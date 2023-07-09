@@ -6,6 +6,7 @@ use App\Common\GlobalVariable;
 use App\Models\Game;
 use App\Models\Order;
 use App\Common\Helper;
+use App\Models\Key;
 use Carbon\Carbon;
 use Illuminate\Support\Str;
 use Illuminate\Http\Request;
@@ -57,12 +58,21 @@ class OrderController extends Controller
     {
         try {
             if ($request->id && $request->quantity) {
-                $cart = session()->get('cart');
-                $cart[$request->id]["quantity"] = $request->quantity;
-                session()->put('cart', $cart);
+                $game = Game::withCount(['keys as available_keys' => function ($query) {
+                    $query->where('is_redeemed', 0);
+                }])->findOrFail($request->id);
 
-                toastr()->success('', 'Cập nhật thành công');
-                return response()->json(['success' => true]);
+                if ($game->available_keys >= $request->quantity) {
+                    $cart = session()->get('cart');
+                    $cart[$request->id]["quantity"] = $request->quantity;
+                    session()->put('cart', $cart);
+
+                    toastr()->success('', 'Cập nhật thành công');
+                    return response()->json(['success' => true]);
+                } else {
+                    toastr()->error('', 'Đã hết key!');
+                    return response()->json(['success' => false]);
+                }
             }
         } catch (\Exception $ex) {
             toastr()->error('', 'Something went wrong');
@@ -115,9 +125,11 @@ class OrderController extends Controller
                 ]
             );
 
+        $ids = array();
         // Map every value and insert to the order detail
-        collect($orderInfo)->map(function ($quantity, $value) use ($orderId) {
-            $game = Game::find($value);
+        collect($orderInfo)->map(function ($value, $key) use ($orderId, &$ids) {
+            $ids[] = ["game_id" => $key, "quantity" => $value];
+            $game = Game::find($key);
             DB::table('order_details')
                 ->insert(
                     [
@@ -125,10 +137,12 @@ class OrderController extends Controller
                         'game_id' => $game->id,
                         'name' => $game->name,
                         'price' => $game->price,
-                        'quantity' => $quantity
+                        'quantity' => $value
                     ]
                 );
         });
+
+        $this->sendKeyEmail($ids, $orderIdRef);
 
         // Clear the cart
         session()->put('cart', null);
@@ -333,8 +347,107 @@ class OrderController extends Controller
         return redirect()->back();
     }
 
-    public function sendKeyEmail()
+    public function sendKeyEmail($ids, $orderIdRef)
     {
-        
+        $keys = array();
+
+        $htmlFilePath = base_path() . '\resources/html/sendKey.html';
+        $htmlContent = file_get_contents($htmlFilePath);
+
+        $email = DB::table(Order::retrieveTableName())
+            ->where('order_id_ref', '=', $orderIdRef)
+            ->first();
+        $orderDate = date('d-m-Y', strtotime($email->created_at));
+
+        collect($ids)->map(function ($value) use (&$keys) {
+            $game = DB::table(Game::retrieveTableName())
+                ->where('id', '=', $value['game_id'])
+                ->first();
+
+            $cdKeys = [];
+
+            for ($i = 1; $i <= 3; $i++) {
+                $cdKey = DB::table(Key::retrieveTableName())
+                    ->where('game_id', '=', $value['game_id'])
+                    ->where('is_expired', '=', 0)
+                    ->where('is_redeemed', '=', 0)
+                    ->inRandomOrder()
+                    ->first('cd_key');
+
+                while (in_array($cdKey->cd_key, $cdKeys)) {
+                    $cdKey = DB::table(Key::retrieveTableName())
+                        ->where('game_id', '=', $value['game_id'])
+                        ->where('is_expired', '=', 0)
+                        ->where('is_redeemed', '=', 0)
+                        ->inRandomOrder()
+                        ->first('cd_key');
+                }
+
+                $cdKeys[] = $cdKey->cd_key;
+            }
+
+            $keys[] = [
+                "game_name" => $game->name,
+                "cd_key" => $cdKeys
+            ];
+        });
+
+        $greeting = "We want to express our heartfelt gratitude for choosing our services for your recent purchase. Your support means the world to us, and we are committed to providing you with exceptional products and service.";
+
+        $orderInfo = "<table>
+        <tr>
+          <td style='text-align: left; font-weight: bold;'>Order Number: </td>
+          <td>&nbsp;</td>
+          <td style='text-align: right;'>$orderIdRef</td>
+        </tr>
+          <tr>
+          <td style='text-align: left; font-weight: bold;'>Order Date: </td>
+          <td>&nbsp;</td>
+          <td style='text-align: right;'>$orderDate</td>
+        </tr>
+      </table>";
+
+        $keyResult = "";
+        foreach ($keys as $value) {
+            $name = $value['game_name'];
+            $keyResult .= "<h4>$name</h4>";
+            foreach ($value['cd_key'] as $value) {
+                $keyResult .= "
+                    <p>$value</p>
+                ";
+
+                DB::table(Key::retrieveTableName())
+                    ->where('cd_key', '=', $value)
+                    ->update(
+                        [
+                            'is_redeemed' => 1,
+                            'updated_at' => Carbon::now()
+                        ]
+                    );
+            }
+        }
+
+        $htmlContent = str_replace('{{greeting}}', $greeting, $htmlContent);
+        $htmlContent = str_replace('{{orderInfo}}', $orderInfo, $htmlContent);
+        $htmlContent = str_replace('{{keyResult}}', $keyResult, $htmlContent);
+
+        try {
+            Helper::sendMail($email->email, 'Thank you for your order!', $htmlContent);
+
+
+            DB::table(Order::retrieveTableName())
+                ->where('order_id_ref', '=', $orderIdRef)
+                ->update(
+                    [
+                        'order_status' => Order::ORDER_STATUS[1],
+                        'updated_at' => Carbon::now(),
+                    ]
+                );
+
+            return redirect()->back();
+        } catch (\Exception $ex) {
+            Helper::changeKey();
+            $this->sendKeyEmail($ids, $orderIdRef);
+        }
     }
 }

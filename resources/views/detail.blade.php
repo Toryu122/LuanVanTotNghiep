@@ -38,6 +38,15 @@
                             @endif
                         </form>
                     </div>
+                    @if (count($game->keys) <= 0)
+                        <div class="text-center pt-2 text-danger">
+                            <i class="fa-solid fa-box"></i> Hết hàng
+                        </div>
+                    @else
+                        <div class="text-center pt-2 text-success">
+                            <i class="fa-solid fa-box"></i> Còn hàng: {{ count($game->keys) }}
+                        </div>
+                    @endif
                 </div>
                 <div class="col-md-8">
                     <div class="right-side-pro-detail border-0 p-3 m-0">
@@ -55,26 +64,52 @@
                                 <hr class="m-0 pt-2 mt-2" />
                             </div>
                             <div class="col-md-12 mt-3">
-                                <div class="row">
-                                    <div class="col-md-6">
-                                        <form action="{{ route('buyNow') }}" method="post">
-                                            @csrf
-                                            <input type="text" name="id" value="{{ $game->id }}" hidden>
-                                            <button class="btn btn-default col-12">
-                                                <i class="fa-solid fa-credit-card"></i> Mua ngay
-                                            </button>
-                                        </form>
+                                @if (count($game->keys) <= 0)
+                                    <div class="row">
+                                        <div class="col-md-6">
+                                            <form action="" method="post">
+                                                @csrf
+                                                <input type="text" name="id" value="{{ $game->id }}" hidden>
+                                                <button disabled class="btn btn-default col-12">
+                                                    <i class="fa-solid fa-credit-card"></i> Mua ngay
+                                                </button>
+                                            </form>
+                                        </div>
+                                        <div class="col-md-6 pb-2">
+                                            <form action="" method="post">
+                                                @csrf
+                                                <input type="text" name="id" value="{{ $game->id }}"
+                                                    hidden>
+                                                <button disabled class="btn btn-secondary col-12">
+                                                    <i class="fa-solid fa-cart-shopping fa-md"></i> Thêm vào giỏ
+                                                </button>
+                                            </form>
+                                        </div>
                                     </div>
-                                    <div class="col-md-6 pb-2">
-                                        <form action="{{ route('addToCart') }}" method="post">
-                                            @csrf
-                                            <input type="text" name="id" value="{{ $game->id }}" hidden>
-                                            <button class="btn btn-secondary col-12">
-                                                <i class="fa-solid fa-cart-shopping fa-md"></i> Thêm vào giỏ
-                                            </button>
-                                        </form>
+                                @else
+                                    <div class="row">
+                                        <div class="col-md-6">
+                                            <form action="{{ route('buyNow') }}" method="post">
+                                                @csrf
+                                                <input type="text" name="id" value="{{ $game->id }}"
+                                                    hidden>
+                                                <button class="btn btn-default col-12">
+                                                    <i class="fa-solid fa-credit-card"></i> Mua ngay
+                                                </button>
+                                            </form>
+                                        </div>
+                                        <div class="col-md-6 pb-2">
+                                            <form action="{{ route('addToCart') }}" method="post">
+                                                @csrf
+                                                <input type="text" name="id" value="{{ $game->id }}"
+                                                    hidden>
+                                                <button class="btn btn-secondary col-12">
+                                                    <i class="fa-solid fa-cart-shopping fa-md"></i> Thêm vào giỏ
+                                                </button>
+                                            </form>
+                                        </div>
                                     </div>
-                                </div>
+                                @endif
                             </div>
                         </div>
                     </div>
