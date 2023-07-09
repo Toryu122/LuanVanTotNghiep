@@ -46,9 +46,9 @@
 <div class="row mb-4">
     <div class="col-md-5">
         <div class="img">
-            <a href="{{ route('detailgame', ['id' => $game->id]) }}" data-bs-toggle="tooltip" data-bs-placement="top"
-                title="{{ $game->name }}">
-                <img class="card-img-top game-img center-img" src="images/{{ $game->image }}" alt="..."
+            <a href="{{ route('detailgame', ['id' => $game->id]) }}"
+                data-bs-toggle="tooltip" data-bs-placement="top" title="{{ $game->name }}">
+                <img class="card-img-top game-img center-img" src="images/games/{{ $game->image }}" alt="..."
                     loading="lazy" />
             </a>
         </div>

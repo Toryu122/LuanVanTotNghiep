@@ -2,7 +2,7 @@
     <div class="card bg-transparent h-100 border-0">
         <a href="{{ route('detailgame', ['id' => $gameList->id]) }}" data-bs-toggle="tooltip" data-bs-placement="top"
             title="{{ $gameList->name }}">
-            <img class="card-img-top game-img center-img" src="images/{{ $gameList->image }}" alt="..."
+            <img class="card-img-top game-img center-img" src="images/games/{{ $gameList->image }}" alt="..."
                 loading="lazy" />
         </a>
         <div class="card-body">

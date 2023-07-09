@@ -21,7 +21,7 @@
             <div class="row m-0">
                 <div class="col-md-4 left-side-product-box pb-3">
                     <div>
-                        <img src="../images/{{ $game->image }}" class="border-0 p-3 rounded" />
+                        <img src="../images/games/{{ $game->image }}" class="border-0 p-3 rounded" />
                     </div>
                     <div class="text-center h5" name="total_like">{{ $game->like }}</div>
                     <div class="d-flex justify-content-center">
