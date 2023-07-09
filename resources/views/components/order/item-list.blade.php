@@ -4,7 +4,7 @@
         <!-- Image -->
         <div class="bg-image hover-overlay hover-zoom ripple rounded" data-mdb-ripple-color="light">
             <a href="{{ route('detailgame', ['id' => $cartItem['id']]) }}">
-                <img src="images/{{ $cartItem['image'] }}" class="rounded shadow-sm w-100" alt="{{ $cartItem['image'] }}">
+                <img src="images/games/{{ $cartItem['image'] }}" class="rounded shadow-sm w-100" alt="{{ $cartItem['image'] }}">
             </a>
             <a href="#!">
                 <div class="mask" style="background-color: rgba(251, 251, 251, 0.2)">

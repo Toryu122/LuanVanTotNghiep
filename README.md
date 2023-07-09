@@ -11,54 +11,153 @@
 
 Laravel is a web application framework with expressive, elegant syntax. We believe development must be an enjoyable and creative experience to be truly fulfilling. Laravel takes the pain out of development by easing common tasks used in many web projects, such as:
 
-- [Simple, fast routing engine](https://laravel.com/docs/routing).
-- [Powerful dependency injection container](https://laravel.com/docs/container).
-- Multiple back-ends for [session](https://laravel.com/docs/session) and [cache](https://laravel.com/docs/cache) storage.
-- Expressive, intuitive [database ORM](https://laravel.com/docs/eloquent).
-- Database agnostic [schema migrations](https://laravel.com/docs/migrations).
-- [Robust background job processing](https://laravel.com/docs/queues).
-- [Real-time event broadcasting](https://laravel.com/docs/broadcasting).
+-   [Simple, fast routing engine](https://laravel.com/docs/routing).
+-   [Powerful dependency injection container](https://laravel.com/docs/container).
+-   Multiple back-ends for [session](https://laravel.com/docs/session) and [cache](https://laravel.com/docs/cache) storage.
+-   Expressive, intuitive [database ORM](https://laravel.com/docs/eloquent).
+-   Database agnostic [schema migrations](https://laravel.com/docs/migrations).
+-   [Robust background job processing](https://laravel.com/docs/queues).
+-   [Real-time event broadcasting](https://laravel.com/docs/broadcasting).
 
 Laravel is accessible, powerful, and provides tools required for large, robust applications.
 
-## Learning Laravel
+# About this repository
 
-Laravel has the most extensive and thorough [documentation](https://laravel.com/docs) and video tutorial library of all modern web application frameworks, making it a breeze to get started with the framework.
+Hi! This is an unfinished Laravel E-commerce website project about selling Game Key ( yeah, the one that we used to redeem at Steam )
 
-If you don't feel like reading, [Laracasts](https://laracasts.com) can help. Laracasts contains over 1500 video tutorials on a range of topics including Laravel, modern PHP, unit testing, and JavaScript. Boost your skills by digging into our comprehensive video library.
+# Requirement & Installation
 
-## Laravel Sponsors
+PHP >= 8.0
+Composer >= 2.5
 
-We would like to extend our thanks to the following sponsors for funding Laravel development. If you are interested in becoming a sponsor, please visit the Laravel [Patreon page](https://patreon.com/taylorotwell).
+Create a .env file with this
 
-### Premium Partners
+```
+APP_NAME=Laravel
+APP_ENV=local
+APP_KEY=<your app key>
+APP_DEBUG=true
+APP_URL=
 
-- **[Vehikl](https://vehikl.com/)**
-- **[Tighten Co.](https://tighten.co)**
-- **[Kirschbaum Development Group](https://kirschbaumdevelopment.com)**
-- **[64 Robots](https://64robots.com)**
-- **[Cubet Techno Labs](https://cubettech.com)**
-- **[Cyber-Duck](https://cyber-duck.co.uk)**
-- **[Many](https://www.many.co.uk)**
-- **[Webdock, Fast VPS Hosting](https://www.webdock.io/en)**
-- **[DevSquad](https://devsquad.com)**
-- **[Curotec](https://www.curotec.com/services/technologies/laravel/)**
-- **[OP.GG](https://op.gg)**
-- **[WebReinvent](https://webreinvent.com/?utm_source=laravel&utm_medium=github&utm_campaign=patreon-sponsors)**
-- **[Lendio](https://lendio.com)**
+LOG_CHANNEL=stack
+LOG_DEPRECATIONS_CHANNEL=null
+LOG_LEVEL=debug
 
-## Contributing
+DB_CONNECTION=mysql
+DB_HOST=127.0.0.1
+DB_PORT=3306
+DB_DATABASE=<your database name>
+DB_USERNAME=<your database username>
+DB_PASSWORD=<your database password>
 
-Thank you for considering contributing to the Laravel framework! The contribution guide can be found in the [Laravel documentation](https://laravel.com/docs/contributions).
+BROADCAST_DRIVER=log
+CACHE_DRIVER=file
+FILESYSTEM_DRIVER=local
+QUEUE_CONNECTION=sync
+SESSION_DRIVER=file
+SESSION_LIFETIME=120
+MEMCACHED_HOST=127.0.0.1
 
-## Code of Conduct
+REDIS_HOST=127.0.0.1
+REDIS_PASSWORD=null
+REDIS_PORT=6379
 
-In order to ensure that the Laravel community is welcoming to all, please review and abide by the [Code of Conduct](https://laravel.com/docs/contributions#code-of-conduct).
 
-## Security Vulnerabilities
+MAIL_MAILER=smtp
+MAIL_HOST=mailhog
+MAIL_PORT=1025
+MAIL_USERNAME=null
+MAIL_PASSWORD=null
+MAIL_ENCRYPTION=null
+MAIL_FROM_ADDRESS=null
+MAIL_FROM_NAME="${APP_NAME}"
 
-If you discover a security vulnerability within Laravel, please send an e-mail to Taylor Otwell via [taylor@laravel.com](mailto:taylor@laravel.com). All security vulnerabilities will be promptly addressed.
+MAIL_ADDRESS=gamestore@noreply.email.com
+SENDGRID_RAPID_API_HOST=rapidprod-sendgrid-v1.p.rapidapi.com
+SENDGRID_RAPID_API_KEY=4d239dcf31mshc0eacf61fa07382p11c334jsn52e33ce4bb74
 
-## License
+AWS_ACCESS_KEY_ID=
+AWS_SECRET_ACCESS_KEY=
+AWS_DEFAULT_REGION=us-east-1
+AWS_BUCKET=
+AWS_USE_PATH_STYLE_ENDPOINT=false
 
-The Laravel framework is open-sourced software licensed under the [MIT license](https://opensource.org/licenses/MIT).
+PUSHER_APP_ID=
+PUSHER_APP_KEY=
+PUSHER_APP_SECRET=
+PUSHER_APP_CLUSTER=mt1
+
+MIX_PUSHER_APP_KEY="${PUSHER_APP_KEY}"
+MIX_PUSHER_APP_CLUSTER="${PUSHER_APP_CLUSTER}"
+
+
+FACEBOOK_CLIENT_ID=185195804461074
+FACEBOOK_CLIENT_SECRET=344be1019ae836d96545385ec65ae47c
+# FACEBOOK_CLIENT_ID= '948505973086987',
+# FACEBOOK_CLIENT_SECRET='1cd7ec8f616d2d1f89968673f723cab9'
+FACEBOOK_REDIRECT='/auth/fb/callback'
+
+GOOGLE_CLIENT_ID=62911174979-adgf70c5h4dlisff4q3kts20gg8147lk.apps.googleusercontent.com
+GOOGLE_CLIENT_SECRET=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
+# GOOGLE_CLIENT_ID='868021255911-astpl298v08fgh8cntgh1jk7a5c79tk0.apps.googleusercontent.com',
+# GOOGLE_CLIENT_SECRET='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',
+GOOGLE_REDIRECT='/auth/gg/callback'
+
+
+
+MOMO_PARTNER_CODE=MOMOBKUN20180529
+MOMO_ACCESS_KEY=klm05TvNBzhg7h7j
+MOMO_SECRET_KEY=at67qH6mk8w5Y1nAyMoYKMWACiEi2bsa
+MOMO_URL=https://test-payment.momo.vn/v2/gateway/api/create
+
+VNPAY_TERMINAL_CODE=NGPV5U4Q
+VNPAY_SECRET_CODE=FYXGGFJSWBPVXDVENZXFQUSCJKXYYANK
+VNPAY_URL=https://sandbox.vnpayment.vn/paymentv2/vpcpay.html
+
+PAYPAL_CLIENT_ID=AU3FHbaWBElqVBcBDI3M7btS8zQVJ-b8GN8oPvSUkQrYzel0T-AqiNRN3ieknrvgtlD50KTiDNHAAqvB
+PAYPAL_CLIENT_SECRET=EBb2PKe8Q3KJRyWteC09cfuguMdw8EwEsTsvIbq8H9RCa7hcNqNkMHQgpRWvAoLug3BKsJFTI_Hg6FW6
+PAYPAL_MODE=sandbox
+# PAYPAL_MODE=live
+
+RAWG.IO_API_KEY=05f1e9f06d794845a77e4903680c7f82
+```
+
+Installation
+
+```
+composer install
+```
+
+Migration
+
+```
+php artisan migrate --seed
+```
+
+You gonna need a seeder file
+location: storage/resources/seederfile.txt
+
+Game seeder file format
+
+```
+name^description^price^image^publisher_id
+```
+
+For Publisher and Genre just put some name in it
+
+## Current Features
+
+-   Can try a test payment, using VNPAY E-Wallet
+-   Like a game
+-   Sending email
+-   Admin Dashboard
+
+For testing payment
+
+```
+Ngân hàng    NCB
+Số thẻ    9704198526191432198
+Tên chủ thẻ    NGUYEN VAN A
+Ngày phát hành    07/15
+Mật khẩu OTP    123456
+```

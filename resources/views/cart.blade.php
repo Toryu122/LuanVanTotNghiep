@@ -125,20 +125,21 @@
 
                                     {{-- The session has the cart, and it's not empty --}}
                                     @if (Session::has('cart') && !empty(session('cart')))
-                                        {{-- <form action="{{ route('checkoutMomo') }}" method="POST"> --}}
-                                        @csrf
-                                        <div class="d-flex justify-content-center pt-2">
-                                            <input type="text" name="total" hidden value="{{ $total }}">
-                                            <button type="submit" class="btn btn-momo">
-                                                <img src="images/common/momo-white-logo.png" width="20"
-                                                    height="20" alt=""> &nbsp; Thanh toán bằng MoMo
-                                            </button>
-                                        </div>
-                                        {{-- </form> --}}
-                                        <form action="{{ route('checkoutVnpay') }}" method="POST">
+                                        {{-- <form action="{{ route('checkoutMomo') }}" method="POST">
                                             @csrf
                                             <div class="d-flex justify-content-center pt-2">
                                                 <input type="text" name="total" hidden value="{{ $total }}">
+                                                <button type="submit" class="btn btn-momo">
+                                                    <img src="images/common/momo-white-logo.png" width="20"
+                                                        height="20" alt=""> &nbsp; Thanh toán bằng MoMo
+                                                </button>
+                                            </div>
+                                        </form> --}}
+                                        <form action="{{ route('checkoutVnpay') }}" method="POST">
+                                            @csrf
+                                            <div class="d-flex justify-content-center pt-2">
+                                                <input type="text" name="total" hidden
+                                                    value="{{ $total }}">
                                                 <button name="redirect" type="submit" class="btn btn-vnpay">
                                                     <img src="images/common/vnpay-logo.png" width="20"
                                                         height="20" alt=""> &nbsp; Thanh toán bằng VNPAY
