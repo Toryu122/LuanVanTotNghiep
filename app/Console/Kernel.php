@@ -17,6 +17,7 @@ class Kernel extends ConsoleKernel
     {
         // $schedule->command('inspire')->hourly();
         $schedule->command('keys:check-expired')->daily();
+        $schedule->command('game:stock-checking')->daily();
     }
 
     /**
