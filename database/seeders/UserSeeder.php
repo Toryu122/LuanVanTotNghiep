@@ -83,43 +83,7 @@ class UserSeeder extends Seeder
                 'updated_at' => '2023-07-07 21:45:15',
                 'social' => 'Google',
                 'social_id' => '101908197917112750588',
-            ),
-            3 =>
-            array(
-                'id' => 4,
-                'name' => 'Toryu',
-                'email' => 'kiratoryu124@gmail.com',
-                'verified' => 1,
-                'otp' => 'F5Nb5Iz1H5',
-                'password' => '$2y$10$Lvv3Gxq7qE9c5xwyzle.KOVAHHOCtlH1eTDai7iO/eG/SPhrnO5BK',
-                'last_sent' => '2023-07-08 06:41:43',
-                'remember_token' => NULL,
-                'gender' => 'Male',
-                'biography' => NULL,
-                'address' => NULL,
-                'created_at' => '2023-07-07 16:08:54',
-                'updated_at' => '2023-07-08 06:41:43',
-                'social' => 'None',
-                'social_id' => NULL,
-            ),
-            4 =>
-            array(
-                'id' => 5,
-                'name' => 'Himegami Nanase',
-                'email' => 'kasenibara122@gmail.com',
-                'verified' => 1,
-                'otp' => NULL,
-                'password' => '$2y$10$GEMVu7GkcI8yek/Lbvu1K.OEVge9.BHW2pBvRRy6zWM8e7.g4Q28q',
-                'last_sent' => NULL,
-                'remember_token' => NULL,
-                'gender' => 'Male',
-                'biography' => NULL,
-                'address' => NULL,
-                'created_at' => '2023-07-08 13:49:56',
-                'updated_at' => '2023-07-08 13:49:56',
-                'social' => 'Facebook',
-                'social_id' => '1607197773111859',
-            ),
+            )
         ));
     }
 }
