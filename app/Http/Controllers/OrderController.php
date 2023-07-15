@@ -365,8 +365,7 @@ class OrderController extends Controller
                 ->first();
 
             $cdKeys = [];
-
-            for ($i = 1; $i <= 3; $i++) {
+            for ($i = 1; $i <= $value['quantity']; $i++) {
                 $cdKey = DB::table(Key::retrieveTableName())
                     ->where('game_id', '=', $value['game_id'])
                     ->where('is_expired', '=', 0)
