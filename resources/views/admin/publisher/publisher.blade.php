@@ -105,6 +105,7 @@
                                                             <div class="modal-body text-start text-black p-4">
                                                                 <div class="mb-3">
                                                                     <form
+                                                                        id="editPublisher"
                                                                         action="{{ route('updatepublisher', ['id' => $item->id]) }}"
                                                                         method="POST" enctype="multipart/form-data">
                                                                         @csrf
@@ -127,7 +128,7 @@
                                                                             <div class="col-sm-10">
                                                                                 <input type="text"
                                                                                     class="form-control"
-                                                                                    id="publisher_name" name="name"
+                                                                                    id="publisher_name" name="publisher_name"
                                                                                     value="{{ $item->name }}" />
                                                                             </div>
                                                                         </div>
@@ -203,13 +204,13 @@
                         </div>
                         <div class="modal-body text-start text-black p-4">
                             <div class="mb-3">
-                                <form action="{{ route('storepublisher') }}" method="POST">
+                                <form id="addPublisher" action="{{ route('storepublisher') }}" method="POST">
                                     @csrf
                                     <div class="row mb-3">
                                         <label class="col-sm-2 col-form-label" for="basic-default-name">Tên
                                             publisher</label>
                                         <div class="col-sm-10">
-                                            <input type="text" class="form-control" id="publisher"
+                                            <input type="text" class="form-control" id="name"
                                                 name="name" />
                                         </div>
                                     </div>
@@ -255,6 +256,50 @@
                 if (datatablesSimple) {
                     new simpleDatatables.DataTable(datatablesSimple);
                 }
+            });
+
+            $(document).ready(function() {
+                $('#addPublisher').validate({
+                    rules: {
+                        name: {
+                            required: true,
+                        },
+                    },
+                    messages: {
+                        name: {
+                            required: 'Thiếu tên nhà phát hành!',
+                        },
+                    },
+                    errorPlacement: function(error, element) {
+                        console.log("first")
+                        error.appendTo(element.parent());
+                    }
+                });
+
+                $('#editPublisher').validate({
+                    rules: {
+                        publisher_name: {
+                            required: true,
+                        },
+                    },
+                    messages: {
+                        publisher_name: {
+                            required: 'Thiếu tên nhà phát hành!',
+                        },
+                    },
+                    errorPlacement: function(error, element) {
+                        console.log("first")
+                        error.appendTo(element.parent());
+                    }
+                });
+
+                $('#name').on('blur', function() {
+                    $(this).valid(); // Trigger validation on blur event
+                });
+                
+                $('#publisher_name').on('blur', function() {
+                    $(this).valid(); // Trigger validation on blur event
+                });
             });
         </script>
 </body>

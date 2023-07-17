@@ -85,7 +85,7 @@ class GenreController extends Controller
             $request->validate(
                 [
                     'name' => [
-                        Rule::unique(Genre::retrieveTableName())->ignore($id),
+                        Rule::unique(Genre::retrieveTableName(), 'name')->ignore($id),
                         'required',
                         'string'
                     ]

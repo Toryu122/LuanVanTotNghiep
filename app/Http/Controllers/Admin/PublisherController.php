@@ -41,7 +41,7 @@ class PublisherController extends Controller
             $request->validate(
                 [
                     'name' => [
-                        Rule::unique(Publisher::retrieveTableName()),
+                        Rule::unique(Publisher::retrieveTableName(), 'name'),
                         'required',
                         'string'
                     ]
@@ -62,6 +62,7 @@ class PublisherController extends Controller
                     ]
                 );
 
+            toastr()->success('', 'Thêm thành công');
             return redirect()->route("adminpublisher");
         }
 
@@ -69,33 +70,24 @@ class PublisherController extends Controller
         return redirect()->back();
     }
 
-    public function edit($id)
-    {
-        $publisher = DB::table(Publisher::retrieveTableName())
-            ->where('id', '=', $id)
-            ->first();
-
-        return view("admin.publisher.editpublisher", ['publisher' => $publisher]);
-    }
-
     public function update(Request $request, $id)
     {
         if (Gate::allows('editPublisher')) {
             $request->validate(
                 [
-                    'name' => [
-                        Rule::unique(Publisher::retrieveTableName())->ignore($id),
+                    'publisher_name' => [
+                        Rule::unique(Publisher::retrieveTableName(), 'name')->ignore($id),
                         'required',
                         'string'
                     ]
                 ],
                 [
-                    'name.required' => "Không thể thiếu tên!",
-                    'name.unique' => "Trùng tên!"
+                    'publisher_name.required' => "Không thể thiếu tên!",
+                    'publisher_name.unique' => "Trùng tên!"
                 ]
             );
 
-            $name = $request->get('name');
+            $name = $request->get('publisher_name');
 
             DB::table(Publisher::retrieveTableName())
                 ->where('id', '=', $id)
@@ -106,6 +98,7 @@ class PublisherController extends Controller
                     ]
                 );
 
+            toastr()->success('', 'Cập nhật thành công');
             return redirect()->route('adminpublisher');
         }
 
