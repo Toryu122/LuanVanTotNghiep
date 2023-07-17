@@ -162,7 +162,7 @@
                                         <label class="col-sm-2 col-form-label" for="basic-default-name">Ảnh</label>
                                         <div class="col-sm-10 ">
                                             <input class="form-control" type="file" id="img" name="img" />
-                                            <small class="text-secondary">Accepted file type: .jpeg, .jpg,
+                                            <small class="text-secondary">Accepted file extension: .jpeg, .jpg,
                                                 .png</small><br>
                                             <small class="text-secondary">Maximum file size: 5MB</small>
                                         </div>
@@ -264,6 +264,36 @@
                 }
             });
 
+            // Convention
+            /*
+            $(document).ready(function() {
+                $('#tên-form').validate({
+                    rules: {
+                        id-của-input: {
+                            tên-validate: giá trị
+                        }
+                    },
+                    messages: {
+                        id-của-input: {
+                            required: 'Thông báo'
+                        }
+                    },
+                    errorPlacement: function(error, element) {
+                        error.appendTo(element.parent());
+                    }
+                });
+
+                Cái này để nếu khi bấm ra ngoài input mà ko có gì thì báo lỗi
+                $('#id-của-input').on('blur', function() {
+                    $(this).valid(); // Trigger validation on blur event
+                });
+
+                Cái này đặc biệt cho checkbox
+                $('input[name="genres[]"]').on('blur', function() {
+                    $(this).valid();
+                });
+            });
+            */
             $(document).ready(function() {
                 $('#addGame').validate({
                     rules: {

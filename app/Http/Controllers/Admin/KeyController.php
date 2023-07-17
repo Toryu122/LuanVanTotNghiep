@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers\Admin;
 
+use App\Common\Helper;
 use App\Models\Key;
 use App\Models\Game;
 use Illuminate\Http\Request;
@@ -67,6 +68,10 @@ class KeyController extends Controller
                     'file',
                     'mimes:csv,txt', // Ensure the uploaded file is a CSV or TXT file
                 ],
+                'format' => [
+                    'nullable',
+                    'sometimes'
+                ]
             ],
             [
                 'cd_key.required' => 'Thiếu key!',
@@ -79,6 +84,10 @@ class KeyController extends Controller
             ]
         );
 
+        $key1 = '/^[A-Z0-9]{5}-[A-Z0-9]{5}-[A-Z0-9]{5}-[A-Z0-9]{5}-[A-Z0-9]{5}-[A-Z0-9]{5}-[A-Z0-9]{5}-[A-Z0-9]{5}$/';
+        $key2 = '/^[A-Z0-9]{5}-[A-Z0-9]{5}-[A-Z0-9]{5}-[A-Z0-9]{5}-[A-Z0-9]{5}$/';
+        $err = array();
+
         if ($request->hasFile('csv_file')) {
             $file = $request->file('csv_file');
 
@@ -86,9 +95,11 @@ class KeyController extends Controller
                 $filePath = $file->getRealPath();
 
                 $file = fopen($filePath, 'r');
+                $errorFile = fopen('error.csv', 'w');
                 if ($file) {
                     // Skip the header line
-                    fgetcsv($file);
+                    $header = fgetcsv($file);
+                    fputcsv($errorFile, $header);
 
                     while (($row = fgetcsv($file)) !== false) {
                         // Process each row of the CSV file
@@ -96,26 +107,36 @@ class KeyController extends Controller
                         // Access each value using $row[index]
                         $cdKey = $row[0];
                         $gameId = $row[1];
-                        $expireDate = isset($row[2]) ? $row[2] : null;
-                        DB::table(Key::retrieveTableName())
-                            ->insert(
-                                [
-                                    'cd_key' => $cdKey,
-                                    'game_id' => $gameId,
-                                    'expire_date' => date('Y-m-d H:i:s', strtotime($expireDate)),
-                                ]
-                            );
+                        $expireDate = isset($row[2]) ? date('Y-m-d H:i:s', strtotime($row[2])) : null;
+
+                        if (preg_match($key1, $cdKey) || preg_match($key2, $cdKey)) {
+                            DB::table(Key::retrieveTableName())
+                                ->insert(
+                                    [
+                                        'cd_key' => Helper::encrypt($cdKey, 'cdkey'),
+                                        'game_id' => $gameId,
+                                        'expire_date' => $expireDate,
+                                    ]
+                                );
+                        } else {
+                            $rowWithErr = array_merge(['[ERR]'], $row);
+                            $err[] = $row;
+                            fputcsv($errorFile, $rowWithErr);
+                        }
                     }
                     fclose($file);
                 }
             }
 
-            toastr()->success('', 'Thêm thành công');
-            return redirect()->back();
+            if (count($err) > 0) {
+                toastr()->warning('', 'Có key bị lỗi, hãy kiểm tra file lỗi');
+                return redirect()->back();
+            } else {
+                toastr()->success('', 'Thêm thành công');
+                return redirect()->back();
+            }
         } else {
 
-            $key1 = '/^[A-Z0-9]{5}-[A-Z0-9]{5}-[A-Z0-9]{5}-[A-Z0-9]{5}-[A-Z0-9]{5}-[A-Z0-9]{5}-[A-Z0-9]{5}-[A-Z0-9]{5}$/';
-            $key2 = '/^[A-Z0-9]{5}-[A-Z0-9]{5}-[A-Z0-9]{5}-[A-Z0-9]{5}-[A-Z0-9]{5}$/';
             $cdKey = $request->get('cd_key');
 
             if (preg_match($key1, $cdKey)) {
@@ -236,8 +257,11 @@ class KeyController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function destroy($id)
+    public function delete($id)
     {
-        //
+        Key::find($id)->delete();
+
+        toastr()->success('', 'Xóa thành công');
+        return redirect()->back();
     }
 }

@@ -70,6 +70,7 @@
                                         <th scope="row">Status</th>
                                         <th scope="row">Expire Date</th>
                                         <th scope="row" data-sortable="false"></th>
+                                        <th scope="row" data-sortable="false"></th>
                                     </tr>
                                 </thead>
                                 <tfoot>
@@ -79,13 +80,14 @@
                                         <th scope="row">Status</th>
                                         <th scope="row">Expire Date</th>
                                         <th scope="row" data-sortable="false"></th>
+                                        <th scope="row" data-sortable="false"></th>
                                         {{-- <th data-sortable="false"></th> --}}
                                     </tr>
                                 </tfoot>
                                 <tbody class="table-border-bottom-0">
                                     @foreach ($keys as $item)
                                         <tr>
-                                            <td>{{ $item->cd_key }}</td>
+                                            <td>{{ Helper::decrypt($item->cd_key, 'cdkey') }}</td>
                                             <td>{{ $item->game->name }}</td>
                                             @if ($item->is_redeemed === 0)
                                                 <td>Chưa bán</td>
@@ -156,6 +158,40 @@
                                                     </div>
                                                 </div>
                                             </td>
+                                            <td>
+                                                <button type="button" class="text-white btn btn-danger"
+                                                    data-bs-toggle="modal"
+                                                    data-bs-target="#deleteKey{{ $item->id }}">
+                                                    <i class="fa-solid fa-trash-can"></i> Xóa
+                                                </button>
+
+                                                <div class="modal" id="deleteKey{{ $item->id }}"
+                                                    tabindex="-1">
+                                                    <div class="modal-dialog">
+                                                        <div class="modal-content">
+
+                                                            <form method="post"
+                                                                action="{{ route('deletekey', ['id' => $item->id]) }}">
+                                                                @csrf
+                                                                @method('delete')<div class="modal-header">
+                                                                    <h5 class="modal-title">Xóa key
+                                                                    </h5>
+                                                                    <button type="button" class="btn-close"
+                                                                        data-bs-dismiss="modal"
+                                                                        aria-label="Close"></button>
+                                                                </div>
+                                                                <div class="modal-body">
+                                                                    <p>Bạn có chắc muốn xóa key này?
+                                                                    </p>
+                                                                </div>
+                                                                <div class="modal-footer">
+                                                                    <button class="btn btn-danger">Xóa</button>
+                                                                </div>
+                                                            </form>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </td>
                                         </tr>
                                     @endforeach
                                 </tbody>
@@ -168,7 +204,8 @@
 
 
 
-            <div class="modal fade" id="addKey" tabindex="-1" aria-labelledby="addRoleModal" aria-hidden="true">
+            <div class="modal fade" id="addKey" tabindex="-1" aria-labelledby="addRoleModal"
+                aria-hidden="true">
                 <div class="modal-dialog modal-dialog-centered modal-lg">
                     <div class="modal-content">
                         <div class="modal-header border-bottom-0">
@@ -201,6 +238,16 @@
                                     <div class="tab-pane fade show active" id="ex3-tabs-1" role="tabpanel"
                                         aria-labelledby="ex3-tab-1">
                                         <form method="POST" action="{{ route('storekey') }}">
+                                            <div class="text-sm">
+                                                <small class="text-secondary">Choose one of these format:</small><br>
+                                                <small class="text-secondary">
+                                                    AAAAA-BBBBB-CCCCC-DDDDD-EEEEE
+                                                </small><br>
+                                                <small class="text-secondary">
+                                                    AAAAA-BBBBB-CCCCC-AAAAA-BBBBB-CCCCC-DDDDD-EEEEE
+                                                </small>
+                                            </div>
+                                            <br>
                                             @csrf
                                             <div class="row">
                                                 <label class="col-sm-2 col-md-3 form-label" for="cd_key">Key</label>
@@ -248,11 +295,19 @@
                                         <form method="POST" action="{{ route('storekey') }}"
                                             enctype="multipart/form-data">
                                             @csrf
-                                            <div class="row">
-                                                <label class="col-sm-2 col-md-3 form-label" for="cd_key">Key
+                                            <div class="row pt-2">
+                                                <label class="col-sm-2 col-md-2 form-label" for="cd_key">Key
                                                     File</label>
-                                                <input type="file" class="form-control" id="csv_file"
-                                                    name="csv_file">
+                                                <div class="col-sm-10 col-md-10">
+                                                    <input type="file" class="form-control" id="csv_file"
+                                                        name="csv_file">
+                                                    <small class="text-secondary">
+                                                        Accepted file extension: .csv, .txt
+                                                    </small><br>
+                                                    <small class="text-secondary">
+                                                        Format: cd_key,game_id,expire_date
+                                                    </small>
+                                                </div>
                                             </div>
                                             <div class="row pt-2">
                                                 <div class="col-md-10">

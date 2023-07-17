@@ -135,66 +135,16 @@ class Helper
         }
     }
 
-    public static function encryptAndHash($string, $key)
+    public static function encrypt($string, $key)
     {
-        // Generate a random Initialization Vector (IV)
-        $iv = openssl_random_pseudo_bytes(openssl_cipher_iv_length('AES-256-CBC'));
-
-        // Encrypt the string using AES encryption with the generated IV
-        $encryptedString = openssl_encrypt($string, 'AES-256-CBC', $key, 0, $iv);
-
-        // Hash the encrypted string using a hashing algorithm (e.g., SHA-256)
-        $hashedString = hash('sha256', $encryptedString);
-
-        // Compress the hashed string
-        $compressedString = gzcompress($hashedString);
-
-        // Combine the IV, encrypted string, and compressed hashed string
-        $encryptedHashedString = base64_encode($iv . $encryptedString . $compressedString);
-
-        // Return the encrypted, hashed, and compressed string
-        return $encryptedHashedString;
+        $encrypted = openssl_encrypt($string, 'AES-256-CBC', $key, 0, substr(md5($key), 0, 16));
+        return base64_encode($encrypted);
     }
 
-    public static function decryptAndUnhash($encryptedHashedString, $key)
+    public static function decrypt($encryptedString, $key)
     {
-        // Separate the IV, encrypted string, and compressed hashed string
-        $combinedString = base64_decode($encryptedHashedString);
-        $ivLength = openssl_cipher_iv_length('AES-256-CBC');
-        $iv = substr($combinedString, 0, $ivLength);
-        $encryptedString = substr($combinedString, $ivLength);
-        $compressedString = substr($encryptedString, -$ivLength);
-
-        // Decompress the compressed hashed string
-        $hashedString = gzuncompress($compressedString);
-
-        // Decrypt the encrypted string using AES decryption with the IV
-        $decryptedString = openssl_decrypt($encryptedString, 'AES-256-CBC', $key, 0, $iv);
-
-        // Return the decrypted string
-        return $decryptedString;
+        $encrypted = base64_decode($encryptedString);
+        $decrypted = openssl_decrypt($encrypted, 'AES-256-CBC', $key, 0, substr(md5($key), 0, 16));
+        return $decrypted;
     }
-
-    // public static function execPostRequest($url, $data)
-    // {
-    //     $ch = curl_init($url);
-    //     curl_setopt($ch, CURLOPT_CUSTOMREQUEST, "POST");
-    //     curl_setopt($ch, CURLOPT_POSTFIELDS, $data);
-    //     curl_setopt($ch, CURLOPT_RETURNTRANSFER, true);
-    //     curl_setopt(
-    //         $ch,
-    //         CURLOPT_HTTPHEADER,
-    //         array(
-    //             'Content-Type: application/json',
-    //             'Content-Length: ' . strlen($data)
-    //         )
-    //     );
-    //     curl_setopt($ch, CURLOPT_TIMEOUT, 5);
-    //     curl_setopt($ch, CURLOPT_CONNECTTIMEOUT, 5);
-    //     //execute post
-    //     $result = curl_exec($ch);
-    //     //close connection
-    //     curl_close($ch);
-    //     return $result;
-    // }
 }

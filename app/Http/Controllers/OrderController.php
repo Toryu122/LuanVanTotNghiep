@@ -382,7 +382,7 @@ class OrderController extends Controller
                         ->first('cd_key');
                 }
 
-                $cdKeys[] = $cdKey->cd_key;
+                $cdKeys[] = Helper::decrypt($cdKey->cd_key, 'cdkey');
             }
 
             $keys[] = [
