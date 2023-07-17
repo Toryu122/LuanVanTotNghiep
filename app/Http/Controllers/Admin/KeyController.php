@@ -203,31 +203,33 @@ class KeyController extends Controller
     {
         $request->validate(
             [
-                'cd_key' => [
+                'key' => [
                     'string',
                 ],
-                'expire_date' => [
-                    'date'
+                'expiredate' => [
+                    'date',
+                    'nullable'
                 ]
             ],
             [
-                'cd_key.string' => 'Key không hợp lệ',
-                'expire_date.date' => 'Ngày hết hạn không hợp lệ',
+                'key.string' => 'Key không hợp lệ',
+                'expiredate.date' => 'Ngày hết hạn không hợp lệ',
             ]
         );
 
         $key1 = '/^[A-Z0-9]{5}-[A-Z0-9]{5}-[A-Z0-9]{5}-[A-Z0-9]{5}-[A-Z0-9]{5}-[A-Z0-9]{5}-[A-Z0-9]{5}-[A-Z0-9]{5}$/';
         $key2 = '/^[A-Z0-9]{5}-[A-Z0-9]{5}-[A-Z0-9]{5}-[A-Z0-9]{5}-[A-Z0-9]{5}$/';
-        $cdKey = $request->get('cd_key');
 
+        $cdKey = $request->get('key');
+        $expireDate = $request->get('expiredate') ? date('Y-m-d H:i:s', strtotime($request->input('expiredate'))) : null;
         // Check if the string matches either of the formats
         if (preg_match($key1, $cdKey)) {
             DB::table(Key::retrieveTableName())
                 ->where('id', '=', $id)
                 ->update(
                     [
-                        'cd_key' => $cdKey,
-                        'expire_date' => date('Y-m-d H:i:s', strtotime($request->input('expiredate')))
+                        'cd_key' => Helper::encrypt($cdKey, 'cdkey'),
+                        'expire_date' => $expireDate
                     ]
                 );
 
@@ -238,8 +240,8 @@ class KeyController extends Controller
                 ->where('id', '=', $id)
                 ->update(
                     [
-                        'cd_key' => $cdKey,
-                        'expire_date' => date('Y-m-d H:i:s', strtotime($request->input('expiredate')))
+                        'cd_key' => Helper::encrypt($cdKey, 'cdkey'),
+                        'expire_date' => $expireDate
                     ]
                 );
 

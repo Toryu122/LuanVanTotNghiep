@@ -118,17 +118,20 @@
                                                             </div>
                                                             <div class="modal-body text-start text-black p-4">
                                                                 <div class="mb-3">
-                                                                    <form method="POST"
+                                                                    <form 
+                                                                        id="editKey"
+                                                                        method="POST"
                                                                         action="{{ route('updatekey', ['id' => $item->id]) }}">
                                                                         @csrf
                                                                         @method('put')
                                                                         <div class="row">
                                                                             <label class="col-sm-2 col-md-3 form-label"
-                                                                                for="cd_key">Key</label>
+                                                                                for="key">Key</label>
                                                                             <div class="col-sm-10 col-md-9">
-                                                                                <input value="{{ $item->cd_key }}"
+                                                                                <input
+                                                                                    value="{{ Helper::decrypt($item->cd_key, 'cdkey') }}"
                                                                                     type="text" class="form-control"
-                                                                                    id="cd_key" name="cd_key" />
+                                                                                    id="key" name="key" />
                                                                             </div>
                                                                         </div>
                                                                         <div class="row pt-2">
@@ -293,9 +296,7 @@
                                     <div class="tab-pane fade" id="ex3-tabs-2" role="tabpanel"
                                         aria-labelledby="ex3-tab-2">
 
-                                        <form
-                                            id="addKeyFile"
-                                            method="POST" action="{{ route('storekey') }}"
+                                        <form id="addKeyFile" method="POST" action="{{ route('storekey') }}"
                                             enctype="multipart/form-data">
                                             @csrf
                                             <div class="row pt-2">
@@ -369,6 +370,11 @@
 
             $(document).ready(function() {
                 $.validator.addMethod("date", function(value, element) {
+                    // Check if the input is empty
+                    if (value === '') {
+                        return true; // Allow empty value
+                    }
+
                     // Validate the date format
                     if (!/^\d{2}-\d{2}-\d{4}$/.test(value)) {
                         return false;
@@ -431,8 +437,27 @@
                         error.appendTo(element.parent());
                     }
                 });
+                
+                $('#editKey').validate({
+                    rules: {
+                        key: {
+                            required: true,
+                        }
+                    },
+                    messages: {
+                        key: {
+                            required: 'Thiếu key!',
+                        }
+                    },
+                    errorPlacement: function(error, element) {
+                        error.appendTo(element.parent());
+                    }
+                });
 
                 $('#cd_key').on('blur', function() {
+                    $(this).valid(); // Trigger validation on blur event
+                });
+                $('#key').on('blur', function() {
                     $(this).valid(); // Trigger validation on blur event
                 });
             });
