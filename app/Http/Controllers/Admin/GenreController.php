@@ -37,22 +37,23 @@ class GenreController extends Controller
 
     public function store(Request $request)
     {
+        // dd($request);
         if (Gate::allows('addGenre')) {
             $request->validate(
                 [
-                    'name' => [
-                        Rule::unique(Genre::retrieveTableName()),
+                    'genre_name' => [
+                        Rule::unique(Genre::retrieveTableName(), 'name'),
                         'required',
                         'string'
                     ]
                 ],
                 [
-                    'name.required' => "Không thể thiếu tên!",
-                    'name.unique' => "Trùng tên!"
+                    'genre_name.required' => "Không thể thiếu tên!",
+                    'genre_name.unique' => "Trùng tên!"
                 ]
             );
 
-            $name = $request->get('name');
+            $name = $request->get('genre_name');
 
             DB::table(Genre::retrieveTableName())
                 ->insert(
@@ -61,6 +62,7 @@ class GenreController extends Controller
                     ]
                 );
 
+            toastr()->success('', 'Thêm thành công');
             return redirect()->route('admingenre');
         }
 
@@ -105,6 +107,7 @@ class GenreController extends Controller
                     ]
                 );
 
+            toastr()->success('', 'Sửa thành công');
             return redirect()->route("admingenre");
         }
 
@@ -120,14 +123,16 @@ class GenreController extends Controller
                 ->exists();
 
             if ($isExist) {
-                return redirect()->back()->with('game_existed', "Xóa thất bại, vẫn còn game thuộc thể loại này");
+                toastr()->error('', 'Xóa thất bại, vẫn còn game thuộc thể loại này');
+                return redirect()->back();
             }
 
             Genre::destroy($id);
 
-            return redirect()->route('admingenre')->with('delete_success', "Xóa thành công");
+            toastr()->success('', 'Xóa thành công');
+            return redirect()->route('admingenre');
         }
-                                
+
         toastr()->error('', 'Bạn không đủ quyền hạn');
         return redirect()->back();
     }

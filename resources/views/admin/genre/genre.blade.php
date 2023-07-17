@@ -107,6 +107,7 @@
                                                             <div class="modal-body text-start text-black p-4">
                                                                 <div class="mb-3">
                                                                     <form
+                                                                        id="editGenre"
                                                                         action="{{ route('updategenre', ['id' => $item->id]) }}"
                                                                         method="POST" enctype="multipart/form-data">
                                                                         @csrf
@@ -128,7 +129,7 @@
                                                                                 loại</label>
                                                                             <div class="col-sm-10">
                                                                                 <input type="text"
-                                                                                    class="form-control" id="genre_name"
+                                                                                    class="form-control" id="name"
                                                                                     name="name"
                                                                                     value="{{ $item->name }}" />
                                                                             </div>
@@ -203,14 +204,14 @@
                         </div>
                         <div class="modal-body text-start text-black p-4">
                             <div class="mb-3">
-                                <form action="{{ route('storegenre') }}" method="POST">
+                                <form id="addGenre" action="{{ route('storegenre') }}" method="POST">
                                     @csrf
                                     <div class="row mb-3">
                                         <label class="col-sm-2 col-form-label" for="basic-default-name">Tên thể
                                             loại</label>
                                         <div class="col-sm-10">
-                                            <input type="text" class="form-control" id="genre"
-                                                name="name" />
+                                            <input type="text" class="form-control" id="genre_name"
+                                                name="genre_name" />
                                         </div>
                                     </div>
                                     <div class="row justify-content-end">
@@ -255,6 +256,47 @@
                 if (datatablesSimple) {
                     new simpleDatatables.DataTable(datatablesSimple);
                 }
+            });
+
+            $(document).ready(function() {
+                $('#addGenre').validate({
+                    rules: {
+                        genre_name: {
+                            required: true,
+                        },
+                    },
+                    messages: {
+                        genre_name: {
+                            required: 'Thiếu tên thể loại!',
+                        },
+                    },
+                    errorPlacement: function(error, element) {
+                        error.appendTo(element.parent());
+                    }
+                });
+
+                $('#editGenre').validate({
+                    rules: {
+                        name: {
+                            required: true,
+                        },
+                    },
+                    messages: {
+                        name: {
+                            required: 'Thiếu tên thể loại!',
+                        },
+                    },
+                    errorPlacement: function(error, element) {
+                        error.appendTo(element.parent());
+                    }
+                });
+
+                $('#genre_name').on('blur', function() {
+                    $(this).valid(); // Trigger validation on blur event
+                });
+                $('#name').on('blur', function() {
+                    $(this).valid(); // Trigger validation on blur event
+                });
             });
         </script>
 </body>
