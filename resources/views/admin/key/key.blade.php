@@ -237,9 +237,10 @@
                                 <div class="tab-content" id="ex2-content">
                                     <div class="tab-pane fade show active" id="ex3-tabs-1" role="tabpanel"
                                         aria-labelledby="ex3-tab-1">
-                                        <form method="POST" action="{{ route('storekey') }}">
+                                        <form id="addKeySingle" method="POST" action="{{ route('storekey') }}">
                                             <div class="text-sm">
-                                                <small class="text-secondary">Choose one of these format:</small><br>
+                                                <small class="text-secondary">The format should be one of
+                                                    these:</small><br>
                                                 <small class="text-secondary">
                                                     AAAAA-BBBBB-CCCCC-DDDDD-EEEEE
                                                 </small><br>
@@ -274,8 +275,8 @@
                                                 <label class="col-sm-2 col-md-3 form-label" for="expiredate">Ngày hết
                                                     hạn</label>
                                                 <div class="col-sm-10 col-md-9">
-                                                    <input class="date form-control" name="expiredate"
-                                                        type="text">
+                                                    <input class="date form-control" id="expiredate"
+                                                        name="expiredate" type="text">
                                                 </div>
                                             </div>
                                             <div class="row pt-2">
@@ -292,7 +293,9 @@
                                     <div class="tab-pane fade" id="ex3-tabs-2" role="tabpanel"
                                         aria-labelledby="ex3-tab-2">
 
-                                        <form method="POST" action="{{ route('storekey') }}"
+                                        <form
+                                            id="addKeyFile"
+                                            method="POST" action="{{ route('storekey') }}"
                                             enctype="multipart/form-data">
                                             @csrf
                                             <div class="row pt-2">
@@ -362,6 +365,76 @@
 
             $('.date').datepicker({
                 format: 'mm-dd-yyyy'
+            });
+
+            $(document).ready(function() {
+                $.validator.addMethod("date", function(value, element) {
+                    // Validate the date format
+                    if (!/^\d{2}-\d{2}-\d{4}$/.test(value)) {
+                        return false;
+                    }
+
+                    // Extract the day, month, and year values
+                    var parts = value.split('-');
+                    var day = parseInt(parts[0], 10);
+                    var month = parseInt(parts[1], 10);
+                    var year = parseInt(parts[2], 10);
+
+                    // Check if the date is valid
+                    var date = new Date(year, month - 1, day);
+                    return date.getDate() === day && date.getMonth() === month - 1 && date.getFullYear() ===
+                        year;
+                }, "Định dạng ngày tháng ko hợp lệ (dd-mm-yyyy)");
+
+                $('#addKeySingle').validate({
+                    rules: {
+                        cd_key: {
+                            required: true,
+                        },
+                        game_id: {
+                            required: true
+                        },
+                        expiredate: {
+                            date: true
+                        }
+                    },
+                    messages: {
+                        cd_key: {
+                            required: 'Thiếu key!',
+                        },
+                        game_id: {
+                            required: 'Thiếu game'
+                        },
+                        expiredate: {
+                            date: 'Định dạng ngày tháng không hợp lệ (dd-mm-yyyy)'
+                        }
+                    },
+                    errorPlacement: function(error, element) {
+                        error.appendTo(element.parent());
+                    }
+                });
+
+                $('#addKeyFile').validate({
+                    rules: {
+                        csv_file: {
+                            required: true,
+                            extension: 'csv|txt',
+                        }
+                    },
+                    messages: {
+                        csv_file: {
+                            required: 'Thiếu file!',
+                            extension: 'Định dạng không hợp lệ!',
+                        }
+                    },
+                    errorPlacement: function(error, element) {
+                        error.appendTo(element.parent());
+                    }
+                });
+
+                $('#cd_key').on('blur', function() {
+                    $(this).valid(); // Trigger validation on blur event
+                });
             });
         </script>
 </body>
