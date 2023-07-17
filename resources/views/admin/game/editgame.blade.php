@@ -11,6 +11,9 @@
     @include('cdn')
 
     <link rel="stylesheet" href="{{ asset('css/admin.style.css') }}">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/toastr.js/2.1.4/toastr.css"
+        integrity="sha512-oe8OpYjBaDWPt2VmSFR+qYOdnTjeV9QPLJUeqZyprDEQvQLJ9C5PCFclxwNuvb/GQgQngdCXzKSFltuHD3eCxA=="
+        crossorigin="anonymous" referrerpolicy="no-referrer" />
 </head>
 
 <body>
@@ -45,8 +48,8 @@
                                 {{-- <small class="text-muted float-end">Default label</small> --}}
                             </div>
                             <div class="card-body">
-                                <form action="{{ route('updategame', ['id' => $game->id]) }}" method="POST"
-                                    enctype="multipart/form-data">
+                                <form id="editGame" action="{{ route('updategame', ['id' => $game->id]) }}"
+                                    method="POST" enctype="multipart/form-data">
                                     @csrf
                                     <div class="row mb-3 align-items-center">
                                         <label class="col-sm-2 col-form-label" for="basic-default-name">Ảnh</label>
@@ -114,8 +117,8 @@
                                                         <div class="col-6 col-sm-4 col-md-3">
                                                             <div class="form-check">
                                                                 <label class="form-check-label">
-                                                                    <input type="checkbox"
-                                                                        class="form-check-input" name="genres[]"
+                                                                    <input type="checkbox" class="form-check-input"
+                                                                        name="genres[]"
                                                                         value="{{ $gen->id }}">{{ $gen->name }}</label>
                                                             </div>
                                                         </div>
@@ -193,6 +196,75 @@
             if (datatablesSimple) {
                 new simpleDatatables.DataTable(datatablesSimple);
             }
+        });
+
+        $(document).ready(function() {
+            $('#editGame').validate({
+                rules: {
+                    img: {
+                        extension: 'jpg|png|jpeg|webp',
+                        filesize: 5048
+                    },
+                    game_name: {
+                        required: true,
+                    },
+                    description: {
+                        required: true,
+                    },
+                    pub_id: {
+                        required: true,
+                    },
+                    'genres[]': {
+                        required: true,
+                        min: 1
+                    },
+                    price: {
+                        required: true,
+                        min: 0
+                    }
+                },
+                messages: {
+                    img: {
+                        extension: 'Định dạng không hợp lệ!',
+                        filesize: 'Hình ảnh không quá 5MB!'
+                    },
+                    game_name: {
+                        required: 'Thiếu tên game!',
+                    },
+                    description: {
+                        required: 'Thiếu mô tả game!',
+                    },
+                    pub_id: {
+                        required: 'Thiếu nhà phát hành!',
+                    },
+                    'genres[]': {
+                        required: 'Thiếu thể loại game!',
+                    },
+                    price: {
+                        required: 'Thiếu giá tiền!',
+                        min: 'Giá tiền âm!',
+                    }
+                },
+                errorPlacement: function(error, element) {
+                    error.appendTo(element.parent());
+                }
+            });
+
+            $('#game_name').on('blur', function() {
+                $(this).valid(); // Trigger validation on blur event
+            });
+            $('#description').on('blur', function() {
+                $(this).valid(); // Trigger validation on blur event
+            });
+            $('#pub_id').on('blur', function() {
+                $(this).valid(); // Trigger validation on blur event
+            });
+            $('#price').on('blur', function() {
+                $(this).valid(); // Trigger validation on blur event
+            });
+            $('input[name="genres[]"]').on('blur', function() {
+                $(this).valid();
+            });
         });
     </script>
 </body>

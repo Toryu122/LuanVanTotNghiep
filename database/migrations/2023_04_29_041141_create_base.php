@@ -22,6 +22,7 @@ class CreateBase extends Migration
     public function up()
     {
         Schema::create('users', function (Blueprint $table) {
+            $table->engine = "InnoDB";
             $table->increments('id')->unique();
             $table->string('name')->nullable(false);
             $table->string('email')->nullable(false)->unique();
@@ -33,6 +34,8 @@ class CreateBase extends Migration
             $table->enum('gender', User::GENDERS)->default(User::GENDERS[0]);
             $table->string('biography')->nullable();
             $table->string('address')->nullable();
+            $table->unique(['name', 'email']);
+
             $table->timestamp('created_at')->useCurrent();
             $table->timestamp('updated_at')->useCurrent();
         });
@@ -42,11 +45,12 @@ class CreateBase extends Migration
             $table->string('name');
             $table->longText('description')->nullable(false);
             $table->double('price')->nullable(false)->default(0);
-            $table->string('image');
+            $table->string('image')->nullable()->default('default.webp');
             $table->unsignedInteger('publisher_id')->nullable(false);
             $table->foreign('publisher_id')->references('id')->on(Publisher::retrieveTableName());
             $table->integer('like')->default(0);
             $table->enum('status', Game::STATUS)->default(Game::STATUS[0]);
+            $table->unique('name');
 
             $table->timestamp('created_at')->useCurrent();
             $table->timestamp('updated_at')->useCurrent();

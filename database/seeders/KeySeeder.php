@@ -2,6 +2,7 @@
 
 namespace Database\Seeders;
 
+use App\Common\Helper;
 use App\Models\Key;
 use App\Models\Game;
 use Illuminate\Support\Str;
@@ -35,7 +36,7 @@ class KeySeeder extends Seeder
                     ->insert(
                         [
                             'game_id' => $id,
-                            'cd_key' => $key,
+                            'cd_key' => Helper::encrypt($key, 'cdkey'),
                         ]
                     );
             }
