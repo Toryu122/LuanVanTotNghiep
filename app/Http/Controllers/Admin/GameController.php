@@ -187,7 +187,9 @@ class GameController extends Controller
     {
         if (Gate::allows('deleteGame')) {
             Game::findOrfail($id)->delete();
-            return redirect('admin/game');
+
+            toastr()->success('', 'Xóa thành công');
+            return redirect()->back();
         }
 
         toastr()->error('', 'Bạn không đủ quyền hạn');

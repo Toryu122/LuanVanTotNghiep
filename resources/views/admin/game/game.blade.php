@@ -14,6 +14,16 @@
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/toastr.js/2.1.4/toastr.css"
         integrity="sha512-oe8OpYjBaDWPt2VmSFR+qYOdnTjeV9QPLJUeqZyprDEQvQLJ9C5PCFclxwNuvb/GQgQngdCXzKSFltuHD3eCxA=="
         crossorigin="anonymous" referrerpolicy="no-referrer" />
+
+    <style>
+        .error {
+            color: red;
+        }
+
+        .success {
+            color: green;
+        }
+    </style>
 </head>
 
 <body>
@@ -145,7 +155,8 @@
 
                         <div class="modal-body text-start text-black p-4">
                             <div class="mb-3">
-                                <form action="{{ route('storegame') }}" method="POST" enctype="multipart/form-data">
+                                <form id="addGame" action="{{ route('storegame') }}" method="POST"
+                                    enctype="multipart/form-data">
                                     @csrf
                                     <div class="row mb-3 align-items-center">
                                         <label class="col-sm-2 col-form-label" for="basic-default-name">Ảnh</label>
@@ -173,13 +184,14 @@
                                         <label class="col-sm-2 col-form-label" for="basic-default-name">Chọn thể
                                             loại</label>
                                         <div class="col-sm-10">
-                                            <input id='genres' type='hidden' name='my_match[]' />
                                             <div class='controls'>
                                                 @foreach ($genres as $gen)
                                                     <div>
-                                                        <label class="checkbox">
-                                                            <input type="checkbox" name="my_match[]"
-                                                                value="{{ $gen->id }}">{{ $gen->name }}</label>
+                                                        <label class="form-check-label">
+                                                            <input id="{{ $gen->id }}" type="checkbox"
+                                                                class="form-check-input" name="genres[]"
+                                                                value="{{ $gen->id }}">
+                                                            {{ $gen->name }}</label>
                                                     </div>
                                                 @endforeach
                                             </div>
@@ -201,9 +213,8 @@
                                     <div class="row mb-3">
                                         <label class="col-sm-2 col-form-label" for="basic-default-name">Giá</label>
                                         <div class="col-sm-10">
-                                            <input type="number" min="0"
-                                                oninput="this.value = Math.abs(this.value)" class="form-control"
-                                                id="price" name="price" />
+                                            <input type="number" min="0" class="form-control" id="price"
+                                                name="price" />
 
                                         </div>
                                     </div>
@@ -251,6 +262,74 @@
                 if (datatablesSimple) {
                     new simpleDatatables.DataTable(datatablesSimple);
                 }
+            });
+
+            $(document).ready(function() {
+                $('#addGame').validate({
+                    rules: {
+                        img: {
+                            required: true,
+                            extension: 'jpg|png|jpeg|webp',
+                            filesize: 5048
+                        },
+                        game_name: {
+                            required: true,
+                        },
+                        description: {
+                            required: true,
+                        },
+                        pub_id: {
+                            required: true,
+                        },
+                        'genres[]': {
+                            required: true,
+                            min: 1
+                        },
+                        price: {
+                            required: true,
+                            min: 0
+                        }
+                    },
+                    messages: {
+                        img: {
+                            required: 'Thiếu file hình ảnh!',
+                            extension: 'Định dạng không hợp lệ!',
+                            filesize: 'Hình ảnh không quá 5MB!'
+                        },
+                        game_name: {
+                            required: 'Thiếu tên game!',
+                        },
+                        description: {
+                            required: 'Thiếu mô tả game!',
+                        },
+                        pub_id: {
+                            required: 'Thiếu nhà phát hành!',
+                        },
+                        'genres[]': {
+                            required: 'Thiếu thể loại game!',
+                        },
+                        price: {
+                            required: 'Thiếu giá tiền!',
+                            min: 'Giá tiền âm!',
+                        }
+                    },
+                    errorPlacement: function(error, element) {
+                        error.appendTo(element.parent());
+                    }
+                });
+
+                $('#game_name').on('blur', function() {
+                    $(this).valid(); // Trigger validation on blur event
+                });
+                $('#description').on('blur', function() {
+                    $(this).valid(); // Trigger validation on blur event
+                });
+                $('#pub_id').on('blur', function() {
+                    $(this).valid(); // Trigger validation on blur event
+                });
+                $('input[name="genres[]"]').on('blur', function() {
+                    $(this).valid();
+                });
             });
         </script>
 </body>
