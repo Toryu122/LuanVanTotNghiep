@@ -19,7 +19,6 @@
 <body>
 
     <x-admin.home.header title="Game" />
-
     <div id="layoutSidenav">
         <div id="layoutSidenav_nav">
             <x-admin.home.sidebar />
@@ -29,6 +28,15 @@
         <div id="layoutSidenav_content">
             <main>
                 <div class="container-fluid px-4">
+                    <div class="text-center">
+                        @if ($errors->any())
+                            <ul class="list-group list-unstyled">
+                                @foreach ($errors->all() as $item)
+                                    <li class="alert alert-danger">{{ $item }}</li>
+                                @endforeach
+                            </ul>
+                        @endif
+                    </div>
                     <div class="card mb-4">
                         <div class="card-header">
                             <i class="fas fa-table me-1"></i>
@@ -134,6 +142,7 @@
                             <button type="button" class="btn-close" data-bs-dismiss="modal"
                                 aria-label="Close"></button>
                         </div>
+
                         <div class="modal-body text-start text-black p-4">
                             <div class="mb-3">
                                 <form action="{{ route('storegame') }}" method="POST" enctype="multipart/form-data">
@@ -192,13 +201,16 @@
                                     <div class="row mb-3">
                                         <label class="col-sm-2 col-form-label" for="basic-default-name">Giá</label>
                                         <div class="col-sm-10">
-                                            <input type="number" class="form-control" id="price"
-                                                name="price" />
+                                            <input type="number" min="0"
+                                                oninput="this.value = Math.abs(this.value)" class="form-control"
+                                                id="price" name="price" />
+
                                         </div>
                                     </div>
                                     <div class="row justify-content-end">
                                         <div class="col-sm-10">
-                                            <button type="submit" class="btn btn-primary">Thêm thông tin
+                                            <button type="submit" class="btn btn-primary">Thêm
+                                                thông tin
                                                 game</button>
                                         </div>
                                     </div>

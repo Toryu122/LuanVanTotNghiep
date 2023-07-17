@@ -47,22 +47,52 @@ class GameController extends Controller
     public function store(Request $request)
     {
         if (Gate::allows('addGame')) {
-            $request->validate([
-                'game_name' => 'required',
-                'price' => 'required',
-                'description' => 'required',
-                'pub_id' => 'required',
-                'img' => 'required|image|mimes:jpg,png,jpeg|max:5048',
-            ]);
+            $request->validate(
+                [
+                    'game_name' => [
+                        'required',
+                        'unique:games,name'
+                    ],
+                    'price' => [
+                        'required',
+                        'min:0'
+                    ],
+                    'description' => 'required',
+                    'pub_id' => 'required',
+                    'img' => 'required|image|mimes:jpg,png,jpeg|max:5048',
+                ],
+                [
+                    'game_name.required' => 'Thiếu tên game!',
+                    'game_name.unique' => 'Game đã tồn tại!',
+                    'price.required' => 'Thiếu giá của game!',
+                    'price.min' => 'Giá tiền âm!',
+                    'description.required' => 'Thiếu mô tả game!',
+                    'pub_id.required' => 'Thiếu nhà phát hành',
+                    'img.required' => 'Thiếu hình ảnh!',
+                    'img.image' => 'Hình ảnh không hợp lệ',
+                    'img.mimes' => 'Định dạng không hợp lệ!',
+                    'img.max' => 'Hình ảnh không quá 5MB!'
+                ]
+            );
+
+            // Duh, why? Laravel literally have Laravel Validation
+            // $name_vali=DB::table('games')
+            // ->where('name', '=', $request->game_name)
+            // ->get();
+            // if ($name_vali != null)
+            //     return redirect('admin/game')->with('message', 'Trung ten game!');
+            // if((float)$request->price<0)
+            //     return redirect('admin/game')->with('message', 'Gia game khong dung!');
+
             $img = $request->file('img');
             /* Uncomment this to do normal image upload without optimizing */
-            // $ten_hinh = hexdec(uniqid()) . '.' . $img->getClientOriginalExtension();
-            // $request->img->move(public_path('images'), $ten_hinh);
-            // $img_url = $ten_hinh;
+            $ten_hinh = hexdec(uniqid()) . '.' . $img->getClientOriginalExtension();
+            $request->img->move(public_path('images/games/'), $ten_hinh);
+            $img_url = $ten_hinh;
 
             /* Comment this to disabled optimize image upload */
-            $savePath = public_path('images/games/');
-            $image_name = $this->optimize($img, $savePath, $request->get('game_name'));
+            // $savePath = public_path('images/games/');
+            // $image_name = $this->optimize($img, $savePath, $request->get('game_name'));
 
 
             $flag = Game::insert([
@@ -70,7 +100,7 @@ class GameController extends Controller
                 'price' => $request->price,
                 'description' => $request->description,
                 'publisher_id' => $request->pub_id,
-                'image' => $image_name, //$img_url
+                'image' => $img_url, //$img_url
                 'updated_at' => Carbon::now(),
             ]);
             if ($flag == false)
@@ -159,7 +189,7 @@ class GameController extends Controller
             Game::findOrfail($id)->delete();
             return redirect('admin/game');
         }
-        
+
         toastr()->error('', 'Bạn không đủ quyền hạn');
         return redirect()->back();
     }
