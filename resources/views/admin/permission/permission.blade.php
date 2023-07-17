@@ -110,7 +110,9 @@
                                                             </div>
                                                             <div class="modal-body text-start text-black p-4">
                                                                 <div class="mb-3">
-                                                                    <form method="POST"
+                                                                    <form 
+                                                                        id="editPermission"
+                                                                        method="POST"
                                                                         action="{{ route('updatepermission', ['id' => $item->id]) }}">
                                                                         @csrf
                                                                         @method('put')
@@ -120,7 +122,7 @@
                                                                             <div class="col-sm-10 col-md-10">
                                                                                 <input value="{{ $item->name }}"
                                                                                     type="text" class="form-control"
-                                                                                    id="verified" name="name" />
+                                                                                    id="name" name="name" />
                                                                             </div>
                                                                         </div>
                                                                         <div class="row pt-2">
@@ -236,13 +238,13 @@
                         </div>
                         <div class="modal-body text-start text-black p-4">
                             <div class="mb-3">
-                                <form method="POST" action="{{ route('storepermission') }}">
+                                <form id="addPermission" method="POST" action="{{ route('storepermission') }}">
                                     @csrf
                                     <div class="row">
                                         <label class="col-sm-2 col-md-2 form-label" for="name">Tên</label>
                                         <div class="col-sm-10 col-md-10">
-                                            <input value="" type="text" class="form-control" id="verified"
-                                                name="name" />
+                                            <input value="" type="text" class="form-control" id="permission_name"
+                                                name="permission_name" />
                                         </div>
                                     </div>
                                     <div class="row pt-2">
@@ -291,6 +293,47 @@
                 if (datatablesSimple) {
                     new simpleDatatables.DataTable(datatablesSimple);
                 }
+            });
+
+            $(document).ready(function() {
+                $('#addPermission').validate({
+                    rules: {
+                        permission_name: {
+                            required: true,
+                        },
+                    },
+                    messages: {
+                        permission_name: {
+                            required: 'Thiếu tên permission!',
+                        },
+                    },
+                    errorPlacement: function(error, element) {
+                        error.appendTo(element.parent());
+                    }
+                });
+
+                $('#editPermission').validate({
+                    rules: {
+                        name: {
+                            required: true,
+                        },
+                    },
+                    messages: {
+                        name: {
+                            required: 'Thiếu tên permission!',
+                        },
+                    },
+                    errorPlacement: function(error, element) {
+                        error.appendTo(element.parent());
+                    }
+                });
+
+                $('#permission_name').on('blur', function() {
+                    $(this).valid(); // Trigger validation on blur event
+                });
+                $('#name').on('blur', function() {
+                    $(this).valid(); // Trigger validation on blur event
+                });
             });
         </script>
 </body>

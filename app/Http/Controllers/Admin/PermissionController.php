@@ -45,20 +45,22 @@ class PermissionController extends Controller
         if (Gate::allows('addPermission')) {
             $request->validate(
                 [
-                    'name' => [
+                    'permission_name' => [
                         'required',
                         'string',
-                        'max:30'
+                        'max:30',
+                        'unique:permissions,name'
                     ]
                 ],
                 [
-                    'name.required' => "Thiếu tên!",
-                    'name.string' => "Tên không hợp lệ",
-                    'name.max' => "Tên không vượt quá 30 ký tự"
+                    'permission_name.unique' => 'Permission đã tồn tại!',
+                    'permission_name.required' => "Thiếu tên!",
+                    'permission_name.string' => "Tên không hợp lệ",
+                    'permission_name.max' => "Tên không vượt quá 30 ký tự"
                 ]
             );
 
-            $name = $request->get('name');
+            $name = $request->get('permission_name');
 
             ModelPermission::create(
                 [
@@ -70,7 +72,7 @@ class PermissionController extends Controller
             toastr()->success('', 'Tạo thành công');
             return redirect()->back();
         }
-                        
+
         toastr()->error('', 'Bạn không đủ quyền hạn');
         return redirect()->back();
     }
