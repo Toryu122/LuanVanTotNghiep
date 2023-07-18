@@ -71,14 +71,20 @@
             <!-- Right links -->
             <ul class="navbar-nav ms-auto d-flex flex-row mt-3 mt-lg-0">
                 <li class="nav-item text-center mx-2 mx-lg-1">
-                    @hasanyrole($roles)
-                        <a class="nav-link" aria-current="page" href="/admin">
-                            <div>
-                                <i class="fa-solid fa-user-tie"></i>
-                            </div>
-                            Admin Homepage
-                        </a>
-                    @endhasrole
+                    @if (Auth::user())
+                        @php
+                            $permissions = \App\Models\Permission::PERMISSIONS;
+                            $user = \App\Models\User::find(Auth::user()->id);
+                        @endphp
+                        @if ($user->hasAnyPermission($permissions))
+                            <a class="nav-link" aria-current="page" href="/admin">
+                                <div>
+                                    <i class="fa-solid fa-user-tie"></i>
+                                </div>
+                                Admin Homepage
+                            </a>
+                        @endif
+                    @endif
                 </li>
                 <li class="nav-item dropdown text-center mx-2 mx-lg-1">
                     @if (Auth::user())

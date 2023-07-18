@@ -2,6 +2,7 @@
 
 namespace App\Http\Middleware;
 
+use App\Models\Permission;
 use App\Models\Role;
 use Closure;
 use App\Models\User;
@@ -21,7 +22,7 @@ class AdminMiddleware
         $currentUserId = auth()->user()->id;
         $user = User::find($currentUserId);
 
-        if (!auth()->check() || !$user->hasRole(Role::ROLES)) {
+        if (!auth()->check() || !$user->hasAnyPermission(Permission::PERMISSIONS)) {
             // User doesn't have roles, redirect to the admin login page
             auth()->logout();
             toastr()->error('','Bạn không có quyền hạn, vui lòng đăng nhập lại');
