@@ -6,6 +6,15 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
     @include('cdn')
+    <style>
+        .error {
+            color: red;
+        }
+
+        .success {
+            color: green;
+        }
+    </style>
 </head>
 
 <body>
@@ -39,12 +48,11 @@
                         </div>
                     @endif
                 </div>
-                <form action="{{ route('createUser') }}" method="POST">
+                <form id="signup" action="{{ route('createUser') }}" method="POST">
                     @csrf
-
                     <div class="form-group">
                         <label>Email</label>
-                        <input name="email" type="email" class="form-control" placeholder="Email">
+                        <input name="email" id="email" type="email" class="form-control" placeholder="Email">
                         @error('email')
                             <div class="invalid-feedback d-block" role="alert">
                                 <strong>{{ $message }}</strong>
@@ -53,7 +61,7 @@
                     </div>
                     <div class="form-group pt-3">
                         <label>Họ tên</label>
-                        <input name="name" type="text" class="form-control" placeholder="Họ tên">
+                        <input name="name" id="name" type="text" class="form-control" placeholder="Họ tên">
                         @error('name')
                             <div class="invalid-feedback d-block" role="alert">
                                 <strong>{{ $message }}</strong>
@@ -62,7 +70,8 @@
                     </div>
                     <div class="form-group pt-3">
                         <label>Mật Khẩu</label>
-                        <input name="password" type="password" class="form-control" placeholder="Mật khẩu">
+                        <input name="password" id="password" type="password" class="form-control"
+                            placeholder="Mật khẩu">
                         @error('password')
                             <div class="invalid-feedback d-block" role="alert">
                                 <strong>{{ $message }}</strong>
@@ -71,8 +80,8 @@
                     </div>
                     <div class="form-group pt-3">
                         <label>Nhập Lại Mật Khẩu</label>
-                        <input name="password_confirmation" type="password" class="form-control"
-                            placeholder="Nhập lại mật khẩu">
+                        <input name="password_confirmation" id="password_confirmation" type="password"
+                            class="form-control" placeholder="Nhập lại mật khẩu">
                         @error('password_confirmation')
                             <div class="invalid-feedback d-block" role="alert">
                                 <strong>{{ $message }}</strong>
@@ -92,6 +101,48 @@
         </div>
     </section>
 
+    <script>
+        $(document).ready(function() {
+            $('#signup').validate({
+                rules: {
+                    email: {
+                        required: true,
+                        email: true
+                    },
+                    name: {
+                        required: true,
+                    },
+                    password: {
+                        required: true
+                    },
+                    password_confirmation: {
+                        required: true
+                    }
+                },
+                messages: {
+                    email: {
+                        required: 'Thiếu email',
+                        email: 'Email không hợp lệ'
+                    },
+                    name: {
+                        required: 'Thiếu họ tên',
+                    },
+                    password: {
+                        required: 'Thiếu mật khẩu'
+                    },
+                    password_confirmation: {
+                        required: 'Nhập lại mật khẩu!'
+                    }
+                },
+                errorPlacement: function(error, element) {
+                    error.appendTo(element.parent());
+                },
+                onfocusout: function(element) {
+                    this.element(element);
+                }
+            });
+        });
+    </script>
 </body>
 
 </html>

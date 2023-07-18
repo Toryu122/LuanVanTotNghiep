@@ -6,7 +6,15 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
     @include('cdn')
+    <style>
+        .error {
+            color: red;
+        }
 
+        .success {
+            color: green;
+        }
+    </style>
 </head>
 
 <body>
@@ -39,11 +47,11 @@
                         </div>
                     @endif
                 </div>
-                <form action="{{ route('loginUser') }}" method="POST">
+                <form id="login" action="{{ route('loginUser') }}" method="POST">
                     @csrf
                     <div class="form-group pt-3">
                         <label for="exampleInputEmail1">Email</label>
-                        <input name="email" type="email" class="form-control" placeholder="Email">
+                        <input name="email" id="email" type="email" class="form-control" placeholder="Email">
                         @error('email')
                             <div class="invalid-feedback d-block" role="alert">
                                 <strong>{{ $message }}</strong>
@@ -52,8 +60,8 @@
                     </div>
                     <div class="form-group pt-3">
                         <label for="exampleInputPassword1">Mật Khẩu</label>
-                        <input name="password" type="password" class="form-control" id="exampleInputPassword1"
-                            placeholder="Mật khẩu">
+                        <input name="password" id="password" type="password" class="form-control"
+                            id="exampleInputPassword1" placeholder="Mật khẩu">
                         @error('password')
                             <div class="invalid-feedback d-block" role="alert">
                                 <strong>{{ $message }}</strong>
@@ -92,6 +100,37 @@
             </div>
         </div>
     </section>
+
+    <script>
+        $(document).ready(function() {
+            $('#login').validate({
+                rules: {
+                    email: {
+                        required: true,
+                        email: true
+                    },
+                    password: {
+                        required: true
+                    }
+                },
+                messages: {
+                    email: {
+                        required: 'Thiếu email',
+                        email: 'Email không hợp lệ'
+                    },
+                    password: {
+                        required: 'Thiếu mật khẩu'
+                    }
+                },
+                errorPlacement: function(error, element) {
+                    error.appendTo(element.parent());
+                },
+                onfocusout: function(element) {
+                    this.element(element);
+                }
+            });
+        });
+    </script>
 </body>
 
 </html>
