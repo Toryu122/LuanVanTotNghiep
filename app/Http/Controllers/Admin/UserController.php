@@ -101,7 +101,7 @@ class UserController extends Controller
         if (Gate::allows('editUser')) {
             $request->validate(
                 [
-                    'name' => [
+                    'user_name' => [
                         'string'
                     ],
                     'gender' => [
@@ -115,7 +115,7 @@ class UserController extends Controller
                         'nullable',
                         'string'
                     ],
-                    'roles' => [
+                    'roles_array' => [
                         'array',
                         'sometimes'
                     ]
@@ -124,7 +124,7 @@ class UserController extends Controller
                     'gender.in' => 'Giới tính không hợp lệ, vui lòng chọn lại!',
                     'biography.string' => 'Tiểu sử không hợp lệ',
                     'address.string' => 'Địa chỉ không hợp lệ',
-                    'name.string' => 'Tên không hợp lệ',
+                    'user_name.string' => 'Tên không hợp lệ',
                     'roles.array' => 'Role không hợp lệ'
                 ]
             );
@@ -132,14 +132,14 @@ class UserController extends Controller
             $user = User::find($id);
 
             $data = [
-                'name' => $request->filled('name') ? $request->input('name') : $user->name,
+                'name' => $request->filled('user_name') ? $request->input('user_name') : $user->name,
                 'gender' => $request->filled('gender') ? $request->input('gender') : $user->gender,
                 'biography' => $request->filled('biography') ? $request->input('biography') : $user->biography,
                 'address' => $request->filled('address') ? $request->input('address') : $user->address,
                 'verified' => $request->filled('verified') ? 1 : 1
             ];
 
-            $roles = $request->get('roles');
+            $roles = $request->get('roles_array');
 
             if ($roles && count($roles) > 0) {
                 if (count($user->getRoleNames()) <= count($roles)) {

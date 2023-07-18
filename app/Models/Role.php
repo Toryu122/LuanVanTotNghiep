@@ -16,6 +16,7 @@ class Role extends BaseModel
         'leader',
         'hr',
         'finance',
+        'staff'
     ];
 
     /**

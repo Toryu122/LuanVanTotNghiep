@@ -118,7 +118,7 @@
                                                             </div>
                                                             <div class="modal-body text-start text-black p-4">
                                                                 <div class="mb-3">
-                                                                    <form method="POST"
+                                                                    <form class="updateUser" method="POST"
                                                                         action="{{ route('updateuser', ['id' => $item->id]) }}">
                                                                         @csrf
                                                                         @method('put')
@@ -128,7 +128,7 @@
                                                                             <div class="col-sm-10 col-md-8">
                                                                                 <input value="{{ $item->name }}"
                                                                                     type="text" class="form-control"
-                                                                                    id="verified" name="name" />
+                                                                                    id="user_name" name="user_name" />
                                                                             </div>
                                                                         </div>
                                                                         <div class="row">
@@ -138,7 +138,8 @@
                                                                                 <input
                                                                                     {{ $item->verified === 0 ? '' : 'checked' }}
                                                                                     type="checkbox" class="form-check"
-                                                                                    id="verified" name="verified" />
+                                                                                    disabled id="verified"
+                                                                                    name="verified" />
                                                                             </div>
                                                                         </div>
                                                                         <div class="row pt-2">
@@ -245,7 +246,7 @@
                                                             </div>
                                                             <div class="modal-body text-start text-black p-4">
                                                                 <div class="mb-3">
-                                                                    <form method="POST"
+                                                                    <form class="assignRole" method="POST"
                                                                         action="{{ route('updateuser', ['id' => $item->id]) }}">
                                                                         @csrf
                                                                         @method('put')
@@ -256,7 +257,8 @@
                                                                                 <input value="{{ $item->name }}"
                                                                                     type="text"
                                                                                     class="form-control"
-                                                                                    id="verified" name="name" />
+                                                                                    id="name" name="name"
+                                                                                    disabled />
                                                                             </div>
                                                                         </div>
                                                                         <div class="row pt-2">
@@ -271,7 +273,7 @@
                                                                                                 <input type="checkbox"
                                                                                                     class="form-check-input"
                                                                                                     id="{{ $role->name }}"
-                                                                                                    name="roles[]"
+                                                                                                    name="roles_array[]"
                                                                                                     value="{{ $role->name }}"
                                                                                                     {{ $item->roles->contains('name', $role->name) ? 'checked' : '' }}>
                                                                                                 <label
@@ -322,7 +324,7 @@
                         </div>
                         <div class="modal-body text-start text-black p-4">
                             <div class="mb-3">
-                                <form method="POST" action="{{ route('storeuser') }}">
+                                <form id="addUserForm" method="POST" action="{{ route('storeuser') }}">
                                     @csrf
                                     <div class="row">
                                         <label class="col-sm-2 col-md-3 form-label" for="name">Tên</label>
@@ -410,6 +412,90 @@
                 if (datatablesSimple) {
                     new simpleDatatables.DataTable(datatablesSimple);
                 }
+            });
+
+            $(document).ready(function() {
+                $('#addUserForm').validate({
+                    rules: {
+                        name: {
+                            required: true,
+                        },
+                        email: {
+                            required: true
+                        },
+                        password: {
+                            required: true
+                        },
+                        'roles[]': {
+                            required: true,
+                        }
+                    },
+                    messages: {
+                        name: {
+                            required: 'Thiếu họ tên!',
+                        },
+                        email: {
+                            required: 'Thiếu email'
+                        },
+                        password: {
+                            required: 'Thiếu mật khẩu'
+                        },
+                        'roles[]': {
+                            required: 'Thiếu role',
+                        }
+                    },
+                    errorPlacement: function(error, element) {
+                        error.appendTo(element.parent());
+                    },
+                    onfocusout: function(element) {
+                        this.element(element);
+                    }
+                });
+
+                $('input[name="roles[]"]').on('blur', function() {
+                    $(this).valid();
+                });
+
+                $('.updateUser').each(function() {
+                    $(this).validate({
+                        rules: {
+                            user_name: {
+                                required: true,
+                            }
+                        },
+                        messages: {
+                            user_name: {
+                                required: 'Thiếu tên',
+                            }
+                        },
+                        errorPlacement: function(error, element) {
+                            error.appendTo(element.parent());
+                        },
+                        onfocusout: function(element) {
+                            this.element(element);
+                        }
+                    });
+                });
+
+                $('.assignRole').each(function() {
+                    $(this).validate({
+                        rules: {
+                            'roles_array[]': {
+                                required: true,
+                                minlength: 1
+                            }
+                        },
+                        messages: {
+                            'roles_array[]': {
+                                required: 'Thiếu role',
+                                minlength: 'Thiếu role'
+                            }
+                        },
+                        errorPlacement: function(error, element) {
+                            error.appendTo(element.parent());
+                        }
+                    });
+                });
             });
         </script>
 </body>
