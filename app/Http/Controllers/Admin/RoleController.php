@@ -85,7 +85,7 @@ class RoleController extends Controller
             toastr()->success('', 'Tạo thành công');
             return redirect()->back();
         }
-        
+
         toastr()->error('', 'Bạn không đủ quyền hạn');
         return redirect()->back();
     }
@@ -126,8 +126,9 @@ class RoleController extends Controller
                 [
                     'permissions' => [
                         'array',
+                        'nullable'
                     ],
-                    'name' => [
+                    'role_name' => [
                         'string',
                         'max:30'
                     ]
@@ -135,12 +136,12 @@ class RoleController extends Controller
                 [
                     'permissions.array' => 'Permission không hợp lệ, vui lòng thử lại',
                     'permissions.in' => 'Permission không hợp lệ, vui lòng thử lại',
-                    'name.string' => 'Tên không hợp lệ!',
-                    'name.max' => 'Tên không dài quá 30 ký tự'
+                    'role_name.string' => 'Tên không hợp lệ!',
+                    'role_name.max' => 'Tên không dài quá 30 ký tự'
                 ]
             );
 
-            $name = $request->get('name');
+            $name = $request->get('role_name');
             $permissions = $request->get('permissions');
 
             $role = ModelRole::findById($id);

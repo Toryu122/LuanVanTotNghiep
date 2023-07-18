@@ -111,7 +111,9 @@
                                                             </div>
                                                             <div class="modal-body text-start text-black p-4">
                                                                 <div class="mb-3">
-                                                                    <form method="POST"
+                                                                    <form class="updateRole"
+                                                                        id="updateRoleForm{{ $item->id }}"
+                                                                        method="POST"
                                                                         action="{{ route('updaterole', ['id' => $item->id]) }}">
                                                                         @csrf
                                                                         @method('put')
@@ -120,8 +122,10 @@
                                                                                 for="name">Tên</label>
                                                                             <div class="col-sm-10 col-md-9">
                                                                                 <input value="{{ $item->name }}"
-                                                                                    type="text" class="form-control"
-                                                                                    id="verified" name="name" />
+                                                                                    type="text"
+                                                                                    class="form-control role_name"
+                                                                                    id="role_name" name="role_name"
+                                                                                    required />
                                                                             </div>
                                                                         </div>
                                                                         <div class="row pt-2">
@@ -135,7 +139,7 @@
                                                                                             class="col-6 col-sm-4 col-md-3">
                                                                                             <div class="form-check">
                                                                                                 <input type="checkbox"
-                                                                                                    class="form-check-input"
+                                                                                                    class="form-check-input permissions"
                                                                                                     id="{{ $perm->name }}"
                                                                                                     name="permissions[]"
                                                                                                     value="{{ $perm->name }}"
@@ -228,7 +232,8 @@
                                                                         <p>Bạn có chắc muốn kích hoạt role này?</p>
                                                                     </div>
                                                                     <div class="modal-footer">
-                                                                        <button class="btn btn-success">Kích hoạt</button>
+                                                                        <button class="btn btn-success">Kích
+                                                                            hoạt</button>
                                                                     </div>
                                                                 </form>
                                                             </div>
@@ -258,16 +263,16 @@
                         </div>
                         <div class="modal-body text-start text-black p-4">
                             <div class="mb-3">
-                                <form method="POST" action="{{ route('storerole') }}">
+                                <form id="addMoreRole" method="POST" action="{{ route('storerole') }}">
                                     @csrf
-                                    <div class="row">
+                                    <div class="row mb-3 ">
                                         <label class="col-sm-2 col-md-3 form-label" for="name">Tên</label>
                                         <div class="col-sm-10 col-md-9">
-                                            <input value="" type="text" class="form-control" id="verified"
+                                            <input type="text" class="form-control" id="name"
                                                 name="name" />
                                         </div>
                                     </div>
-                                    <div class="row pt-2">
+                                    <div class="row">
                                         <label class="col-sm-4 col-md-3 form-label" for="permissions">Chọn
                                             permission</label>
                                         <div class="col-sm-8 col-md-9">
@@ -276,7 +281,7 @@
                                                     <div class="col-6 col-sm-4 col-md-3">
                                                         <div class="form-check">
                                                             <input type="checkbox" class="form-check-input"
-                                                                id="{{ $perm->name }}" name="permissions[]"
+                                                                id="{{ $perm->id }}" name="permissions[]"
                                                                 value="{{ $perm->name }}">
                                                             <label class="form-check-label"
                                                                 for="{{ $perm->name }}">{{ $perm->name }}</label>
@@ -297,11 +302,11 @@
                                     </div>
                                 </form>
                             </div>
-
                         </div>
                     </div>
                 </div>
             </div>
+
         </div>
 
         <script>
@@ -332,6 +337,68 @@
                 if (datatablesSimple) {
                     new simpleDatatables.DataTable(datatablesSimple);
                 }
+            });
+
+            $(document).ready(function() {
+                $('#addMoreRole').validate({
+                    rules: {
+                        name: {
+                            required: true,
+                        },
+                        'permissions[]': {
+                            required: true,
+                            min: 1
+                        }
+                    },
+                    messages: {
+                        name: {
+                            required: 'Thiếu tên role!',
+                        },
+                        'permissions[]': {
+                            required: 'Thiếu permissions!',
+                            min: 'Thiếu permissions!'
+                        }
+                    },
+                    errorPlacement: function(error, element) {
+                        error.appendTo(element.parent());
+                    }
+                });
+
+                $('#name').on('blur', function() {
+                    $(this).valid(); // Trigger validation on blur event
+                });
+
+                $('input[name="permissions[]').on('blur', function() {
+                    $(this).valid(); // Trigger validation on blur event
+                });
+
+                $('.updateRole').each(function() {
+                    $(this).validate({
+                        rules: {
+                            role_name: {
+                                required: true
+                            },
+                            'permissions[]': {
+                                required: true,
+                                checkPermission: true
+                            }
+                        },
+                        messages: {
+                            role_name: {
+                                required: 'Thiếu tên role'
+                            },
+                            'permissions[]': {
+                                required: 'Thiếu permission',
+                            }
+                        },
+                        errorPlacement: function(error, element) {
+                            error.appendTo(element.parent());
+                        },
+                        onfocusout: function(element) {
+                            this.element(element);
+                        }
+                    });
+                });
             });
         </script>
 </body>
