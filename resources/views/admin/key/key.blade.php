@@ -379,21 +379,30 @@
                     }
 
                     // Extract the day, month, and year values
-                    var parts = value.split('-');
-                    var day = parseInt(parts[0], 10);
-                    var month = parseInt(parts[1], 10);
-                    var year = parseInt(parts[2], 10);
+                    let parts = value.split('-');
+                    let day = parseInt(parts[0], 10);
+                    let month = parseInt(parts[1], 10);
+                    let year = parseInt(parts[2], 10);
 
                     // Check if the date is valid
-                    var date = new Date(year, month - 1, day);
+                    let date = new Date(year, month - 1, day);
                     return date.getDate() === day && date.getMonth() === month - 1 && date.getFullYear() ===
                         year;
                 }, "Định dạng ngày tháng ko hợp lệ (dd-mm-yyyy)");
+
+                $.validator.addMethod('keyFormat', function(value, element) {
+                    let key1Regex =
+                        /^[A-Z0-9]{5}-[A-Z0-9]{5}-[A-Z0-9]{5}-[A-Z0-9]{5}-[A-Z0-9]{5}-[A-Z0-9]{5}-[A-Z0-9]{5}-[A-Z0-9]{5}$/;
+                    let key2Regex = /^[A-Z0-9]{5}-[A-Z0-9]{5}-[A-Z0-9]{5}-[A-Z0-9]{5}-[A-Z0-9]{5}$/;
+
+                    return this.optional(element) || key1Regex.test(value) || key2Regex.test(value);
+                }, 'Định dạng key không hợp lệ');
 
                 $('#addKeySingle').validate({
                     rules: {
                         cd_key: {
                             required: true,
+                            keyFormat: true
                         },
                         game_id: {
                             required: true
@@ -441,6 +450,7 @@
                         rules: {
                             key: {
                                 required: true,
+                                keyFormat: true
                             },
                             expiredate: {
                                 date: true
