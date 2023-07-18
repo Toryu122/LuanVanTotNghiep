@@ -456,6 +456,7 @@
                     $(this).valid();
                 });
 
+                // This is for validate multiple form with same class
                 $('.updateUser').each(function() {
                     $(this).validate({
                         rules: {

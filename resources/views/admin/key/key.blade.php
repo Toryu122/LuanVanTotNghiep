@@ -118,9 +118,7 @@
                                                             </div>
                                                             <div class="modal-body text-start text-black p-4">
                                                                 <div class="mb-3">
-                                                                    <form 
-                                                                        id="editKey"
-                                                                        method="POST"
+                                                                    <form class="editKey" method="POST"
                                                                         action="{{ route('updatekey', ['id' => $item->id]) }}">
                                                                         @csrf
                                                                         @method('put')
@@ -437,27 +435,32 @@
                         error.appendTo(element.parent());
                     }
                 });
-                
-                $('#editKey').validate({
-                    rules: {
-                        key: {
-                            required: true,
+
+                $('.editKey').each(function() {
+                    $(this).validate({
+                        rules: {
+                            key: {
+                                required: true,
+                            },
+                            expiredate: {
+                                date: true
+                            }
+                        },
+                        messages: {
+                            key: {
+                                required: 'Thiếu key',
+                            }
+                        },
+                        errorPlacement: function(error, element) {
+                            error.appendTo(element.parent());
+                        },
+                        onfocusout: function(element) {
+                            this.element(element);
                         }
-                    },
-                    messages: {
-                        key: {
-                            required: 'Thiếu key!',
-                        }
-                    },
-                    errorPlacement: function(error, element) {
-                        error.appendTo(element.parent());
-                    }
+                    });
                 });
 
                 $('#cd_key').on('blur', function() {
-                    $(this).valid(); // Trigger validation on blur event
-                });
-                $('#key').on('blur', function() {
                     $(this).valid(); // Trigger validation on blur event
                 });
             });

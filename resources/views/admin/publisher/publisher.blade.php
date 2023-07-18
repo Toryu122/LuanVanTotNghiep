@@ -104,8 +104,7 @@
                                                             </div>
                                                             <div class="modal-body text-start text-black p-4">
                                                                 <div class="mb-3">
-                                                                    <form
-                                                                        id="editPublisher"
+                                                                    <form class="editPublisher"
                                                                         action="{{ route('updatepublisher', ['id' => $item->id]) }}"
                                                                         method="POST" enctype="multipart/form-data">
                                                                         @csrf
@@ -128,7 +127,8 @@
                                                                             <div class="col-sm-10">
                                                                                 <input type="text"
                                                                                     class="form-control"
-                                                                                    id="publisher_name" name="publisher_name"
+                                                                                    id="publisher_name"
+                                                                                    name="publisher_name"
                                                                                     value="{{ $item->name }}" />
                                                                             </div>
                                                                         </div>
@@ -276,27 +276,31 @@
                     }
                 });
 
-                $('#editPublisher').validate({
-                    rules: {
-                        publisher_name: {
-                            required: true,
+                $('.editPublisher').each(function() {
+                    $(this).validate({
+                        rules: {
+                            publisher_name: {
+                                required: true,
+                            },
                         },
-                    },
-                    messages: {
-                        publisher_name: {
-                            required: 'Thiếu tên nhà phát hành!',
+                        messages: {
+                            publisher_name: {
+                                required: 'Thiếu tên nhà phát hành!',
+                            },
                         },
-                    },
-                    errorPlacement: function(error, element) {
-                        console.log("first")
-                        error.appendTo(element.parent());
-                    }
+                        errorPlacement: function(error, element) {
+                            error.appendTo(element.parent());
+                        },
+                        onfocusout: function(element) {
+                            this.element(element);
+                        }
+                    });
                 });
 
                 $('#name').on('blur', function() {
                     $(this).valid(); // Trigger validation on blur event
                 });
-                
+
                 $('#publisher_name').on('blur', function() {
                     $(this).valid(); // Trigger validation on blur event
                 });

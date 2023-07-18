@@ -110,9 +110,7 @@
                                                             </div>
                                                             <div class="modal-body text-start text-black p-4">
                                                                 <div class="mb-3">
-                                                                    <form 
-                                                                        id="editPermission"
-                                                                        method="POST"
+                                                                    <form class="editPermission" method="POST"
                                                                         action="{{ route('updatepermission', ['id' => $item->id]) }}">
                                                                         @csrf
                                                                         @method('put')
@@ -243,8 +241,8 @@
                                     <div class="row">
                                         <label class="col-sm-2 col-md-2 form-label" for="name">Tên</label>
                                         <div class="col-sm-10 col-md-10">
-                                            <input value="" type="text" class="form-control" id="permission_name"
-                                                name="permission_name" />
+                                            <input value="" type="text" class="form-control"
+                                                id="permission_name" name="permission_name" />
                                         </div>
                                     </div>
                                     <div class="row pt-2">
@@ -312,26 +310,28 @@
                     }
                 });
 
-                $('#editPermission').validate({
-                    rules: {
-                        name: {
-                            required: true,
+                $('.editPermission').each(function() {
+                    $(this).validate({
+                        rules: {
+                            name: {
+                                required: true,
+                            },
                         },
-                    },
-                    messages: {
-                        name: {
-                            required: 'Thiếu tên permission!',
+                        messages: {
+                            name: {
+                                required: 'Thiếu tên permission!',
+                            },
                         },
-                    },
-                    errorPlacement: function(error, element) {
-                        error.appendTo(element.parent());
-                    }
+                        errorPlacement: function(error, element) {
+                            error.appendTo(element.parent());
+                        },
+                        onfocusout: function(element) {
+                            this.element(element);
+                        }
+                    });
                 });
 
                 $('#permission_name').on('blur', function() {
-                    $(this).valid(); // Trigger validation on blur event
-                });
-                $('#name').on('blur', function() {
                     $(this).valid(); // Trigger validation on blur event
                 });
             });

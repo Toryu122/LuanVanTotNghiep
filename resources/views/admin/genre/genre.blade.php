@@ -107,7 +107,7 @@
                                                             <div class="modal-body text-start text-black p-4">
                                                                 <div class="mb-3">
                                                                     <form
-                                                                        id="editGenre"
+                                                                        class="editGenre"
                                                                         action="{{ route('updategenre', ['id' => $item->id]) }}"
                                                                         method="POST" enctype="multipart/form-data">
                                                                         @csrf
@@ -275,26 +275,28 @@
                     }
                 });
 
-                $('#editGenre').validate({
-                    rules: {
-                        name: {
-                            required: true,
+                $('.editGenre').each(function() {
+                    $(this).validate({
+                        rules: {
+                            name: {
+                                required: true,
+                            }
                         },
-                    },
-                    messages: {
-                        name: {
-                            required: 'Thiếu tên thể loại!',
+                        messages: {
+                            name: {
+                                required: 'Thiếu tên',
+                            }
                         },
-                    },
-                    errorPlacement: function(error, element) {
-                        error.appendTo(element.parent());
-                    }
+                        errorPlacement: function(error, element) {
+                            error.appendTo(element.parent());
+                        },
+                        onfocusout: function(element) {
+                            this.element(element);
+                        }
+                    });
                 });
 
                 $('#genre_name').on('blur', function() {
-                    $(this).valid(); // Trigger validation on blur event
-                });
-                $('#name').on('blur', function() {
                     $(this).valid(); // Trigger validation on blur event
                 });
             });
