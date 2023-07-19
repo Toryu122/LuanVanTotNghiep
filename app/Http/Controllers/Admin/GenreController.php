@@ -119,7 +119,7 @@ class GenreController extends Controller
     {
         if (Gate::allows('deleteGenre')) {
             $isExist = DB::table(Genre::INTERMEDIATE_TABLE[0])
-                ->where('id', '=', $id)
+                ->where('genre_id', '=', $id)
                 ->exists();
 
             if ($isExist) {
