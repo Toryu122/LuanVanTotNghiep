@@ -155,10 +155,10 @@ class GameController extends Controller
         $sortBy = $request->get('sortBy');
         $fromPrice = $request->get('fromPrice');
         $toPrice = $request->get('toPrice');
-    
+
         // Start the main query for games
         $gameQuery = Game::query();
-    
+
         // Check if it exists
         if ($query) {
             $gameQuery = $gameQuery->where('name', 'like', '%' . $query . '%');
@@ -174,7 +174,8 @@ class GameController extends Controller
                 $query->where('name', '=', $genre);
             });
         }
-    
+
+        // Apply sorting based on the selected option
         if ($sortBy) {
             if ($sortBy == 'bestSale') {
                 // Get best-selling game IDs
@@ -184,29 +185,40 @@ class GameController extends Controller
                     ->orderByDesc('total_quantity')
                     ->limit(5)
                     ->pluck('game_id');
-    
+
                 // If best-selling game IDs exist, add them to the query
                 if ($bestSellingGameIds->isNotEmpty()) {
                     $gameQuery = $gameQuery->whereIn('id', $bestSellingGameIds);
+
+                    // Query the rest of the games (exclude best-selling games)
+                    $restOfTheGames = Game::query()
+                        ->whereNotIn('id', $bestSellingGameIds)
+                        ->orderBy('name', 'asc');
+
+                    // Append the rest of the games to the best-selling games
+                    $games = $gameQuery->union($restOfTheGames);
+                } else {
+                    // If there are no best-selling games, simply get all games with default sorting
+                    $games = $gameQuery->orderBy('name', 'asc');
                 }
             } elseif ($sortBy == 'highest') {
-                $gameQuery = $gameQuery->orderBy('price', 'desc');
+                $games = $gameQuery->orderBy('price', 'desc');
             } elseif ($sortBy == 'lowest') {
-                $gameQuery = $gameQuery->orderBy('price', 'asc');
+                $games = $gameQuery->orderBy('price', 'asc');
             } elseif ($sortBy == 'AZ') {
-                $gameQuery = $gameQuery->orderBy('name', 'asc');
+                $games = $gameQuery->orderBy('name', 'asc');
             } elseif ($sortBy == 'ZA') {
-                $gameQuery = $gameQuery->orderBy('name', 'desc');
+                $games = $gameQuery->orderBy('name', 'desc');
             }
+        } else {
+            // If no sort option is selected, get all games with default sorting
+            $games = $gameQuery;
         }
-    
-        // Get current page, default is 1
-        $currentPage = $request->query('page', 1);
-        // Paginate the query
-        $games = $gameQuery->paginate(20, columns: ['*'], pageName: 'page', page: $currentPage);
-        // Append the query parameter to the URL
+
+        // Paginate the query and append the query parameters to the URL
+        $games = $games->paginate(20);
         $games->appends($request->except('page'));
-    
+
         return view('search', [
             'games' => $games,
             'query' => $gameQuery->toSql()
