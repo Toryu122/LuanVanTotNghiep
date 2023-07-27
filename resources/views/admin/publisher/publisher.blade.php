@@ -30,17 +30,15 @@
             <main>
                 <div class="container-fluid px-4">
                     <div class="text-center">
-                        @if (Session::has('game_existed'))
-                            <div class="alert alert-danger" role="alert">
-                                <strong>{{ Session::get('game_existed') }}</strong>
+                        @if ($errors->any())
+                            <div class="text-danger h3 text-lg-start fw-bold">
+                                Something went wrong...
                             </div>
-                        @endif
-                    </div>
-                    <div class="text-center">
-                        @if (Session::has('delete_success'))
-                            <div class="alert alert-success" role="alert">
-                                <strong>{{ Session::get('delete_success') }}</strong>
-                            </div>
+                            <ul class="list-group list-unstyled">
+                                @foreach ($errors->all() as $item)
+                                    <li class="alert alert-danger">{{ $item }}</li>
+                                @endforeach
+                            </ul>
                         @endif
                     </div>
                     <div class="card mb-4">
