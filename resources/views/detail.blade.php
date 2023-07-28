@@ -27,7 +27,7 @@
                     <div class="d-flex justify-content-center">
                         <form method="POST" action="{{ route('likeGame', ['id' => $game->id]) }}">
                             @csrf
-                            @if (Cache::has('like_game_' . $game->id))
+                            @if (Cache::has('like_game_' . $game->id .  "_" . request()->ip()))
                                 <button disabled class="btn btn-outline-primary">
                                     <i class="fa-solid fa-heart"></i> Liked
                                 </button>

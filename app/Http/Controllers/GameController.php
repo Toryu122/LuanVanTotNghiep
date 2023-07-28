@@ -227,8 +227,11 @@ class GameController extends Controller
 
     public function likeGame(Request $request, $id)
     {
-        $cacheKey = "like_game_" . $id . $request->ip();
-        if (Cache::has($cacheKey)) {
+        // Get the liked games array from the session
+        $likedGames = $request->session()->get('liked_games', []);
+
+        // Check if the game ID is already in the liked games array
+        if (in_array($id, $likedGames)) {
             return redirect()->back();
         }
 
@@ -239,14 +242,23 @@ class GameController extends Controller
         if ($game) {
             DB::table(Game::retrieveTableName())
                 ->where('id', '=', $id)
-                ->update(
-                    [
-                        'like' => $game->like + 1,
-                        'updated_at' => Carbon::now()
-                    ]
-                );
+                ->update([
+                    'like' => $game->like + 1,
+                    'updated_at' => Carbon::now()
+                ]);
 
+            // Add the game ID to the liked games array in the session
+            $likedGames[] = $id;
+            $request->session()->put('liked_games', $likedGames);
+
+            // Set rate-limiting duration to 1800 seconds (30 minutes)
             $rateLimitedDuration = 1800;
+
+            // Generate a unique cache key for this user's IP address
+            $userIp = $request->ip();
+            $cacheKey = "like_game_" . $id . "_" . $userIp;
+
+            // Cache the like action to prevent further likes from the same user for the given duration
             Cache::put($cacheKey, true, $rateLimitedDuration);
 
             return redirect()->back()->with('liked');
