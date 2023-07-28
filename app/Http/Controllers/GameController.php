@@ -227,7 +227,7 @@ class GameController extends Controller
 
     public function likeGame($id)
     {
-        $cacheKey = "like_game_" . $id;
+        $cacheKey = "like_game_" . $id . (new Request)->ip();
 
         if (Cache::has($cacheKey)) {
             return redirect()->back();

@@ -357,7 +357,7 @@ class OrderController extends Controller
                 ";
 
                 DB::table(Key::retrieveTableName())
-                    ->where('cd_key', '=', $value)
+                    ->where('cd_key', '=', Helper::encrypt($value, 'cdkey'))
                     ->update(
                         [
                             'is_redeemed' => 1,

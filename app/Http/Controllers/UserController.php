@@ -103,7 +103,7 @@ class UserController extends Controller
             ]);
 
         // Logout the user
-        Auth::logout();
+        auth()->guest();
         $request->session()->invalidate();
         $request->session()->regenerateToken();
 

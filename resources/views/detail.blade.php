@@ -28,7 +28,7 @@
                         <form method="POST" action="{{ route('likeGame', ['id' => $game->id]) }}">
                             @csrf
                             @if (Cache::has('like_game_' . $game->id))
-                                <button class="btn btn-outline-primary">
+                                <button disabled class="btn btn-outline-primary">
                                     <i class="fa-solid fa-heart"></i> Liked
                                 </button>
                             @else

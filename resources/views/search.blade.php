@@ -57,9 +57,9 @@
                         <select class="form-select mb-3 bg-navbar-dark border-0 text-white" name="sortBy"
                             id="sortBy">
                             <option value="">Mặc định</option>
-                            <option value="bestSale" {{ Request::get('sortBy') === 'bestSale' ? 'selected' : '' }}>
+                            {{-- <option value="bestSale" {{ Request::get('sortBy') === 'bestSale' ? 'selected' : '' }}>
                                 Bán chạy nhất
-                            </option>
+                            </option> --}}
                             <option value="lowest" {{ Request::get('sortBy') === 'lowest' ? 'selected' : '' }}>
                                 Giá thấp nhất
                             </option>

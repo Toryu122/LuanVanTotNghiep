@@ -119,7 +119,7 @@ class AuthController extends Controller
             return redirect(route('index'));
         }
 
-        return redirect(route('login'))->with('user_not_found', 'Tài khoản không tồn tại, vui lòng đăng ký!');
+        return redirect(route('login'))->with('user_not_found', 'Tài khoản không tồn tại hoặc sai mật khẩu, vui lòng kiểm tra lại!');
     }
 
     public function logoutUser(Request $request)

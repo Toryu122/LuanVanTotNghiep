@@ -143,7 +143,7 @@ class KeyController extends Controller
                 DB::table(Key::retrieveTableName())
                     ->insert(
                         [
-                            'cd_key' => $request->filled('cd_key') ? $request->input('cd_key') : "",
+                            'cd_key' => $request->filled('cd_key') ? Helper::encrypt($request->input('cd_key'), 'cdkey') : "",
                             'game_id' => $request->filled('game_id') ? $request->input('game_id') : "",
                             'expire_date' => $request->filled('expiredate') ? date('Y-m-d H:i:s', strtotime($request->input('expiredate'))) : null,
                         ]
@@ -155,7 +155,7 @@ class KeyController extends Controller
                 DB::table(Key::retrieveTableName())
                     ->insert(
                         [
-                            'cd_key' => $request->filled('cd_key') ? $request->input('cd_key') : "",
+                            'cd_key' => $request->filled('cd_key') ? Helper::encrypt($request->input('cd_key'), 'cdkey') : "",
                             'game_id' => $request->filled('game_id') ? $request->input('game_id') : "",
                             'expire_date' => $request->filled('expiredate') ? date('Y-m-d H:i:s', strtotime($request->input('expiredate'))) : null,
                         ]

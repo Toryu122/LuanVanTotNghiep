@@ -347,7 +347,6 @@
                         },
                         'permissions[]': {
                             required: true,
-                            min: 1
                         }
                     },
                     messages: {
@@ -356,7 +355,6 @@
                         },
                         'permissions[]': {
                             required: 'Thiếu permissions!',
-                            min: 'Thiếu permissions!'
                         }
                     },
                     errorPlacement: function(error, element) {
